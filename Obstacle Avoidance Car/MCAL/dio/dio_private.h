@@ -1,8 +1,8 @@
 /*
  * dio_private.h
  *
- *     Created on: Mar 31, 2021
- *         Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+ *     Created on: MAY 16, 2023
+ *         Author: Mohamed Abdelsalam - https://github.com/m3adel
  *    Description: This file contains all Digital Input Output (DIO) registers' locations and other private Macros.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */
@@ -28,12 +28,6 @@
 #define DIO_U8_PORTD_REG	    *( ( volatile u8 * ) 0x32 )
 #define DIO_U8_DDRD_REG		    *( ( volatile u8 * ) 0x31 )
 #define DIO_U8_PIND_REG		    *( ( volatile u8 * ) 0x30 )
-
-/*******************************************************************************************************************************************************************/
-
-/* Concatenate Functions Like Macros */
-#define DIO_U8_CONC( P7, P6, P5, P4, P3, P2, P1, P0 )			DIO_U8_CONC_HELP( P7, P6, P5, P4, P3, P2, P1, P0 )
-#define DIO_U8_CONC_HELP( P7, P6, P5, P4, P3, P2, P1, P0 )		0b##P7##P6##P5##P4##P3##P2##P1##P0
 
 /*******************************************************************************************************************************************************************/
 

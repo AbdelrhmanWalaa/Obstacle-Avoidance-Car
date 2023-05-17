@@ -1,8 +1,8 @@
 /*
  * dio_program.c
  *
- *     Created on: Mar 31, 2021
- *         Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+ *     Created on: MAY 16, 2023
+ *         Author: Mohamed Abdelsalam - https://github.com/m3adel
  *    Description: This file contains all Digital Input Output (DIO) functions' implementation.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */
@@ -14,351 +14,289 @@
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_initialization
- Input: void
+ Name: DIO_init
+ Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction
  Output: void
- Description: Function to initialize DIO peripheral.
+ Description: Function to initialize Pin direction.
 */
-vd DIO_initialization  ( void )
-{
-	/* Set Initial Port Direction */
-	/* PORTA */
-	DIO_U8_DDRA_REG = DIO_U8_CONC( DIO_U8_PA7_INITIAL_DIRECTION, DIO_U8_PA6_INITIAL_DIRECTION, DIO_U8_PA5_INITIAL_DIRECTION, DIO_U8_PA4_INITIAL_DIRECTION, DIO_U8_PA3_INITIAL_DIRECTION, DIO_U8_PA2_INITIAL_DIRECTION, DIO_U8_PA1_INITIAL_DIRECTION, DIO_U8_PA0_INITIAL_DIRECTION );
-	/* PORTB */
-	DIO_U8_DDRB_REG = DIO_U8_CONC( DIO_U8_PB7_INITIAL_DIRECTION, DIO_U8_PB6_INITIAL_DIRECTION, DIO_U8_PB5_INITIAL_DIRECTION, DIO_U8_PB4_INITIAL_DIRECTION, DIO_U8_PB3_INITIAL_DIRECTION, DIO_U8_PB2_INITIAL_DIRECTION, DIO_U8_PB1_INITIAL_DIRECTION, DIO_U8_PB0_INITIAL_DIRECTION );
-	/* PORTC */
-	DIO_U8_DDRC_REG = DIO_U8_CONC( DIO_U8_PC7_INITIAL_DIRECTION, DIO_U8_PC6_INITIAL_DIRECTION, DIO_U8_PC5_INITIAL_DIRECTION, DIO_U8_PC4_INITIAL_DIRECTION, DIO_U8_PC3_INITIAL_DIRECTION, DIO_U8_PC2_INITIAL_DIRECTION, DIO_U8_PC1_INITIAL_DIRECTION, DIO_U8_PC0_INITIAL_DIRECTION );
-	/* PORTD */
-	DIO_U8_DDRD_REG = DIO_U8_CONC( DIO_U8_PD7_INITIAL_DIRECTION, DIO_U8_PD6_INITIAL_DIRECTION, DIO_U8_PD5_INITIAL_DIRECTION, DIO_U8_PD4_INITIAL_DIRECTION, DIO_U8_PD3_INITIAL_DIRECTION, DIO_U8_PD2_INITIAL_DIRECTION, DIO_U8_PD1_INITIAL_DIRECTION, DIO_U8_PD0_INITIAL_DIRECTION );
-	
-	/* Set Initial Port Value */
-	/* PORTA */
-	DIO_U8_PORTA_REG = DIO_U8_CONC( DIO_U8_PA7_INITIAL_VALUE, DIO_U8_PA6_INITIAL_VALUE, DIO_U8_PA5_INITIAL_VALUE, DIO_U8_PA4_INITIAL_VALUE, DIO_U8_PA3_INITIAL_VALUE, DIO_U8_PA2_INITIAL_VALUE, DIO_U8_PA1_INITIAL_VALUE, DIO_U8_PA0_INITIAL_VALUE );
-	/* PORTB */
-	DIO_U8_PORTB_REG = DIO_U8_CONC( DIO_U8_PB7_INITIAL_VALUE, DIO_U8_PB6_INITIAL_VALUE, DIO_U8_PB5_INITIAL_VALUE, DIO_U8_PB4_INITIAL_VALUE, DIO_U8_PB3_INITIAL_VALUE, DIO_U8_PB2_INITIAL_VALUE, DIO_U8_PB1_INITIAL_VALUE, DIO_U8_PB0_INITIAL_VALUE );
-	/* PORTC */
-	DIO_U8_PORTC_REG = DIO_U8_CONC( DIO_U8_PC7_INITIAL_VALUE, DIO_U8_PC6_INITIAL_VALUE, DIO_U8_PC5_INITIAL_VALUE, DIO_U8_PC4_INITIAL_VALUE, DIO_U8_PC3_INITIAL_VALUE, DIO_U8_PC2_INITIAL_VALUE, DIO_U8_PC1_INITIAL_VALUE, DIO_U8_PC0_INITIAL_VALUE );
-	/* PORTD */
-	DIO_U8_PORTD_REG = DIO_U8_CONC( DIO_U8_PD7_INITIAL_VALUE, DIO_U8_PD6_INITIAL_VALUE, DIO_U8_PD5_INITIAL_VALUE, DIO_U8_PD4_INITIAL_VALUE, DIO_U8_PD3_INITIAL_VALUE, DIO_U8_PD2_INITIAL_VALUE, DIO_U8_PD1_INITIAL_VALUE, DIO_U8_PD0_INITIAL_VALUE );
-}
-
-/*******************************************************************************************************************************************************************/
-/*
- Name: DIO_setPinDirection
- Input: u8 PortId, u8 PinId, and u8 PinDirection
- Output: u8 Error or No Error
- Description: Function to set Pin direction.
-*/
-u8 DIO_setPinDirection ( u8 u8_a_portId, u8 u8_a_pinId, u8 u8_a_pinDirection )
-{
-	/* Define local variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId and PinId are in the valid range */
-	if ( ( u8_a_portId <= DIO_U8_PORTD ) && ( u8_a_pinId <= DIO_U8_PIN7 ) )
+void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction){
+	switch(portNumber)
 	{
-		/* Check 1.1: PinDirection is in the valid range */
-		if ( u8_a_pinDirection == DIO_U8_PIN_INPUT )
+		case A:
+		if (direction == OUT)
 		{
-			/* Check 1.1.1: Required PortId */
-			switch ( u8_a_portId )
-			{
-				case DIO_U8_PORTA: CLR_BIT( DIO_U8_DDRA_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTB: CLR_BIT( DIO_U8_DDRB_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTC: CLR_BIT( DIO_U8_DDRC_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTD: CLR_BIT( DIO_U8_DDRD_REG, u8_a_pinId ); break;
-			}
+			SET_BIT( DIO_U8_DDRA_REG , pinNumber );    //Set Initial PortA Direction
 		}
-		/* Check 1.2: PinDirection is in the valid range */
-		else if ( u8_a_pinDirection == DIO_U8_PIN_OUTPUT )
+		else if (direction == IN)
 		{
-			/* Check 1.2.1: Required PortId */
-			switch ( u8_a_portId )
-			{
-				case DIO_U8_PORTA: SET_BIT( DIO_U8_DDRA_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTB: SET_BIT( DIO_U8_DDRB_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTC: SET_BIT( DIO_U8_DDRC_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTD: SET_BIT( DIO_U8_DDRD_REG, u8_a_pinId ); break;
-			}
+			CLR_BIT( DIO_U8_DDRA_REG ,pinNumber);   //clear Initial PortA Direction
 		}
-		/* Check 1.3: PinDirection is not in the valid range */
-		else
+		break;
+		case B:
+		if (direction == OUT)
 		{
-			/* Update error state = NOK, wrong PinDirection! */
-			u8_l_errorState = STD_TYPES_NOK;
+			SET_BIT( DIO_U8_DDRB_REG , pinNumber );    //Set Initial PortB Direction
 		}
-	}
-	/* Check 2: PortId or PinId is not in the valid range */
-	else
-	{
-		/* Update error state = NOK, wrong PortId or PinId! */
-		u8_l_errorState = STD_TYPES_NOK;
+		else if (direction == IN)
+		{
+			CLR_BIT( DIO_U8_DDRB_REG , pinNumber );   //clear Initial PortB Direction
+		}
+		break;
+		case C:
+		if (direction == OUT)
+		{
+			SET_BIT( DIO_U8_DDRC_REG , pinNumber );    //Set Initial PortC Direction
+		}
+		else if (direction == IN)
+		{
+			CLR_BIT( DIO_U8_DDRC_REG  , pinNumber );   //clear Initial PortC Direction
+		}
+		break;
+		case D:
+		if (direction == OUT)
+		{
+			SET_BIT( DIO_U8_DDRD_REG , pinNumber );    //Set Initial PortD Direction
+		}
+		else if (direction == IN)
+		{
+			CLR_BIT( DIO_U8_DDRD_REG , pinNumber );   //clear Initial PortD Direction
+		}
+		break;
 	}
 	
-	return u8_l_errorState;
 }
-
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_setPinValue
- Input: u8 PortId, u8 PinId, and u8 PinValue
- Output: u8 Error or No Error
+ Name: DIO_write
+ Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value
+ Output: void
  Description: Function to set Pin value.
 */
-u8 DIO_setPinValue     ( u8 u8_a_portId, u8 u8_a_pinId, u8 Cpy_u8PinValue )
-{
-	/* Define local variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId and PinId are in the valid range */
-	if ( ( u8_a_portId <= DIO_U8_PORTD ) && ( u8_a_pinId <= DIO_U8_PIN7 ) )
+
+void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value){
+	switch(portNumber)
 	{
-		/* Check 1.1: PinValue is in the valid range */
-		if ( Cpy_u8PinValue == DIO_U8_PIN_LOW )
+		case A:
+		if (value == HIGH)
 		{
-			/* Check 1.1.1: Required PortId */
-			switch ( u8_a_portId )
-			{
-				case DIO_U8_PORTA: CLR_BIT( DIO_U8_PORTA_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTB: CLR_BIT( DIO_U8_PORTB_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTC: CLR_BIT( DIO_U8_PORTC_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTD: CLR_BIT( DIO_U8_PORTD_REG, u8_a_pinId ); break;
-			}
+			SET_BIT( DIO_U8_PORTA_REG , pinNumber );	//Set value of pinNumber in PortA
 		}
-		/* Check 1.2: PinValue is in the valid range */
-		else if ( Cpy_u8PinValue == DIO_U8_PIN_HIGH )
+		else if (value == LOW)
 		{
-			/* Check 1.2.1: Required PortId */
-			switch( u8_a_portId )
-			{
-				case DIO_U8_PORTA: SET_BIT( DIO_U8_PORTA_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTB: SET_BIT( DIO_U8_PORTB_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTC: SET_BIT( DIO_U8_PORTC_REG, u8_a_pinId ); break;
-				case DIO_U8_PORTD: SET_BIT( DIO_U8_PORTD_REG, u8_a_pinId ); break;
-			}
+			CLR_BIT( DIO_U8_PORTA_REG , pinNumber );	//clear value of pinNumber in PortA
 		}
-		/* Check 1.3: PinValue is not in the valid range */
-		else
+		break;
+		case B:
+		if (value == HIGH)
 		{
-			/* Update error state = NOK, wrong PinValue! */
-			u8_l_errorState = STD_TYPES_NOK;
+			SET_BIT( DIO_U8_PORTB_REG , pinNumber );	//Set value of pinNumber in PortB
 		}
+		else if (value == LOW)
+		{
+			CLR_BIT( DIO_U8_PORTB_REG , pinNumber );	//clear value of pinNumber in PortB
+		}
+		break;
+		case C:
+		if (value == HIGH)
+		{
+			SET_BIT( DIO_U8_PORTC_REG , pinNumber );	//Set value of pinNumber in PortC
+		}
+		else if (value == LOW)
+		{
+			CLR_BIT( DIO_U8_PORTC_REG , pinNumber );	//clear value of pinNumber in PortC
+		}
+		break;
+		case D:
+		if (value == HIGH)
+		{
+			SET_BIT( DIO_U8_PORTD_REG , pinNumber );	//Set value of pinNumber in PortD
+		}
+		else if (value == LOW)
+		{
+			CLR_BIT( DIO_U8_PORTD_REG , pinNumber );	//clear value of pinNumber in PortD
+		}
+		break;
 	}
-	/* Check 2: PortId or PinId is not in the valid range */
-	else
-	{
-		/* Update error state = NOK, wrong PortId or PinId! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
-	
-	return u8_l_errorState;
 }
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_getPinValue
- Input: u8 PortId, u8 PinId, and Pointer to u8 ReturnedPinValue
- Output: u8 Error or No Error
+ Name: DIO_read
+ Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data
+ Output: void
  Description: Function to get Pin value.
 */
-u8 DIO_getPinValue 	   ( u8 u8_a_portId, u8 u8_a_pinId, u8 *pu8_a_returnedPinValue )
-{
-	/* Define local variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId and PinId are in the valid range, and Pointer is not equal to NULL */
-	if ( ( u8_a_portId <= DIO_U8_PORTD ) && ( u8_a_pinId <= DIO_U8_PIN7 ) && ( pu8_a_returnedPinValue != NULL ) )
-	{	
-		/* Check 1.1: Required PortId */
-		switch ( u8_a_portId )
-		{
-			case DIO_U8_PORTA: *pu8_a_returnedPinValue = GET_BIT( DIO_U8_PINA_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTB: *pu8_a_returnedPinValue = GET_BIT( DIO_U8_PINB_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTC: *pu8_a_returnedPinValue = GET_BIT( DIO_U8_PINC_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTD: *pu8_a_returnedPinValue = GET_BIT( DIO_U8_PIND_REG, u8_a_pinId ); break;
-		}
-	}
-	/* Check 2: PortId or PinId is not in the valid range, or Pointer is equal to NULL */
-	else
-	{
-		/* Update error state = NOK, wrong PortId, PinId, or Pointer is NULL! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
 
-	return u8_l_errorState;
+void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data){
+	
+	switch(portNumber)
+	{
+		case A:
+		*data = GET_BIT( DIO_U8_PINA_REG , pinNumber );
+		break;
+		case B:
+		*data = GET_BIT( DIO_U8_PINB_REG , pinNumber );
+		break;
+		case C:
+		*data = GET_BIT( DIO_U8_PINC_REG , pinNumber );
+		break;
+		case D:
+		*data = GET_BIT( DIO_U8_PIND_REG , pinNumber );
+		break;
+	}
 }
+
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_togglePinValue
- Input: u8 PortId and u8 PinId
- Output: u8 Error or No Error
+ Name: DIO_toggle
+ Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber
+ Output: void
  Description: Function to toggle Pin value.
 */
-u8 DIO_togglePinValue  ( u8 u8_a_portId, u8 u8_a_pinId )
-{
-	/* Define local variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId and PinId are in the valid range */
-	if ( ( u8_a_portId <= DIO_U8_PORTD ) && ( u8_a_pinId <= DIO_U8_PIN7 ) )
+void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber){
+	switch(portNumber)
 	{
-		/* Check 1.1: Required PortId */
-		switch ( u8_a_portId )
-		{
-			case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_a_pinId ); break;
-			case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_a_pinId ); break;
-		}
+		case A:
+		TOG_BIT( DIO_U8_PORTA_REG , pinNumber );
+		break;
+		case B:
+		TOG_BIT( DIO_U8_PORTB_REG , pinNumber );
+		break;
+		case C:
+		TOG_BIT( DIO_U8_PORTC_REG , pinNumber );
+		break;
+		case D:
+		TOG_BIT( DIO_U8_PORTD_REG , pinNumber );
+		break;
 	}
-	/* Check 2: PortId or PinId is not in the valid range */
-	else
-	{
-		/* Update error state = NOK, wrong PortId or PinId! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
-	
-	return u8_l_errorState;
 }
-
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortDirection
- Input: u8 PortId and u8 PortDirection
- Output: u8 Error or No Error
+ Input: dio_Port_number_en portNumber,u8 Port_direction
+ Output: void
  Description: Function to set Port direction.
 */
-u8 DIO_setPortDirection( u8 u8_a_portId, u8 u8_a_portDirection )
+
+void DIO_setPortDirection( dio_Port_number_en portNumber,u8 Port_direction )
 {
-	/* Define local variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId is in the valid range */
-	if( u8_a_portId <= DIO_U8_PORTD )
-	{		
-		/* Check 1.1: Required PortId */
-		switch( u8_a_portId )
+		switch(portNumber)
 		{
-			case DIO_U8_PORTA: DIO_U8_DDRA_REG = u8_a_portDirection; break;
-			case DIO_U8_PORTB: DIO_U8_DDRB_REG = u8_a_portDirection; break;
-			case DIO_U8_PORTC: DIO_U8_DDRC_REG = u8_a_portDirection; break;
-			case DIO_U8_PORTD: DIO_U8_DDRD_REG = u8_a_portDirection; break;
+			case A:
+			DIO_U8_DDRA_REG = Port_direction;
+			break;
+			case B:
+			DIO_U8_DDRB_REG = Port_direction;
+			break;
+			case C:
+			DIO_U8_DDRC_REG = Port_direction;
+			break;
+			case D:
+			DIO_U8_DDRD_REG = Port_direction;
+			break;
 		}
-	}
-	/* Check 2: PortId is not in the valid range */
-	else
-	{
-		/* Update error state = NOK, wrong PortId! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
-	
-	return u8_l_errorState;
 }
 
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortValue
- Input: u8 PortId and u8 PortValue
- Output: u8 Error or No Error
+ Input: dio_Port_number_en portNumber,u8 Port_value
+ Output: void
  Description: Function to set Port value.
 */
-u8 DIO_setPortValue	   ( u8 u8_a_portId, u8 u8_a_portValue )
+void DIO_setPortValue ( dio_Port_number_en portNumber,u8 Port_value )
 {
-	/* Define Local Variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId is in the valid range */
-	if( u8_a_portId <= DIO_U8_PORTD )
+	switch(portNumber)
 	{
-		/* Check 1.1: Required PortId */
-		switch( u8_a_portId )
-		{
-			case DIO_U8_PORTA: DIO_U8_PORTA_REG = u8_a_portValue; break;
-			case DIO_U8_PORTB: DIO_U8_PORTB_REG = u8_a_portValue; break;
-			case DIO_U8_PORTC: DIO_U8_PORTC_REG = u8_a_portValue; break;
-			case DIO_U8_PORTD: DIO_U8_PORTD_REG = u8_a_portValue; break;
-		}
+		case A:
+		DIO_U8_PORTA_REG = Port_value;
+		break;
+		case B:
+		DIO_U8_PORTB_REG = Port_value;
+		break;
+		case C:
+		DIO_U8_PORTC_REG = Port_value;
+		break;
+		case D:
+		DIO_U8_PORTD_REG = Port_value;
+		break;
 	}
-	/* Check 2: PortId is not in the valid range */
-	else
-	{
-		/* Update error state = NOK, wrong PortId! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
-	
-	return u8_l_errorState;
 }
 
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_getPortValue
- Input: u8 PortId and Pointer to u8 ReturnedPortValue
- Output: u8 Error or No Error
+ Input: dio_Port_number_en portNumber,u8 *Port_value
+ Output: void
  Description: Function to get Port value.
 */
-u8 DIO_getPortValue	   ( u8 u8_a_portId, u8 *pu8_a_returnedPortValue )
+void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value )
 {
-	/* Define Local Variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-	
-	/* Check 1: PortId is in the valid range, and Pointer is not equal to NULL */
-	if( ( u8_a_portId <= DIO_U8_PORTD ) && ( pu8_a_returnedPortValue != NULL ) )
+	switch(portNumber)
 	{
-		/* Check 1.1: Required PortId */
-		switch( u8_a_portId )
-		{
-			case DIO_U8_PORTA: *pu8_a_returnedPortValue = DIO_U8_PINA_REG; break;
-			case DIO_U8_PORTB: *pu8_a_returnedPortValue = DIO_U8_PINB_REG; break;
-			case DIO_U8_PORTC: *pu8_a_returnedPortValue = DIO_U8_PINC_REG; break;
-			case DIO_U8_PORTD: *pu8_a_returnedPortValue = DIO_U8_PIND_REG; break;
-		}		
+		case A:
+		*Port_value = DIO_U8_PINA_REG;
+		break;
+		case B:
+		*Port_value = DIO_U8_PINB_REG;
+		break;
+		case C:
+		*Port_value = DIO_U8_PINC_REG;
+		break;
+		case D:
+		*Port_value = DIO_U8_PIND_REG;
+		break;
 	}
-	/* Check 2: PortId is not in the valid range, or Pointer is equal to NULL */
-	else
-	{
-		/* Update error state = NOK, wrong PortId, or Pointer is NULL! */
-		u8_l_errorState = STD_TYPES_NOK;
-	}
-	
-	return u8_l_errorState;
 }
-
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_togglePortValue
- Input: u8 PortId
- Output: u8 Error or No Error
- Description: Function to toggle Port value.
+ Name: DIO_higher_nipple
+ Input: dio_Port_number_en portNumber,u8 data 
+ Output: void
+ Description: Function to set Higher Nipple of Port value.
 */
-u8 DIO_togglePortValue ( u8 u8_a_portId )
+void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data )
 {
-	/* Define Local Variable to set the error state = OK */
-	u8 u8_l_errorState = STD_TYPES_OK;
-
-	/* Check 1: PortId is in the valid range */
-	if ( u8_a_portId <= DIO_U8_PORTD )
-	{		
-		/* Define Local Variable to get Port Value */
-		u8 u8_l_portValue;
-		
-		/* Check 1.1: Required PortId */
-		switch ( u8_a_portId )
-		{
-			case DIO_U8_PORTA: DIO_getPortValue( DIO_U8_PORTA, &u8_l_portValue ); DIO_setPortValue( DIO_U8_PORTA, ~u8_l_portValue ); break;
-			case DIO_U8_PORTB: DIO_getPortValue( DIO_U8_PORTB, &u8_l_portValue ); DIO_setPortValue( DIO_U8_PORTB, ~u8_l_portValue ); break;
-			case DIO_U8_PORTC: DIO_getPortValue( DIO_U8_PORTC, &u8_l_portValue ); DIO_setPortValue( DIO_U8_PORTC, ~u8_l_portValue ); break;
-			case DIO_U8_PORTD: DIO_getPortValue( DIO_U8_PORTD, &u8_l_portValue ); DIO_setPortValue( DIO_U8_PORTD, ~u8_l_portValue ); break;
-		}
-	}
-	/* Check 2: PortId is not in the valid range*/
-	else
+	switch(portNumber)
 	{
-		/* Update error state = NOK, wrong PortId! */
-		u8_l_errorState = STD_TYPES_NOK;
+		case A:
+		UPPER_NIPPLE( DIO_U8_PORTA_REG, data );
+		break;
+		case B:
+		UPPER_NIPPLE( DIO_U8_PORTB_REG, data );
+		break;
+		case C:
+		UPPER_NIPPLE( DIO_U8_PORTC_REG, data );
+		break;
+		case D:
+		UPPER_NIPPLE( DIO_U8_PORTD_REG, data );
+		break;
 	}
-		
-	return u8_l_errorState;
 }
-
+/*******************************************************************************************************************************************************************/
+/*
+ Name: DIO_lower_nipple
+ Input: dio_Port_number_en portNumber,u8 data 
+ Output: void
+ Description: Function to set LOWER Nipple of Port value.
+*/
+void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data )
+{
+	switch(portNumber)
+	{
+		case A:
+		LOWER_NIPPLE( DIO_U8_PORTA_REG, data );
+		break;
+		case B:
+		LOWER_NIPPLE( DIO_U8_PORTB_REG, data );
+		break;
+		case C:
+		LOWER_NIPPLE( DIO_U8_PORTC_REG, data );
+		break;
+		case D:
+		LOWER_NIPPLE( DIO_U8_PORTD_REG, data );
+		break;
+	}
+}
 /*******************************************************************************************************************************************************************/
