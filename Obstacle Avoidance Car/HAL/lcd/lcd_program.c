@@ -14,7 +14,7 @@
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: LCD_initialization
+ Name: LCD_init
  Input: void
  Output: void
  Description: Function to initialize ( both 4 Bit and 8 Bit Modes ) LCD peripheral.
