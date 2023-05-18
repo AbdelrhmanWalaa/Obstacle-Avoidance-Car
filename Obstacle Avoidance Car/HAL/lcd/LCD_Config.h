@@ -1,8 +1,8 @@
 /*
  * lcd_config.h
  *
- *   Created on: Apr 20, 2021
- *       Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+ *   Created on: MAY 16, 2023
+ *       Author: Mohamed Abdelsalam - https://github.com/m3adel
  *  Description: This file contains all Liquid Crystal Display (LCD) pre-build configurations, through which user can configure before using the LCD peripheral.
  *    Datasheet: https://datasheetspdf.com/pdf/746281/Topway/LMB161ABC-1/1
  *    Model No.: LMB161A - LCD
@@ -10,7 +10,6 @@
 
 #ifndef LCD_CONFIG_H_
 #define LCD_CONFIG_H_
-
 /*******************************************************************************************************************************************************************/
 /* ATmega32(L) interfacing with LCD: */
 /*
@@ -33,85 +32,61 @@
  */
 
 /*******************************************************************************************************************************************************************/
-/* LCD Configurations' Definitions */
+/* LCD Configurations Definitions */
 
-/* LCD Modes */
-#define LCD_U8_4_BIT_MODE				0
-#define LCD_U8_8_BIT_MODE				1
+/******************************************************************************************************************/
+/******************************************************************************************************************/
 
-/* LCD Pins Locations ( In case 4-Bit Mode is selected ) */
-#define LCD_U8_LOWER_PORT_PINS			0
-#define LCD_U8_UPPER_PORT_PINS			1
+							/************************************************************************/
+							/*                            LCD Settings							     */
+							/************************************************************************/
+
+/************************************************************************/
+/* LCD Modes                                                                     */
+/************************************************************************/
+#define bit_4 4
+#define bit_8 8
+/************************************************************************/
+/************************************************************************/
+/*  Mode for data transfer Choose ( bit_4 or bit_8 )                                                                     */
+/************************************************************************/
+#define Mode bit_4
+/************************************************************************/
+/************************************************************************/
+/*							Definitions										*/
+/************************************************************************/
+/*
+						4 bits mode definitions
+*/
+#if Mode == bit_4						//if LCD mode chosen in 4bit mode
+#define D7 P7							//Data7 is connected to Pin Number is 7
+#define D6 P6							//Data6 is connected to Pin Number is 6
+#define D5 P5							//Data5 is connected to Pin Number is 5
+#define D4 P4							//Data4 is connected to Pin Number is 4
+#define EN P3							//EN is connected to Pin Number is 3
+#define RW P2							//RW is connected to Pin Number is 2
+#define RS P1							//RS is connected to Pin Number is 1
+#define LCD_Data_cmmnd_Port A			//Data and Command pins connected to Port A
+/*
+						8 bits mode definations
+*/
+#elif Mode == bit_8					//if LCD mode chosen in 8bit mode
+#define D7 P7						//Data7 is connected to Pin Number is 7
+#define D6 P6						//Data6 is connected to Pin Number is 6
+#define D5 P5						//Data5 is connected to Pin Number is 5
+#define D4 P4						//Data4 is connected to Pin Number is 4
+#define D3 P3						//Data3 is connected to Pin Number is 3
+#define D2 P2						//Data2 is connected to Pin Number is 2
+#define D1 P1						//Data1 is connected to Pin Number is 1
+#define D0 P0						//Data0 is connected to Pin Number is 0
+#define RS P0						//RS Pin Number is 0
+#define RW P1						//RW Pin Number is 1
+#define EN P2						//EN Pin Number is 2
+#define LCD_Data_Port A				//Data pins connected to Port A
+#define LCD_cmmnd_Port B			//Command pins is connected to Port B
+#endif
 
 /* End of Configurations' Definitions */
-
-/*******************************************************************************************************************************************************************/
-/* LCD Configurations */
-
-/* LCD Mode Select */
-/* Options: LCD_U8_4_BIT_MODE
-			LCD_U8_8_BIT_MODE
- */
-#define LCD_U8_MODE_SELECT				LCD_U8_4_BIT_MODE
-
-/* LCD Port(s) */
-/* Options: DIO_U8_PORTA
-			DIO_U8_PORTB
-			DIO_U8_PORTC
-			DIO_U8_PORTD
- */
-#define LCD_U8_CTRL_PORT 				DIO_U8_PORTB
-#define LCD_U8_DATA_PORT 				DIO_U8_PORTA
-
-/* LCD Ctrl Pins connected to Ctrl Port */
-/* Options: DIO_U8_PIN0
-			DIO_U8_PIN1
-			DIO_U8_PIN2
-			DIO_U8_PIN3
-			DIO_U8_PIN4
-			DIO_U8_PIN5
-			DIO_U8_PIN6
-			DIO_U8_PIN7
- */
-#define LCD_U8_RS_PIN	 				DIO_U8_PIN0
-#define LCD_U8_RW_PIN	 				DIO_U8_PIN1
-#define LCD_U8_EN_PIN	 				DIO_U8_PIN2
-
-/* LCD Data Pins' Location ( In case 4-Bit Mode is selected ) */
-/* Options: LCD_U8_LOWER_PORT_PINS
-			LCD_U8_UPPER_PORT_PINS
- */
-#define LCD_U8_DATA_PINS_LOCATION		LCD_U8_UPPER_PORT_PINS
-
-/* LCD 4 Bit Mode Configured bits: ( 0 0 1 DL N F X X ) */
-/* Options: 1- BIT4 DL: 0-> 4 bit    , 1-> 8 bit
- * 			2- BIT3 N : 0-> 1 Line   , 1-> 2 Lines
- * 			3- BIT2 F : 0-> 5*7 dots , 1-> 5*10 dots
- */
-#define LCD_U8_FUNC_SET_4_BIT			0b00101000
-
-/* LCD 8 Bit Mode Configured bits: ( 0 0 1 DL N F X X ) */
-/* Options: 1- BIT4 DL: 0-> 4 bit    , 1-> 8 bit
- * 			2- BIT3 N : 0-> 1 Line   , 1-> 2 Lines
- * 			3- BIT2 F : 0-> 5*7 dots , 1-> 5*10 dots
- */
-#define LCD_U8_FUNC_SET_8_BIT			0b00111000
-
-/* Configured bits: ( 0 0 0 0 1 D C B ) */
-/* Options: 1- BIT2 D : 0-> Display OFF 	 , 1-> Display ON
- * 			2- BIT1 C : 0-> Cursor OFF  	 , 1-> Cursor ON
- * 			3- BIT0 B : 0-> Cursor Blink OFF , 1-> Cursor Blink ON
- */
-#define LCD_U8_DISP_ON_OFF_CTRL 		0b00001100
-
-/* Configured bits: ( 0 0 0 0 0 1 I/D SH ) */
-/* Options: 1- BIT1 I/D : 0-> Decrement , 1-> Increment
- * 			2- BIT0 SH  : 0-> Shift OFF , 1-> Shift ON
- */
-#define LCD_U8_ENTRY_MODE				0b00000110
-
-/* End of Configurations */
-
 /*******************************************************************************************************************************************************************/
 
 #endif /* LCD_CONFIG_H_ */

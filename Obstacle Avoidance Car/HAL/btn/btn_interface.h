@@ -1,8 +1,8 @@
 /*
  * btn_interface.h
  *
- *   Created on: Nov 20, 2022
- *       Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+ *   Created on: MAY 16, 2023
+ *       Author: Mohamed Abdelsalam - https://github.com/m3adel
  *  Description: This file contains all Button (BTN) functions' prototypes and definitions (Macros) to avoid magic numbers.
  */
 
@@ -20,23 +20,10 @@
 #include "../../MCAL/dio/dio_interface.h"
 
 /*******************************************************************************************************************************************************************/
-/* BTN Macros */
-
-/* The 8 BTNs counted from 1 to 8 */
-#define BTN_U8_1	1
-#define BTN_U8_2	2
-#define BTN_U8_3	3
-#define BTN_U8_4	4
-#define BTN_U8_5	5
-#define BTN_U8_6	6
-#define BTN_U8_7	7
-#define BTN_U8_8	8
-
-/*******************************************************************************************************************************************************************/
 /* BTN Functions' Prototypes */
-
-u8 BTN_getBTNState( u8 u8_a_BTNId, u8 *pu8_a_returnedBTNState );
-
+/*******************************************************************************************************************************************************************/
+void BUTTON_init( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber );
+void BUTTON_read( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber,u8 *state );
 /*******************************************************************************************************************************************************************/
 
 #endif /* BTN_INTERFACE_H_ */

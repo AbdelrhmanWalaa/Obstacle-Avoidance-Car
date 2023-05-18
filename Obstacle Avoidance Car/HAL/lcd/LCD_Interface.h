@@ -1,7 +1,7 @@
 /*
  * lcd_interface.h
  *
- *   Created on: Apr 20, 2021
+ *   Created on: MAY 16, 2023
  *       Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
  *  Description: This file contains all Liquid Crystal Display (LCD) functions' prototypes and definitions (Macros) to avoid magic numbers.
  *    Datasheet: https://datasheetspdf.com/pdf/746281/Topway/LMB161ABC-1/1
@@ -23,10 +23,6 @@
 #include "../../MCAL/dio/dio_interface.h"
 
 /*******************************************************************************************************************************************************************/
-/* LCD Macros */
-
-#define LCD_U8_FIRST_ELEMENT			0
-#define LCD_U8_NUM_OF_DIGITS_OF_S64	    19
 
 /* The LCD's DDRAM ( 80 locations ) is divided as the following:
  *
@@ -36,35 +32,18 @@
  * LCD Line2 ( 40 locations ): From location 64->104 ( Only 64->79 are displayed  )
  * Starting address of LCD Line2 : Dec.-> 64, Hex.-> 0x40
  */
-#define LCD_U8_LINE1			        1
-#define LCD_U8_LINE2 		        	2
-
-/* LCD Clear Display ( Cmnd ) */
-#define LCD_U8_DISP_CLEAR 		        0b00000001
-
-/* LCD Cursor States ( Cmnd ) */
-#define LCD_U8_CURSOR_OFF		        0b00001100
-#define LCD_U8_CURSOR_ON		        0b00001111
-
-/* LCD total number of Characters to be displayed on each line */
-#define LCD_U8_LINE_LOCATIONS	        39
 
 /*******************************************************************************************************************************************************************/
 /* LCD Functions' Prototypes */
 
-vd LCD_initialization  ( void );
-
-vd LCD_sendCmnd	       ( u8 u8_a_cmnd );
-vd LCD_sendChar	       ( u8 u8_a_char );
-
-vd LCD_clearDisplay    ( void );
-
-u8 LCD_goToLocation    ( u8 u8_a_lineNumber, u8 u8_a_displayLocation );
-
-u8 LCD_writeString     ( u8 *pu8_a_string );
-vd LCD_writeNumber     ( s64 s64_a_number );
-u8 LCD_writeSpecialChar( u8 u8_a_storeLocation, u8 u8_a_lineNumber, u8 u8_a_displayLocation, u8 *pu8_a_specialChar );
-
+void LCD_init(void);
+void LCD_sendcommand (u8 cmnd);
+void LCD_sendChar (u8 char_data);
+void LCD_sendString (u8 *str);
+void LCD_createCustomCharacter (u8 *pattern , u8 location );
+void LCD_clear(void);
+void LCD_floattostring (f32 float_value);
+void LCD_setCursor (u8 row , u8 column);
 /*******************************************************************************************************************************************************************/
 
 #endif /* LCD_INTERFACE_H_ */
