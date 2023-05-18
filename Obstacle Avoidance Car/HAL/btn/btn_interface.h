@@ -22,8 +22,8 @@
 /*******************************************************************************************************************************************************************/
 /* BTN Functions' Prototypes */
 /*******************************************************************************************************************************************************************/
-void BUTTON_init( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber );
-void BUTTON_read( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber,u8 *state );
+void BUTTON_init( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber );
+void BUTTON_read( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state );
 /*******************************************************************************************************************************************************************/
 
 #endif /* BTN_INTERFACE_H_ */

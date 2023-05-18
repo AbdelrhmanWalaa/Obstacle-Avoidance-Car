@@ -21,15 +21,16 @@
 /*******************************************************************************************************************************************************************/
 /* DIO Functions' Prototypes */
 /*******************************************************************************************************************************************************************/
-void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction);
-void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value);
-void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data);
-void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber);
-void DIO_setPortDirection( dio_Port_number_en portNumber,u8 Port_direction );
-void DIO_setPortValue ( dio_Port_number_en portNumber,u8 Port_value );
-void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value );
-void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data );
-void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data );
+void DIO_init (dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Direction_en en_a_direction);
+void DIO_write (dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Port_value_en en_a_value);
+void DIO_read (dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,u8 *en_a_data);
+void DIO_toggle (dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber);
+void DIO_setPortDirection( dio_Port_number_en en_a_portNumber,u8 u8_a_PortDirection );
+void DIO_setPortValue ( dio_Port_number_en en_a_portNumber,u8 u8_a_PortValue );
+void DIO_getPortValue ( dio_Port_number_en en_a_portNumber,u8 *u8_a_PortValue );
+void DIO_higher_nipple ( dio_Port_number_en en_a_portNumber,u8 u8_a_data );
+void DIO_lower_nipple ( dio_Port_number_en en_a_portNumber,u8 u8_a_data );
 /*******************************************************************************************************************************************************************/
 
 #endif /* DIO_INTERFACE_H_ */
+

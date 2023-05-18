@@ -2,7 +2,7 @@
  * lcd_interface.h
  *
  *   Created on: MAY 16, 2023
- *       Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+ *       Author: Mohamed Abdelsalam - https://github.com/m3adel
  *  Description: This file contains all Liquid Crystal Display (LCD) functions' prototypes and definitions (Macros) to avoid magic numbers.
  *    Datasheet: https://datasheetspdf.com/pdf/746281/Topway/LMB161ABC-1/1
  *    Model No.: LMB161A - LCD
@@ -35,15 +35,15 @@
 
 /*******************************************************************************************************************************************************************/
 /* LCD Functions' Prototypes */
-
 void LCD_init(void);
-void LCD_sendcommand (u8 cmnd);
-void LCD_sendChar (u8 char_data);
-void LCD_sendString (u8 *str);
-void LCD_createCustomCharacter (u8 *pattern , u8 location );
+void LCD_sendcommand (u8 u8_a_cmnd);
+void LCD_sendChar (u8 u8_a_charData);
 void LCD_clear(void);
-void LCD_floattostring (f32 float_value);
-void LCD_setCursor (u8 row , u8 column);
+void LCD_setCursor (u8 u8_a_row , u8 u8_a_column);
+void LCD_sendString (u8 *arr_a_str);
+void LCD_floattostring (f32 f32_a_floatValue);
+void LCD_createCustomCharacter (u8 *arr_a_pattern , u8 u8_a_location );
 /*******************************************************************************************************************************************************************/
 
 #endif /* LCD_INTERFACE_H_ */
+
