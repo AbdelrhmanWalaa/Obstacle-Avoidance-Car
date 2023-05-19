@@ -11,8 +11,8 @@
 
 /*============= FILE INCLUSION =============*/
 #include "../UTILITIES/STD_TYPES.h"
-#include "../UTILITIES/MCU_Config.h"
 #include "../TMR_UTILITIES/TMR_UTILITIES.h"
+#include "../TMR_UTILITIES/TMR_Registers.h"
 
 /*============= extern variables =============*/
 extern volatile u8 g_timeout_flag;

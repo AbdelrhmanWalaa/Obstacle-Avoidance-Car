@@ -1,34 +1,17 @@
 /*
- * TMR_private.h
+ * TMR_Registers.h
  *
- * Created: 2023-05-16 6:57:41 PM
+ * Created: 2023-05-19 9:13:30 PM
  *  Author: HAZEM-PC
  */ 
 
 
-#ifndef TMR_PRIVATE_H_
-#define TMR_PRIVATE_H_
-
-/*============= MACRO DEFINITION =============*/
-//timer common macros
-#define MAX_COUNT 256
-#define MIN_COUNT 1
-#define INIT_VALUE(T_max,T_delay,tick)  (((f32)T_max-T_delay)/tick)
-#define MAX_DELAY_MS(prescaler) ((((f32)prescaler/F_CPU)*MAX_COUNT)*1000UL) 
-#define MIN_DELAY_MS(prescaler) ((((f32)prescaler/F_CPU)*MIN_COUNT)*1000UL) 
-#define MAX_DELAY_US(prescaler) ((((f32)prescaler/F_CPU)*MAX_COUNT)*1000000UL) 
-#define MIN_DELAY_US(prescaler) ((((f32)prescaler/F_CPU)*MIN_COUNT)*1000000UL)
+#ifndef TMR_REGISTERS_H_
+#define TMR_REGISTERS_H_
 
 
-//pre_scaler values for TIMER0
-#define P_0    0
-#define P_1    1
-#define P_8    8
-#define P_64   64
-#define P_256  256
-#define P_1024 1024
+/*============= timer registers =============*/
 
-/*======timer registers ====== */
 //timer 0 registers
 #define TCCR0	(*((volatile u8*)0x53))
 #define TCNT0	(*((volatile u8*)0x52))
@@ -40,12 +23,16 @@
 #define TCCR1B	(*((volatile u8*)0x4E))
 #define TCNT1H	(*((volatile u8*)0x4D))
 #define TCNT1L	(*((volatile u8*)0x4C))
+#define TCNT1	(*((volatile u16*)0x4C))
 #define OCR1AH	(*((volatile u8*)0x4B))
 #define OCR1AL	(*((volatile u8*)0x4A))
+#define OCR1A	(*((volatile u16*)0x4A))
 #define OCR1BH	(*((volatile u8*)0x49))
 #define OCR1BL	(*((volatile u8*)0x48))
+#define OCR1B	(*((volatile u16*)0x48))
 #define ICR1H	(*((volatile u8*)0x47))
 #define ICR1L	(*((volatile u8*)0x46))
+#define ICR1	(*((volatile u16*)0x46))
 //timer 2 registers
 #define TCCR2	(*((volatile u8*)0x45))
 #define TCNT2	(*((volatile u8*)0x44))
@@ -131,4 +118,5 @@
 #define ISR_HANDLER(INT_VECT) void INT_VECT(void) __attribute__ ((signal,used));\
 void INT_VECT(void)
 
-#endif /* TMR_PRIVATE_H_ */
+
+#endif /* TMR_REGISTERS_H_ */
