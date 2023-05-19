@@ -12,23 +12,23 @@
 /*******************************************************************************************************************************************************************/
 /*
  Name: BUTTON_init
- Input: dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber
+ Input: dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber
  Output: void
  Description: Function to initialize BUTTON pin as INPUT.
 */
-void BUTTON_init( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber )
+void BUTTON_init( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber )
 {
-	DIO_init (PortNumber,PinNumber,IN);
+	DIO_init (en_a_PortNumber,en_a_PinNumber,IN);
 }
 /*
  Name: BUTTON_read
- Input: dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber,u8 *state
+ Input: dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state
  Output: void
  Description: Function to get BTN state.
 */
-void BUTTON_read( dio_Port_number_en PortNumber,dio_Pin_number_en PinNumber,u8 *state )
+void BUTTON_read( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state )
 {
-	DIO_read (PortNumber,PinNumber,state);
+	DIO_read (en_a_PortNumber,en_a_PinNumber,en_a_state);
 }
 
 /*******************************************************************************************************************************************************************/

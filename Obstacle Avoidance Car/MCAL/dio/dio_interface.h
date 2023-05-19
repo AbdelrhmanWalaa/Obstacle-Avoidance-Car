@@ -23,35 +23,36 @@
 /* Port Numbers */
 typedef enum {
 	A, B, C, D
-} dio_Port_number_en;
+} EN_DIO_PortNumber;
 
 /* Pin Numbers */
 typedef enum {
 	P0,	P1,	P2,	P3,	P4,	P5,	P6,	P7
-} dio_Pin_number_en;
+} EN_DIO_PINNumber;
 
 /* Pin Directions */
 typedef enum {
 	IN,	OUT
-} dio_Direction_en;
+} EN_DIO_PINDirection;
 
 /* Pin Values */
 typedef enum {
 	LOW, HIGH, INPUT_FLOATING, INPUT_PULLUP_RESISTOR
-} dio_Port_value_en;
+} EN_DIO_PINValue;
 
 /*******************************************************************************************************************************************************************/
 /* DIO Functions' Prototypes */
 
-void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction);
-void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value);
-void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data);
-void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber);
-void DIO_setPortDirection( dio_Port_number_en portNumber,u8 Port_direction );
-void DIO_setPortValue ( dio_Port_number_en portNumber,u8 Port_value );
-void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value );
-void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data );
-void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data );
+void DIO_init (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINDirection en_a_pinDirection);
+void DIO_write (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINValue en_a_pinValue);
+void DIO_read (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, u8 *pu8_a_returnedData);
+void DIO_toggle (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber);
+void DIO_setPortDirection (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portDirection);
+void DIO_setPortValue (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portValue);
+void DIO_getPortValue (EN_DIO_PortNumber en_a_portNumber, u8 *pu8_a_returnedPortValue);
+void DIO_setHigherNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data);
+void DIO_setLowerNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data);
 /*******************************************************************************************************************************************************************/
 
 #endif /* DIO_INTERFACE_H_ */
+

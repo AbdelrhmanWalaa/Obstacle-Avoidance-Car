@@ -15,107 +15,107 @@
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_init
- Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction
+ Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Direction_en en_a_direction
  Output: void
  Description: Function to initialize Pin direction.
 */
-void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction){
-	switch(portNumber)
+void DIO_init (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINDirection en_a_pinDirection)
+{
+	switch(en_a_portNumber)
 	{
 		case A:
-		if (direction == OUT)
-		{
-			SET_BIT( DIO_U8_DDRA_REG , pinNumber );    //Set Initial PortA Direction
-		}
-		else if (direction == IN)
-		{
-			CLR_BIT( DIO_U8_DDRA_REG ,pinNumber);   //clear Initial PortA Direction
-		}
+		if (en_a_pinDirection == OUT)
+			{
+				SET_BIT( DIO_U8_DDRA_REG , en_a_pinNumber );    //Set Initial PortA Direction
+			}
+			else if (en_a_pinDirection == IN)
+			{
+				CLR_BIT( DIO_U8_DDRA_REG ,en_a_pinNumber);   //clear Initial PortA Direction
+			}
 		break;
 		case B:
-		if (direction == OUT)
-		{
-			SET_BIT( DIO_U8_DDRB_REG , pinNumber );    //Set Initial PortB Direction
-		}
-		else if (direction == IN)
-		{
-			CLR_BIT( DIO_U8_DDRB_REG , pinNumber );   //clear Initial PortB Direction
-		}
+			if (en_a_pinDirection == OUT)
+			{
+				SET_BIT( DIO_U8_DDRB_REG , en_a_pinNumber );    //Set Initial PortB Direction
+			}
+			else if (en_a_pinDirection == IN)
+			{
+				CLR_BIT( DIO_U8_DDRB_REG , en_a_pinNumber );   //clear Initial PortB Direction
+			}
 		break;
 		case C:
-		if (direction == OUT)
-		{
-			SET_BIT( DIO_U8_DDRC_REG , pinNumber );    //Set Initial PortC Direction
-		}
-		else if (direction == IN)
-		{
-			CLR_BIT( DIO_U8_DDRC_REG  , pinNumber );   //clear Initial PortC Direction
-		}
+			if (en_a_pinDirection == OUT)
+			{
+				SET_BIT( DIO_U8_DDRC_REG , en_a_pinNumber );    //Set Initial PortC Direction
+			}
+			else if (en_a_pinDirection == IN)
+			{
+				CLR_BIT( DIO_U8_DDRC_REG  , en_a_pinNumber );   //clear Initial PortC Direction
+			}
 		break;
 		case D:
-		if (direction == OUT)
-		{
-			SET_BIT( DIO_U8_DDRD_REG , pinNumber );    //Set Initial PortD Direction
-		}
-		else if (direction == IN)
-		{
-			CLR_BIT( DIO_U8_DDRD_REG , pinNumber );   //clear Initial PortD Direction
-		}
+			if (en_a_pinDirection == OUT)
+			{
+				SET_BIT( DIO_U8_DDRD_REG , en_a_pinNumber );    //Set Initial PortD Direction
+			}
+			else if (en_a_pinDirection == IN)
+			{
+				CLR_BIT( DIO_U8_DDRD_REG , en_a_pinNumber );   //clear Initial PortD Direction
+			}
 		break;
-	}
-	
+	}	
 }
 
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_write
- Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value
+ Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Port_value_en en_a_value
  Output: void
  Description: Function to set Pin value.
 */
-
-void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value){
-	switch(portNumber)
+void DIO_write (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINValue en_a_pinValue)
+{
+	switch(en_a_portNumber)
 	{
 		case A:
-		if (value == HIGH)
-		{
-			SET_BIT( DIO_U8_PORTA_REG , pinNumber );	//Set value of pinNumber in PortA
-		}
-		else if (value == LOW)
-		{
-			CLR_BIT( DIO_U8_PORTA_REG , pinNumber );	//clear value of pinNumber in PortA
-		}
+			if (en_a_pinValue == HIGH)
+			{
+				SET_BIT( DIO_U8_PORTA_REG , en_a_pinNumber );	//Set value of pinNumber in PortA
+			}
+			else if (en_a_pinValue == LOW)
+			{
+				CLR_BIT( DIO_U8_PORTA_REG , en_a_pinNumber );	//clear value of pinNumber in PortA
+			}
 		break;
 		case B:
-		if (value == HIGH)
-		{
-			SET_BIT( DIO_U8_PORTB_REG , pinNumber );	//Set value of pinNumber in PortB
-		}
-		else if (value == LOW)
-		{
-			CLR_BIT( DIO_U8_PORTB_REG , pinNumber );	//clear value of pinNumber in PortB
-		}
+			if (en_a_pinValue == HIGH)
+			{
+				SET_BIT( DIO_U8_PORTB_REG , en_a_pinNumber );	//Set value of pinNumber in PortB
+			}
+			else if (en_a_pinValue == LOW)
+			{
+				CLR_BIT( DIO_U8_PORTB_REG , en_a_pinNumber );	//clear value of pinNumber in PortB
+			}
 		break;
 		case C:
-		if (value == HIGH)
-		{
-			SET_BIT( DIO_U8_PORTC_REG , pinNumber );	//Set value of pinNumber in PortC
-		}
-		else if (value == LOW)
-		{
-			CLR_BIT( DIO_U8_PORTC_REG , pinNumber );	//clear value of pinNumber in PortC
-		}
+			if (en_a_pinValue == HIGH)
+			{
+				SET_BIT( DIO_U8_PORTC_REG , en_a_pinNumber );	//Set value of pinNumber in PortC
+			}
+			else if (en_a_pinValue == LOW)
+			{
+				CLR_BIT( DIO_U8_PORTC_REG , en_a_pinNumber );	//clear value of pinNumber in PortC
+			}
 		break;
 		case D:
-		if (value == HIGH)
-		{
-			SET_BIT( DIO_U8_PORTD_REG , pinNumber );	//Set value of pinNumber in PortD
-		}
-		else if (value == LOW)
-		{
-			CLR_BIT( DIO_U8_PORTD_REG , pinNumber );	//clear value of pinNumber in PortD
-		}
+			if (en_a_pinValue == HIGH)
+			{
+				SET_BIT( DIO_U8_PORTD_REG , en_a_pinNumber );	//Set value of pinNumber in PortD
+			}
+			else if (en_a_pinValue == LOW)
+			{
+				CLR_BIT( DIO_U8_PORTD_REG , en_a_pinNumber );	//clear value of pinNumber in PortD
+			}
 		break;
 	}
 }
@@ -123,26 +123,25 @@ void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Po
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_read
- Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data
+ Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,u8 *en_a_data
  Output: void
  Description: Function to get Pin value.
 */
-
-void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data){
-	
-	switch(portNumber)
+void DIO_read (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, u8 *pu8_a_returnedData)
+{	
+	switch(en_a_portNumber)
 	{
 		case A:
-		*data = GET_BIT( DIO_U8_PINA_REG , pinNumber );
+			*pu8_a_returnedData = GET_BIT( DIO_U8_PINA_REG , en_a_pinNumber );
 		break;
 		case B:
-		*data = GET_BIT( DIO_U8_PINB_REG , pinNumber );
+			*pu8_a_returnedData = GET_BIT( DIO_U8_PINB_REG , en_a_pinNumber );
 		break;
 		case C:
-		*data = GET_BIT( DIO_U8_PINC_REG , pinNumber );
+			*pu8_a_returnedData = GET_BIT( DIO_U8_PINC_REG , en_a_pinNumber );
 		break;
 		case D:
-		*data = GET_BIT( DIO_U8_PIND_REG , pinNumber );
+			*pu8_a_returnedData = GET_BIT( DIO_U8_PIND_REG , en_a_pinNumber );
 		break;
 	}
 }
@@ -150,24 +149,25 @@ void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *dat
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_toggle
- Input: dio_Port_number_en portNumber,dio_Pin_number_en pinNumber
+ Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber
  Output: void
  Description: Function to toggle Pin value.
 */
-void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber){
-	switch(portNumber)
+void DIO_toggle (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber)
+{
+	switch(en_a_portNumber)
 	{
 		case A:
-		TOG_BIT( DIO_U8_PORTA_REG , pinNumber );
+			TOG_BIT( DIO_U8_PORTA_REG , en_a_pinNumber );
 		break;
 		case B:
-		TOG_BIT( DIO_U8_PORTB_REG , pinNumber );
+			TOG_BIT( DIO_U8_PORTB_REG , en_a_pinNumber );
 		break;
 		case C:
-		TOG_BIT( DIO_U8_PORTC_REG , pinNumber );
+			TOG_BIT( DIO_U8_PORTC_REG , en_a_pinNumber );
 		break;
 		case D:
-		TOG_BIT( DIO_U8_PORTD_REG , pinNumber );
+			TOG_BIT( DIO_U8_PORTD_REG , en_a_pinNumber );
 		break;
 	}
 }
@@ -175,51 +175,51 @@ void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber){
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortDirection
- Input: dio_Port_number_en portNumber,u8 Port_direction
+ Input: dio_Port_number_en en_a_portNumber,u8 u8_a_PortDirection
  Output: void
  Description: Function to set Port direction.
 */
-void DIO_setPortDirection( dio_Port_number_en portNumber,u8 Port_direction )
+void DIO_setPortDirection (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portDirection)
 {
-		switch(portNumber)
-		{
-			case A:
-			DIO_U8_DDRA_REG = Port_direction;
-			break;
-			case B:
-			DIO_U8_DDRB_REG = Port_direction;
-			break;
-			case C:
-			DIO_U8_DDRC_REG = Port_direction;
-			break;
-			case D:
-			DIO_U8_DDRD_REG = Port_direction;
-			break;
-		}
+	switch(en_a_portNumber)
+	{
+		case A:
+			DIO_U8_DDRA_REG = u8_a_portDirection;
+		break;
+		case B:
+			DIO_U8_DDRB_REG = u8_a_portDirection;
+		break;
+		case C:
+			DIO_U8_DDRC_REG = u8_a_portDirection;
+		break;
+		case D:
+			DIO_U8_DDRD_REG = u8_a_portDirection;
+		break;
+	}
 }
 
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortValue
- Input: dio_Port_number_en portNumber,u8 Port_value
+ Input: dio_Port_number_en en_a_portNumber,u8 u8_a_PortValue
  Output: void
  Description: Function to set Port value.
 */
-void DIO_setPortValue ( dio_Port_number_en portNumber,u8 Port_value )
+void DIO_setPortValue (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portValue)
 {
-	switch(portNumber)
+	switch(en_a_portNumber)
 	{
 		case A:
-		DIO_U8_PORTA_REG = Port_value;
+			DIO_U8_PORTA_REG = u8_a_portValue;
 		break;
 		case B:
-		DIO_U8_PORTB_REG = Port_value;
+			DIO_U8_PORTB_REG = u8_a_portValue;
 		break;
 		case C:
-		DIO_U8_PORTC_REG = Port_value;
+			DIO_U8_PORTC_REG = u8_a_portValue;
 		break;
 		case D:
-		DIO_U8_PORTD_REG = Port_value;
+			DIO_U8_PORTD_REG = u8_a_portValue;
 		break;
 	}
 }
@@ -227,25 +227,25 @@ void DIO_setPortValue ( dio_Port_number_en portNumber,u8 Port_value )
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_getPortValue
- Input: dio_Port_number_en portNumber,u8 *Port_value
+ Input: dio_Port_number_en en_a_portNumber,u8 *u8_a_PortValue
  Output: void
  Description: Function to get Port value.
 */
-void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value )
+void DIO_getPortValue (EN_DIO_PortNumber en_a_portNumber, u8 *pu8_a_returnedPortValue)
 {
-	switch(portNumber)
+	switch(en_a_portNumber)
 	{
 		case A:
-		*Port_value = DIO_U8_PINA_REG;
+			*pu8_a_returnedPortValue = DIO_U8_PINA_REG;
 		break;
 		case B:
-		*Port_value = DIO_U8_PINB_REG;
+			*pu8_a_returnedPortValue = DIO_U8_PINB_REG;
 		break;
 		case C:
-		*Port_value = DIO_U8_PINC_REG;
+			*pu8_a_returnedPortValue = DIO_U8_PINC_REG;
 		break;
 		case D:
-		*Port_value = DIO_U8_PIND_REG;
+			*pu8_a_returnedPortValue = DIO_U8_PIND_REG;
 		break;
 	}
 }
@@ -253,53 +253,51 @@ void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value )
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_higher_nipple
- Input: dio_Port_number_en portNumber,u8 data 
+ Input: dio_Port_number_en en_a_portNumber,u8 u8_a_data 
  Output: void
  Description: Function to set Higher Nipple of Port value.
 */
-// void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data )
-// {
-// 	switch(portNumber)
-// 	{
-// 		case A:
-// 		UPPER_NIPPLE( DIO_U8_PORTA_REG, data );
-// 		break;
-// 		case B:
-// 		UPPER_NIPPLE( DIO_U8_PORTB_REG, data );
-// 		break;
-// 		case C:
-// 		UPPER_NIPPLE( DIO_U8_PORTC_REG, data );
-// 		break;
-// 		case D:
-// 		UPPER_NIPPLE( DIO_U8_PORTD_REG, data );
-// 		break;
-// 	}
-// }
-
+void DIO_setHigherNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data)
+{
+	switch(en_a_portNumber)
+	{
+		case A:
+			UPPER_NIPPLE( DIO_U8_PORTA_REG, u8_a_data );
+		break;
+		case B:
+			UPPER_NIPPLE( DIO_U8_PORTB_REG, u8_a_data );
+		break;
+		case C:
+			UPPER_NIPPLE( DIO_U8_PORTC_REG, u8_a_data );
+		break;
+		case D:
+			UPPER_NIPPLE( DIO_U8_PORTD_REG, u8_a_data );
+		break;
+	}
+}
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_lower_nipple
- Input: dio_Port_number_en portNumber,u8 data 
+ Input: dio_Port_number_en en_a_portNumber,u8 u8_a_data 
  Output: void
  Description: Function to set LOWER Nipple of Port value.
 */
-// void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data )
-// {
-// 	switch(portNumber)
-// 	{
-// 		case A:
-// 		LOWER_NIPPLE( DIO_U8_PORTA_REG, data );
-// 		break;
-// 		case B:
-// 		LOWER_NIPPLE( DIO_U8_PORTB_REG, data );
-// 		break;
-// 		case C:
-// 		LOWER_NIPPLE( DIO_U8_PORTC_REG, data );
-// 		break;
-// 		case D:
-// 		LOWER_NIPPLE( DIO_U8_PORTD_REG, data );
-// 		break;
-// 	}
-// }
-
+void DIO_setLowerNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data)
+{
+	switch(en_a_portNumber)
+	{
+		case A:
+			LOWER_NIPPLE( DIO_U8_PORTA_REG, u8_a_data );
+		break;
+		case B:
+			LOWER_NIPPLE( DIO_U8_PORTB_REG, u8_a_data );
+		break;
+		case C:
+			LOWER_NIPPLE( DIO_U8_PORTC_REG, u8_a_data );
+		break;
+		case D:
+			LOWER_NIPPLE( DIO_U8_PORTD_REG, u8_a_data );
+		break;
+	}
+}
 /*******************************************************************************************************************************************************************/
