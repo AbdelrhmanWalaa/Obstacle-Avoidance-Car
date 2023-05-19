@@ -10,7 +10,8 @@
 #define TMR0_INTERFACE_H_
 
 /*============= FILE INCLUSION =============*/
-#include "../UTILITIES/STD_TYPES.h"
+
+#include "../LIB/std_types/STD_TYPES.h"
 #include "../TMR_UTILITIES/TMR_UTILITIES.h"
 #include "../TMR_UTILITIES/TMR_Registers.h"
 
