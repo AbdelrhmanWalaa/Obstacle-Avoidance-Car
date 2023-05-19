@@ -10,7 +10,7 @@
 #define TMR2_INTERFACE_H_
 
 /*============= FILE INCLUSION =============*/
-#include "../UTILITIES/STD_TYPES.h"
+#include "../LIB/std_types/STD_TYPES.h"
 #include "../TMR_UTILITIES/TMR_UTILITIES.h"
 #include "../TMR_UTILITIES/TMR_Registers.h"
 /*============= extern variables =============*/
@@ -23,7 +23,20 @@
 
 
 /*============= FUNCTION PROTOTYPE =============*/
+
+/*
+Description:Used to initialize PWM frequency and pin to be used with PWM
+pwm_frequency:frequency of PWM in KHZ
+port_ID: port name
+pin_num: pin name
+*/
 void TMR2_PWM_Init(f32 pwm_frequency,u8 port_ID,u8 pin_num);
+
+/*
+Description:Used to start generate PWM with the required duty cycle
+duty cycle percentage 0--100
+*/
+
 void TMR2_PWM_start(u8 duty_cycle);
 
 

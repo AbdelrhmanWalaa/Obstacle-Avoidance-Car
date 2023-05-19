@@ -10,7 +10,7 @@
 #define TMR_UTILITIES_H_
 
 /*============= FILE INCLUSION =============*/
-#include "../UTILITIES/MCU_Config.h"
+#include "../LIB/mcu_config/MCU_Config.h"
 
 /*============= MACRO DEFINITION =============*/
 //timer common macros
