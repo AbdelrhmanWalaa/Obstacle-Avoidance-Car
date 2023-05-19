@@ -33,7 +33,7 @@ APP/app_program.d APP/app_program.o: ../APP/app_program.c \
  ../APP/../HAL/kpd/../../LIB/std_types/std_types.h \
  ../APP/../HAL/kpd/../../LIB/bit_math/bit_math.h \
  ../APP/../HAL/kpd/../../LIB/mcu_config/mcu_config.h \
- ../APP/../HAL/kpd/../../MCAL/dio/dio_Interface.h \
+ ../APP/../HAL/kpd/../../MCAL/dio/dio_interface.h \
  ../APP/../HAL/dcm/dcm_interface.h \
  ../APP/../HAL/dcm/../../LIB/std_types/std_types.h \
  ../APP/../HAL/dcm/../../LIB/bit_math/bit_math.h \
@@ -121,7 +121,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../APP/../HAL/kpd/../../LIB/mcu_config/mcu_config.h:
 
-../APP/../HAL/kpd/../../MCAL/dio/dio_Interface.h:
+../APP/../HAL/kpd/../../MCAL/dio/dio_interface.h:
 
 ../APP/../HAL/dcm/dcm_interface.h:
 

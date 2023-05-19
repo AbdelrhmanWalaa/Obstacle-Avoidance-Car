@@ -12,15 +12,37 @@
 
 /*******************************************************************************************************************************************************************/
 /* DIO Includes */
-#include "dio_config.h"
-#include "dio_private.h"
+
 /* LIB */
 #include "../../LIB/std_types/std_types.h"
 #include "../../LIB/bit_math/bit_math.h"
 
 /*******************************************************************************************************************************************************************/
-/* DIO Functions' Prototypes */
+/* DIO Macros */
+
+/* Port Numbers */
+typedef enum {
+	A, B, C, D
+} dio_Port_number_en;
+
+/* Pin Numbers */
+typedef enum {
+	P0,	P1,	P2,	P3,	P4,	P5,	P6,	P7
+} dio_Pin_number_en;
+
+/* Pin Directions */
+typedef enum {
+	IN,	OUT
+} dio_Direction_en;
+
+/* Pin Values */
+typedef enum {
+	LOW, HIGH, INPUT_FLOATING, INPUT_PULLUP_RESISTOR
+} dio_Port_value_en;
+
 /*******************************************************************************************************************************************************************/
+/* DIO Functions' Prototypes */
+
 void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Direction_en direction);
 void DIO_write (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Port_value_en value);
 void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *data);

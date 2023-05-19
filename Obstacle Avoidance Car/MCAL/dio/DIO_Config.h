@@ -41,35 +41,7 @@
 /*******************************************************************************************************************************************************************/
 /* DIO Configurations' Definitions */
 
-/* Initial Pin Directions */
-typedef enum {
-	IN,
-	OUT,
-}dio_Direction_en;
-/* Initial Pin Values */
-typedef enum {
-	LOW,
-	HIGH,
-	INPUT_FLOATING,
-	INPUT_PULLUP_RESISTOR
-}dio_Port_value_en;
 
-typedef enum {
-	A,
-	B,
-	C,
-	D
-}dio_Port_number_en;
-typedef enum {
-	P0,
-	P1,
-	P2,
-	P3,
-	P4,
-	P5,
-	P6,
-	P7
-}dio_Pin_number_en;
 
 /* End of Configurations' Definitions */
 /*******************************************************************************************************************************************************************/

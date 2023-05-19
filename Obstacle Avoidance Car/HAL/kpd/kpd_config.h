@@ -12,76 +12,61 @@
 /*******************************************************************************************************************************************************************/
 /* ATmega32(L) interfacing with KPD: */
 /*
- 									  -----------                   ----------
-									 | ATmega32  |                 |   KPD    |
-									 |           |                 |          |
-									 |        PA1|---------------->|R1        |
-									 |        PA2|---------------->|R2        |
-									 |        PA3|---------------->|R3        |
-									 |        PA4|---------------->|R4        |
-									 |           |                 |          |
-									 |        PA4|<----------------|C1        |
-									 |        PA5|<----------------|C2        |
-									 |        PA6|<----------------|C3        |
-									 |        PA7|<----------------|C4        |
 									  -----------                   ----------
+									  | ATmega32  |                 |   KPD    |
+									  |           |                 |          |
+									  |        PC2|---------------->|R1        |
+									  |        PC3|---------------->|R2        |
+									  |        PC4|---------------->|R3        |
+									  |           |                 |          |
+									  |        PC5|<----------------|C1        |
+									  |        PC6|<----------------|C2        |
+									  |        PC7|<----------------|C3        |
+									   -----------                   ----------
  */
 
 /*******************************************************************************************************************************************************************/
 /* KPD Configurations */
 
 /* KPD Port(s) */
-/* Options: DIO_U8_PORTA
-			DIO_U8_PORTB
-			DIO_U8_PORTC
-			DIO_U8_PORTD
+/* Options: A:0
+			B:1
+			C:2
+			D:3
  */
-#define KPD_U8_INPUT_PORT		DIO_U8_PORTA
-#define KPD_U8_OUTPUT_PORT		DIO_U8_PORTA
+#define KPD_U8_INPUT_PORT		2
+#define KPD_U8_OUTPUT_PORT		2
 
 /* KPD Pins */
-/* Options: DIO_U8_PIN0
-			DIO_U8_PIN1
-			DIO_U8_PIN2
-			DIO_U8_PIN3
-			DIO_U8_PIN4
-			DIO_U8_PIN5
-			DIO_U8_PIN6
-			DIO_U8_PIN7
+/* Options: P0
+			P1
+			P2
+			P3
+			P4
+			P5
+			P6
+			P7
  */
 /* KPD Rows */
-#define KPD_U8_R1_PIN			DIO_U8_PIN0
-#define KPD_U8_R2_PIN			DIO_U8_PIN1
-#define KPD_U8_R3_PIN			DIO_U8_PIN2
-#define KPD_U8_R4_PIN			DIO_U8_PIN3
+#define KPD_U8_R1_PIN			P2
 
 /* KPD Columns */
-#define KPD_U8_C1_PIN			DIO_U8_PIN4
-#define KPD_U8_C2_PIN			DIO_U8_PIN5
-#define KPD_U8_C3_PIN			DIO_U8_PIN6
-#define KPD_U8_C4_PIN			DIO_U8_PIN7
+#define KPD_U8_C1_PIN			P5
+#define KPD_U8_C2_PIN			P6
 
-/* KPD Output Pins */
+/* KPD Output and Input Pins */
 /* Options: 1.Rows:    KPD_U8_R1_PIN
- * 			           KPD_U8_R2_PIN
- *                     KPD_U8_R3_PIN
- *                     KPD_U8_R4_PIN
  *
  *          2.Columns: KPD_U8_C1_PIN
  *                     KPD_U8_C2_PIN
- *                     KPD_U8_C3_PIN
- *                     KPD_U8_C4_PIN
  */
 #define KPD_U8_OUTPUT_PIN1		KPD_U8_R1_PIN
-#define KPD_U8_OUTPUT_PIN2		KPD_U8_R2_PIN
-#define KPD_U8_OUTPUT_PIN3		KPD_U8_R3_PIN
-#define KPD_U8_OUTPUT_PIN4		KPD_U8_R4_PIN
+
+#define KPD_U8_INPUT_PIN1		KPD_U8_C1_PIN
+#define KPD_U8_INPUT_PIN2		KPD_U8_C2_PIN
 
 /* KPD Configured Keys */
-#define KPD_AU8_KEYS	  	  { { '7', '8', '9', '/' },  \
-								{ '4', '5', '6', '*' },  \
-								{ '1', '2', '3', '-' },  \
-								{ '%', '0', '=', '+' } }
+#define KPD_AU8_KEYS	  	  { { '1', '2' } }
 
 /* End of Configurations */
 

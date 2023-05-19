@@ -18,7 +18,8 @@
 #include "../../LIB/mcu_config/mcu_config.h"
 
 /* MCAL */
-#include "../../MCAL/dio/dio_Interface.h"
+#include "../../MCAL/dio/dio_interface.h"
+//#include "../../MCAL/tmer/tmer_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* KPD Macros */
@@ -33,11 +34,11 @@
 /*******************************************************************************************************************************************************************/
 /* KPD Functions' Prototypes */
 
-vd KPD_enableKPD    ( void );
-vd KPD_disableKPD   ( void );
+void KPD_initKPD    ( void );
+void KPD_enableKPD  ( void );
+void KPD_disableKPD ( void );
 
 u8 KPD_getPressedKey( u8 *pu8_a_returnedKeyValue );
-
 /*******************************************************************************************************************************************************************/
 
 #endif /* KPD_INTERFACE_H_ */

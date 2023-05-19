@@ -10,6 +10,7 @@
 
 #ifndef LCD_CONFIG_H_
 #define LCD_CONFIG_H_
+
 /*******************************************************************************************************************************************************************/
 /* ATmega32(L) interfacing with LCD: */
 /*
@@ -68,7 +69,7 @@
 #define RS P1							//RS is connected to Pin Number is 1
 #define LCD_Data_cmmnd_Port A			//Data and Command pins connected to Port A
 /*
-						8 bits mode definations
+						8 bits mode definitions
 */
 #elif Mode == bit_8					//if LCD mode chosen in 8bit mode
 #define D7 P7						//Data7 is connected to Pin Number is 7

@@ -65,6 +65,7 @@ void DIO_init (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,dio_Dir
 	}
 	
 }
+
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_write
@@ -146,7 +147,6 @@ void DIO_read (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber,u8 *dat
 	}
 }
 
-
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_toggle
@@ -171,6 +171,7 @@ void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber){
 		break;
 	}
 }
+
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortDirection
@@ -178,7 +179,6 @@ void DIO_toggle (dio_Port_number_en portNumber,dio_Pin_number_en pinNumber){
  Output: void
  Description: Function to set Port direction.
 */
-
 void DIO_setPortDirection( dio_Port_number_en portNumber,u8 Port_direction )
 {
 		switch(portNumber)
@@ -249,6 +249,7 @@ void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value )
 		break;
 	}
 }
+
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_higher_nipple
@@ -256,24 +257,25 @@ void DIO_getPortValue	   ( dio_Port_number_en portNumber,u8 *Port_value )
  Output: void
  Description: Function to set Higher Nipple of Port value.
 */
-void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data )
-{
-	switch(portNumber)
-	{
-		case A:
-		UPPER_NIPPLE( DIO_U8_PORTA_REG, data );
-		break;
-		case B:
-		UPPER_NIPPLE( DIO_U8_PORTB_REG, data );
-		break;
-		case C:
-		UPPER_NIPPLE( DIO_U8_PORTC_REG, data );
-		break;
-		case D:
-		UPPER_NIPPLE( DIO_U8_PORTD_REG, data );
-		break;
-	}
-}
+// void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data )
+// {
+// 	switch(portNumber)
+// 	{
+// 		case A:
+// 		UPPER_NIPPLE( DIO_U8_PORTA_REG, data );
+// 		break;
+// 		case B:
+// 		UPPER_NIPPLE( DIO_U8_PORTB_REG, data );
+// 		break;
+// 		case C:
+// 		UPPER_NIPPLE( DIO_U8_PORTC_REG, data );
+// 		break;
+// 		case D:
+// 		UPPER_NIPPLE( DIO_U8_PORTD_REG, data );
+// 		break;
+// 	}
+// }
+
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_lower_nipple
@@ -281,22 +283,23 @@ void DIO_higher_nipple ( dio_Port_number_en portNumber,u8 data )
  Output: void
  Description: Function to set LOWER Nipple of Port value.
 */
-void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data )
-{
-	switch(portNumber)
-	{
-		case A:
-		LOWER_NIPPLE( DIO_U8_PORTA_REG, data );
-		break;
-		case B:
-		LOWER_NIPPLE( DIO_U8_PORTB_REG, data );
-		break;
-		case C:
-		LOWER_NIPPLE( DIO_U8_PORTC_REG, data );
-		break;
-		case D:
-		LOWER_NIPPLE( DIO_U8_PORTD_REG, data );
-		break;
-	}
-}
+// void DIO_lower_nipple ( dio_Port_number_en portNumber,u8 data )
+// {
+// 	switch(portNumber)
+// 	{
+// 		case A:
+// 		LOWER_NIPPLE( DIO_U8_PORTA_REG, data );
+// 		break;
+// 		case B:
+// 		LOWER_NIPPLE( DIO_U8_PORTB_REG, data );
+// 		break;
+// 		case C:
+// 		LOWER_NIPPLE( DIO_U8_PORTC_REG, data );
+// 		break;
+// 		case D:
+// 		LOWER_NIPPLE( DIO_U8_PORTD_REG, data );
+// 		break;
+// 	}
+// }
+
 /*******************************************************************************************************************************************************************/

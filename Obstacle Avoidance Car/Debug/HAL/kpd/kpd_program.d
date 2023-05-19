@@ -9,7 +9,7 @@ HAL/kpd/kpd_program.d HAL/kpd/kpd_program.o: ../HAL/kpd/kpd_program.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
- ../HAL/kpd/../../MCAL/dio/dio_Interface.h \
+ ../HAL/kpd/../../MCAL/dio/dio_interface.h \
  ../HAL/kpd/../../MCAL/dio/../../LIB/std_types/std_types.h \
  ../HAL/kpd/../../MCAL/dio/../../LIB/bit_math/bit_math.h
 
@@ -35,7 +35,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h:
 
-../HAL/kpd/../../MCAL/dio/dio_Interface.h:
+../HAL/kpd/../../MCAL/dio/dio_interface.h:
 
 ../HAL/kpd/../../MCAL/dio/../../LIB/std_types/std_types.h:
 

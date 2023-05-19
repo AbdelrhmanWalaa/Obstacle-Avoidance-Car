@@ -1,6 +1,6 @@
 HAL/lcd/lcd_program.d HAL/lcd/lcd_program.o: ../HAL/lcd/lcd_program.c \
- ../HAL/lcd/lcd_private.h ../HAL/lcd/lcd_config.h \
- ../HAL/lcd/lcd_interface.h ../HAL/lcd/../../LIB/std_types/std_types.h \
+ ../HAL/lcd/lcd_config.h ../HAL/lcd/lcd_interface.h \
+ ../HAL/lcd/../../LIB/std_types/std_types.h \
  ../HAL/lcd/../../LIB/bit_math/bit_math.h \
  ../HAL/lcd/../../LIB/MCU_Config/MCU_Config.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
@@ -12,8 +12,6 @@ HAL/lcd/lcd_program.d HAL/lcd/lcd_program.o: ../HAL/lcd/lcd_program.c \
  ../HAL/lcd/../../MCAL/dio/dio_interface.h \
  ../HAL/lcd/../../MCAL/dio/../../LIB/std_types/std_types.h \
  ../HAL/lcd/../../MCAL/dio/../../LIB/bit_math/bit_math.h
-
-../HAL/lcd/lcd_private.h:
 
 ../HAL/lcd/lcd_config.h:
 

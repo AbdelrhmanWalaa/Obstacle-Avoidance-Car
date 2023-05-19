@@ -12,8 +12,8 @@
 
 int main(void)
 {
-// 	APP_initialization();
-// 	APP_startProgram();
+	APP_initialization();
+	APP_startProgram();
 	
 	return 0;
 }
