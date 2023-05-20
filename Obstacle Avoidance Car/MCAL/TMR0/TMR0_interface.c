@@ -6,10 +6,10 @@
  */ 
 
 /*============= FILE INCLUSION =============*/
-#include "TMR0_interface.h"
+#include "tmr0_interface.h"
 
 /*============= global variables =============*/
-static volatile void (*g_callBackPtr_0)(void) = NULL;
+static void (*g_callBackPtr_0)(void) = NULL;
 static volatile u8 NO_OF_OVERFLOWS=0;
 static volatile u8 g_tick=0;
 static u8 g_initial_value=0;
@@ -171,7 +171,7 @@ void TMR0_TimeOut_Ms(f32 delay)
 		TCNT0=0;
 		OCR0=g_initial_value;
 		TIMSK |= (1<<OCIE0);			//enable timer compare match interrupt
-		g_timeout_flag=0;
+		g_timeout_flag=0;				//set flag to default
 		TCCR0 = (1<<FOC0) | (1<<WGM01) | (1<<CS02) | (1<<CS00);
 }
 

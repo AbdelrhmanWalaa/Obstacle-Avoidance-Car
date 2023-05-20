@@ -16,7 +16,7 @@
 #include "../TMR_UTILITIES/TMR_Registers.h"
 
 /*============= extern variables =============*/
-extern volatile u8 g_timeoutFlag;
+extern volatile u8 g_timeout_flag;
 
 
 /*============= MACRO DEFINITION =============*/
@@ -28,7 +28,7 @@ extern volatile u8 g_timeoutFlag;
 Description
 use to apply block delay using overflow mode 
 */
-void TMR0_DelayMS(f32 delay);
+void TMR0_Delay_MS(f32 delay);
 
 /*
 Description
@@ -53,11 +53,9 @@ for example:
 assume OCR register (0--255) 
 max_timeout = MAX_DELAY_COMP_MODE * OCR
 */
-void TMR0_TimeOutMs(f32 delay); 
+void TMR0_TimeOut_Ms(f32 delay); 
 
 //void TMR0_OVFSetCallBack (void(*g_ptr)(void));
 //void TMR0_CMPSetCallBack (void(*g_ptr)(void));
 
 #endif /* TMR0_INTERFACE_H_ */
-
-

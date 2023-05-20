@@ -304,34 +304,34 @@ void __vector_5( void )		__attribute__((signal));
 /*******************************************************************************************************************************************************************/
 
 /* ISR function implementation of TMR2 OVF */
-void __vector_5( void )
-{
-	static u8 u8_ls_PWM_flag = 0;
-	
-	if( u8_ls_PWM_flag == 0 )
-	{
-		PWM_setPrescaler( u16_gs_ToffPrescale );
-		
-		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
-		u8_ls_PWM_flag = 1;
-	}
-	
-	else
-	{
-		PWM_setPrescaler( u16_gs_TonPrescale );
-		
-		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
-		u8_ls_PWM_flag = 0;
-	}
-
-	/* Step 2: Toggle the PWM Pin */
-	switch ( u8_gs_portId )
-	{
-		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
-	}
-}
+// void __vector_5( void )
+// {
+// 	static u8 u8_ls_PWM_flag = 0;
+// 	
+// 	if( u8_ls_PWM_flag == 0 )
+// 	{
+// 		PWM_setPrescaler( u16_gs_ToffPrescale );
+// 		
+// 		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
+// 		u8_ls_PWM_flag = 1;
+// 	}
+// 	
+// 	else
+// 	{
+// 		PWM_setPrescaler( u16_gs_TonPrescale );
+// 		
+// 		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
+// 		u8_ls_PWM_flag = 0;
+// 	}
+// 
+// 	/* Step 2: Toggle the PWM Pin */
+// 	switch ( u8_gs_portId )
+// 	{
+// 		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
+// 	}
+// }
 
 /*******************************************************************************************************************************************************************/

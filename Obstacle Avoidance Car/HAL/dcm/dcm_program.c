@@ -96,6 +96,8 @@ u8 DCM_controlDCM      ( DCM_ST_CONFIG *pst_a_DCMConfig, u8 u8_a_controlMode, u8
 		/* Update error state = NOK, Pointer is NULL, or wrong ControlMode or SpeedPercentage! */
 		u8_l_errorState = STD_TYPES_NOK;
 	}
+	
+	return u8_l_errorState;
 }
 
 /*******************************************************************************************************************************************************************/
