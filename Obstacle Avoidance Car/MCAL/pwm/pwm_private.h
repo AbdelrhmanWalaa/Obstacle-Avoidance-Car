@@ -2,7 +2,7 @@
  * pwm_private.h
  *
  *     Created on: May 17, 2023
- *         Author: Hazem Ashraf - 
+ *         Author: Hazem Ashraf - https://github.com/hazemashrafali
  *    Description: This file contains all Pulse Width Modulation (PWM) registers' locations and description.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */
@@ -12,6 +12,11 @@
 
 /*******************************************************************************************************************************************************************/
 /* DIO Registers' Locations */
+
+#define DIO_U8_DDRA_REG		    *( ( volatile u8 * ) 0x3A )
+#define DIO_U8_DDRB_REG		    *( ( volatile u8 * ) 0x37 )
+#define DIO_U8_DDRC_REG		    *( ( volatile u8 * ) 0x34 )
+#define DIO_U8_DDRD_REG		    *( ( volatile u8 * ) 0x31 )
 
 #define DIO_U8_PORTA_REG	    *( ( volatile u8 * ) 0x3B )
 #define DIO_U8_PORTB_REG	    *( ( volatile u8 * ) 0x38 )
