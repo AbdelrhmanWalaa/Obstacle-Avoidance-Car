@@ -7,7 +7,7 @@
 
 /*============= FILE INCLUSION =============*/
 #include "TMR2_interface.h"
-#include "../DIO/dio_interface.h"
+#include "../dio/dio_interface.h"
 
 /*============= global variables =============*/
 u8 g_port,g_pin,g_PWM_flag=0;
@@ -29,10 +29,8 @@ void TMR2_PWM_Init(f32 pwm_frequency,u8 port_ID,u8 pin_num)
 {
 	g_port=port_ID;
 	g_pin=pin_num;
-	//GPIO_setPinDirection(port_ID,pin_num,PIN_OUTPUT);
 	DIO_init(port_ID,pin_num,OUT);
-	//GPIO_writePin(port_ID,pin_num,Low);
-	DIO_write(port_ID,pin_num,Low);
+	DIO_write(port_ID,pin_num,LOW);
 	g_period_time=1.0F/pwm_frequency;							//PWM periodic time in milli_seconds
 	TIMSK |= (1<<TOIE2);										// Enable Timer2 Overflow Interrupt
 }
@@ -64,7 +62,6 @@ ISR_HANDLER(TMR2_OVF)
 		TCNT2=g_Ton_initValue;
 		g_PWM_flag=0;
 	}
-	//GPIO_togglePin(g_port, g_pin);
 	DIO_toggle(g_port,g_pin);
 }
 

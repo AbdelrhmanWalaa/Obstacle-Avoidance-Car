@@ -10,10 +10,10 @@
 
 /*============= global variables =============*/
 static volatile void (*g_callBackPtr_0)(void) = NULL;
-static volatile u8 NO_OF_OVERFLOWS=0;
+static volatile u8 g_overFlows=0;
 static volatile u8 g_tick=0;
-static u8 g_initial_value=0;
-volatile u8 g_timeout_flag=0;
+static u8 g_initialValue=0;
+volatile u8 g_timeoutFlag=0;
 
 /*============= TYPE DEFINITION =============*/
 typedef struct{
@@ -35,29 +35,28 @@ static inline void set_prescale(u16 prescaler);
  * calculate timer initial value
  */
 
-void TMR0_Delay_MS(f32 delay)
+void TMR0_DelayMS(f32 delay)
 {
-	//delay-=5;
-	ST_timer0_config Time;
+	ST_timer0_config st_time;
 	u8 real_part,reminder,count;
-	if(calc_prescaler(delay, &Time.prescaler))
+	if(calc_prescaler(delay, &st_time.prescaler))
 	{
-		calc_initialValue(Time.prescaler, &Time.initial_value,delay);
-		Time.NO_OF_OV=0;
+		calc_initialValue(st_time.prescaler, &st_time.initial_value,delay);
+		st_time.NO_OF_OV=0;
 	}
 	else
 	{
-		Time.prescaler=P_1024;
-		Time.NO_OF_OV=(delay/MAX_DELAY_MS(P_1024));
-		Time.initial_value=0;
+		st_time.prescaler=P_1024;
+		st_time.NO_OF_OV=(delay/MAX_DELAY_MS(P_1024));
+		st_time.initial_value=0;
 	}
-	real_part=Time.NO_OF_OV;
-	reminder=(Time.NO_OF_OV-real_part)*(MAX_DELAY_MS(P_1024)); //reminder delay to complete required delay period
+	real_part=st_time.NO_OF_OV;
+	reminder=(st_time.NO_OF_OV-real_part)*(MAX_DELAY_MS(P_1024)); //reminder delay to complete required delay period
 	count=real_part;
-	TCNT0=Time.initial_value;
+	TCNT0=st_time.initial_value;
 	if(count==0)
 	{
-		set_prescale(Time.prescaler);
+		set_prescale(st_time.prescaler);
 		while(!(TIFR & (1<<TOV0)));
 	}
 	else
@@ -72,19 +71,19 @@ void TMR0_Delay_MS(f32 delay)
 		if(reminder > 0)								//run remaining delay period
 		{
 			if(reminder <= MAX_DELAY_MS(P_1))						//find best range that contain the required remaining delay
-				Time.prescaler=P_1;
+				st_time.prescaler=P_1;
 			else if(reminder <= MAX_DELAY_MS(P_8))
-				Time.prescaler=P_8;
+				st_time.prescaler=P_8;
 			else if(reminder <= MAX_DELAY_MS(P_64))
-				Time.prescaler=P_64;
+				st_time.prescaler=P_64;
 			else if(reminder <= MAX_DELAY_MS(P_256))
-				Time.prescaler=P_256;
+				st_time.prescaler=P_256;
 			else if(reminder <= MAX_DELAY_MS(P_1024))
-				Time.prescaler=P_1024;
+				st_time.prescaler=P_1024;
 			else
-				Time.prescaler = P_0;
+				st_time.prescaler = P_0;
 		}
-		switch(Time.prescaler)												//according to selected pre_scaler value
+		switch(st_time.prescaler)												//according to selected pre_scaler value
 		{
 		case P_1:
 			TCNT0=INIT_VALUE(MAX_DELAY_MS(P_1),reminder,MIN_DELAY_MS(P_1));	//set TCNT0 register with the initial value
@@ -127,29 +126,29 @@ void TMR0_CallEvent(f32 delay,void(*g_ptr)(void))
 	TIMSK |= (1<<TOIE0);
 	if(delay < MAX_DELAY_MS(P_1024))
 	{
-		g_initial_value=ceil(((f32)(MAX_DELAY_MS(P_1024)-delay)/MIN_DELAY_MS(P_1024)));
-		NO_OF_OVERFLOWS=0;
+		g_initialValue=ceil(((f32)(MAX_DELAY_MS(P_1024)-delay)/MIN_DELAY_MS(P_1024)));
+		g_overFlows=0;
 	}
 	else
 	{
-		NO_OF_OVERFLOWS=delay/MAX_DELAY_MS(P_1024);
-		g_initial_value=0;
+		g_overFlows=delay/MAX_DELAY_MS(P_1024);
+		g_initialValue=0;
 	}
-	TCNT0=g_initial_value;
+	TCNT0=g_initialValue;
 	
 	g_callBackPtr_0=g_ptr;
 	TCCR0 = (1<<FOC0) | (1<<CS02) | (1<<CS00);
 }
 
-void TMR0_TimeOut_Ms(f32 delay)
+void TMR0_TimeOutMs(f32 delay)
 {
 	u8 divide_1=0;
 	u32 divide_2=0;
 	/*code to count time in milliseconds*/
 		if(delay < MAX_DELAY_MS(P_1024))
 		{
-			g_initial_value=delay;
-			NO_OF_OVERFLOWS=0;
+			g_initialValue=delay;
+			g_overFlows=0;
 		}
 		else
 		{
@@ -161,36 +160,36 @@ void TMR0_TimeOut_Ms(f32 delay)
 				{
 					if(divide_1==divide_2)
 					{
-						g_initial_value=divide_1;
-						NO_OF_OVERFLOWS=i;
+						g_initialValue=divide_1;
+						g_overFlows=i;
 						break;
 					}
 				}
 			}
 		}
 		TCNT0=0;
-		OCR0=g_initial_value;
+		OCR0=g_initialValue;
 		TIMSK |= (1<<OCIE0);			//enable timer compare match interrupt
-		g_timeout_flag=0;
+		g_timeoutFlag=0;				//set flag to default
 		TCCR0 = (1<<FOC0) | (1<<WGM01) | (1<<CS02) | (1<<CS00);
 }
 
 ISR_HANDLER(TMR0_CMP)
 {
-	if(NO_OF_OVERFLOWS > 0)
+	if(g_overFlows > 0)
 	{
 		g_tick++;
-		if(g_tick==NO_OF_OVERFLOWS)
+		if(g_tick==g_overFlows)
 		{
-			g_timeout_flag++;
+			g_timeoutFlag++;
 			g_tick = 0;			//clear the tick counter again to start new count				
 		}
 	}
 	else
 	{
-		g_timeout_flag++;
+		g_timeoutFlag++;
 		TCNT0=0;
-		OCR0=g_initial_value;
+		OCR0=g_initialValue;
 	}
 }
 
@@ -198,10 +197,10 @@ ISR_HANDLER(TMR0_OVF)
 {
 	if(g_callBackPtr_0 != NULL)
 	{
-		if(NO_OF_OVERFLOWS > 0)
+		if(g_overFlows > 0)
 		{
 			g_tick++;
-			if(g_tick == NO_OF_OVERFLOWS)
+			if(g_tick == g_overFlows)
 			{
 				g_callBackPtr_0();
 				g_tick = 0; //clear the tick counter again to start new count
@@ -210,7 +209,7 @@ ISR_HANDLER(TMR0_OVF)
 		else
 		{
 			g_callBackPtr_0();
-			TCNT0=g_initial_value;
+			TCNT0=g_initialValue;
 		}
 	}
 }

@@ -12,9 +12,9 @@ HAL\kpd\kpd_program.c
 
 HAL\lcd\lcd_program.c
 
-HAL\swicu\swicu_program.c
+HAL\icu\ICU_interface.c
 
-HAL\usi\usi_program.c
+HAL\us\US_Interface.c
 
 main.c
 
@@ -24,5 +24,9 @@ MCAL\exi\exi_program.c
 
 MCAL\gli\gli_program.c
 
-MCAL\tmr\tmr_program.c
+MCAL\TMR2\TMR2_interface.c
+
+MCAL\TMR1\TMR1_interface.c
+
+MCAL\TMR0\TMR0_interface.c
 

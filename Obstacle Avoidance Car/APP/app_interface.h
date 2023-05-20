@@ -20,14 +20,18 @@
 #include "../MCAL/dio/dio_interface.h"
 #include "../MCAL/gli/gli_interface.h"
 #include "../MCAL/exi/exi_interface.h"
-#include "../MCAL/tmr/tmr_interface.h"
+#include "../MCAL/TMR0/TMR0_interface.h"
+#include "../MCAL/TMR1/TMR1_interface.h"
+#include "../MCAL/TMR2/TMR2_interface.h"
 
 /* HAL */
 #include "../HAL/btn/btn_interface.h"
 #include "../HAL/lcd/lcd_interface.h"
 #include "../HAL/kpd/kpd_interface.h"
 #include "../HAL/dcm/dcm_interface.h"
-#include "../HAL/usi/usi_interface.h"
+#include "../HAL/ICU/ICU_interface.h"
+#include "../HAL/Ultrasonic/US_Interface.h"
+
 
 /*******************************************************************************************************************************************************************/
 /* APP Macros */

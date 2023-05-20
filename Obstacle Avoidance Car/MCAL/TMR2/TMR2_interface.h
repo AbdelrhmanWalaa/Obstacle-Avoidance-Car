@@ -10,7 +10,7 @@
 #define TMR2_INTERFACE_H_
 
 /*============= FILE INCLUSION =============*/
-#include "../LIB/std_types/STD_TYPES.h"
+#include "../../LIB/std_types/std_types.h"
 #include "../TMR_UTILITIES/TMR_UTILITIES.h"
 #include "../TMR_UTILITIES/TMR_Registers.h"
 /*============= extern variables =============*/
