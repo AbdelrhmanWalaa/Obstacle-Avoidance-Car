@@ -138,7 +138,7 @@ void DIO_read (dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumb
 		*en_a_data = GET_BIT( DIO_U8_PINB_REG , en_a_pinNumber );
 		break;
 		case C:
-		*en_a_data = GET_BIT( DIO_U8_PINC_REG , pinNumber );
+		*en_a_data = GET_BIT( DIO_U8_PINC_REG , en_a_pinNumber );
 		break;
 		case D:
 		*en_a_data = GET_BIT( DIO_U8_PIND_REG , en_a_pinNumber );

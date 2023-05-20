@@ -39,8 +39,8 @@ SUBDIRS :=  \
 ../HAL/btn \
 ../HAL/lcd \
 ../HAL/kpd \
-../HAL/usi \
-../HAL/swicu \
+../HAL/icu \
+../HAL/us \
 ../LIB \
 ../LIB/bit_math \
 ../LIB/mcu_config \
@@ -49,7 +49,10 @@ SUBDIRS :=  \
 ../MCAL/dio \
 ../MCAL/exi \
 ../MCAL/gli \
-../MCAL/tmr
+../MCAL/TMR_UTILITIES \
+../MCAL/TMR2 \
+../MCAL/TMR1 \
+../MCAL/TMR0
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -59,13 +62,15 @@ C_SRCS +=  \
 ../HAL/dcm/dcm_program.c \
 ../HAL/kpd/kpd_program.c \
 ../HAL/lcd/lcd_program.c \
-../HAL/swicu/swicu_program.c \
-../HAL/usi/usi_program.c \
+../HAL/icu/ICU_interface.c \
+../HAL/us/US_Interface.c \
 ../main.c \
 ../MCAL/dio/dio_program.c \
 ../MCAL/exi/exi_program.c \
 ../MCAL/gli/gli_program.c \
-../MCAL/tmr/tmr_program.c
+../MCAL/TMR2/TMR2_interface.c \
+../MCAL/TMR1/TMR1_interface.c \
+../MCAL/TMR0/TMR0_interface.c
 
 
 PREPROCESSING_SRCS += 
@@ -80,13 +85,15 @@ HAL/btn/btn_program.o \
 HAL/dcm/dcm_program.o \
 HAL/kpd/kpd_program.o \
 HAL/lcd/lcd_program.o \
-HAL/swicu/swicu_program.o \
-HAL/usi/usi_program.o \
+HAL/icu/ICU_interface.o \
+HAL/us/US_Interface.o \
 main.o \
 MCAL/dio/dio_program.o \
 MCAL/exi/exi_program.o \
 MCAL/gli/gli_program.o \
-MCAL/tmr/tmr_program.o
+MCAL/TMR2/TMR2_interface.o \
+MCAL/TMR1/TMR1_interface.o \
+MCAL/TMR0/TMR0_interface.o
 
 OBJS_AS_ARGS +=  \
 APP/app_program.o \
@@ -94,13 +101,15 @@ HAL/btn/btn_program.o \
 HAL/dcm/dcm_program.o \
 HAL/kpd/kpd_program.o \
 HAL/lcd/lcd_program.o \
-HAL/swicu/swicu_program.o \
-HAL/usi/usi_program.o \
+HAL/icu/ICU_interface.o \
+HAL/us/US_Interface.o \
 main.o \
 MCAL/dio/dio_program.o \
 MCAL/exi/exi_program.o \
 MCAL/gli/gli_program.o \
-MCAL/tmr/tmr_program.o
+MCAL/TMR2/TMR2_interface.o \
+MCAL/TMR1/TMR1_interface.o \
+MCAL/TMR0/TMR0_interface.o
 
 C_DEPS +=  \
 APP/app_program.d \
@@ -108,13 +117,15 @@ HAL/btn/btn_program.d \
 HAL/dcm/dcm_program.d \
 HAL/kpd/kpd_program.d \
 HAL/lcd/lcd_program.d \
-HAL/swicu/swicu_program.d \
-HAL/usi/usi_program.d \
+HAL/icu/ICU_interface.d \
+HAL/us/US_Interface.d \
 main.d \
 MCAL/dio/dio_program.d \
 MCAL/exi/exi_program.d \
 MCAL/gli/gli_program.d \
-MCAL/tmr/tmr_program.d
+MCAL/TMR2/TMR2_interface.d \
+MCAL/TMR1/TMR1_interface.d \
+MCAL/TMR0/TMR0_interface.d
 
 C_DEPS_AS_ARGS +=  \
 APP/app_program.d \
@@ -122,13 +133,15 @@ HAL/btn/btn_program.d \
 HAL/dcm/dcm_program.d \
 HAL/kpd/kpd_program.d \
 HAL/lcd/lcd_program.d \
-HAL/swicu/swicu_program.d \
-HAL/usi/usi_program.d \
+HAL/icu/ICU_interface.d \
+HAL/us/US_Interface.d \
 main.d \
 MCAL/dio/dio_program.d \
 MCAL/exi/exi_program.d \
 MCAL/gli/gli_program.d \
-MCAL/tmr/tmr_program.d
+MCAL/TMR2/TMR2_interface.d \
+MCAL/TMR1/TMR1_interface.d \
+MCAL/TMR0/TMR0_interface.d
 
 OUTPUT_FILE_PATH +=Obstacle\ Avoidance\ Car.elf
 
@@ -179,14 +192,14 @@ HAL/lcd/lcd_program.o: ../HAL/lcd/lcd_program.c
 	@echo Finished building: $<
 	
 
-HAL/swicu/swicu_program.o: ../HAL/swicu/swicu_program.c
+HAL/icu/ICU_interface.o: ../HAL/icu/ICU_interface.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-HAL/usi/usi_program.o: ../HAL/usi/usi_program.c
+HAL/us/US_Interface.o: ../HAL/us/US_Interface.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -221,7 +234,21 @@ MCAL/gli/gli_program.o: ../MCAL/gli/gli_program.c
 	@echo Finished building: $<
 	
 
-MCAL/tmr/tmr_program.o: ../MCAL/tmr/tmr_program.c
+MCAL/TMR2/TMR2_interface.o: ../MCAL/TMR2/TMR2_interface.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/TMR1/TMR1_interface.o: ../MCAL/TMR1/TMR1_interface.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/TMR0/TMR0_interface.o: ../MCAL/TMR0/TMR0_interface.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\2.0.401\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
