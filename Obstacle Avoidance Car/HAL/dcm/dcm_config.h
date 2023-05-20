@@ -13,40 +13,9 @@
 
 /*******************************************************************************************************************************************************************/
 /* DCM Configurations */
- 
-/* DCM Port(s) */
-/* Options: A:0
-			B:1
-			C:2
-			D:3
- */
-/* Right DCM */
-#define	DCM_U8_DCM_R_DIR_PORT		3
-#define	DCM_U8_DCM_R_PWM_PORT		3
 
-/* Left DCM  */
-#define	DCM_U8_DCM_L_DIR_PORT		3
-#define	DCM_U8_DCM_L_PWM_PORT		3
-
-/* DCM Pins */
-/* Options: P0
-			P1
-			P2
-			P3
-			P4
-			P5
-			P6
-			P7
- */
-/* Right DCM */
-#define DCM_U8_DCM_R_DIR_PIN_1A		P2
-#define	DCM_U8_DCM_R_DIR_PIN_1B		P3
-#define	DCM_U8_DCM_R_PWM_PIN		P4
-
-/* Left DCM */
-#define DCM_U8_DCM_L_DIR_PIN_2A		P6
-#define	DCM_U8_DCM_L_DIR_PIN_2B		P7
-#define	DCM_U8_DCM_L_PWM_PIN		P5
+/* Number of DCM(s) */
+#define DCM_U8_NUMBER_OF_DCM		2 
 
 /* End of Configurations */
 

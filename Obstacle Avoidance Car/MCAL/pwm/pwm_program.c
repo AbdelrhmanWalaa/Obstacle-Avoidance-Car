@@ -2,7 +2,7 @@
  * pwm_program.c
  *
  *     Created on: May 17, 2023
- *         Author: Hazem Ashraf -
+ *         Author: Hazem Ashraf - https://github.com/hazemashrafali
  *    Description: This file contains all Pulse Width Modulation (PWM) functions' implementation, and ISR functions' prototypes and implementation.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */
@@ -16,11 +16,11 @@
 /* Declaration and Initialization */
 
 /* Global Variables ( Flags ) to be altered when CTC Mode is selected in Timer 1, and depending on which Channel is selected. */
-static u8 u8_gs_portId, u8_gs_pinId;
+u8 u8_gs_portId, u8_gs_pinId;
 
-static u8 u8_gs_TonInitialValue, u8_gs_ToffInitialValue;
-static u16 u16_gs_TonPrescale, u16_gs_ToffPrescale;
-static f32 f32_gs_periodTime;
+u8 u8_gs_TonInitialValue, u8_gs_ToffInitialValue;
+u16 u16_gs_TonPrescale, u16_gs_ToffPrescale;
+f32 f32_gs_periodTime;
 
 /*******************************************************************************************************************************************************************/
 /* PWM Private Functions' prototypes */
@@ -48,6 +48,15 @@ u8 PWM_initialization( u8 u8_a_portId, u8 u8_a_pinId, f32 f32_a_pwmFrequency )
 		u8_gs_portId = u8_a_portId;
 		u8_gs_pinId = u8_a_pinId;
 		
+		/* Step 2: Initialize the PWM Pin to Output */
+		switch ( u8_a_portId )
+		{
+			case DIO_U8_PORTA: SET_BIT( DIO_U8_DDRA_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTB: SET_BIT( DIO_U8_DDRB_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTC: SET_BIT( DIO_U8_DDRC_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTD: SET_BIT( DIO_U8_DDRD_REG, u8_a_pinId ); break;
+		}
+				
 		/* Step 2: Set the PWM Pin to Low */
 		switch ( u8_a_portId )
 		{
@@ -295,43 +304,43 @@ static u8 PWM_setPrescaler         ( u16 u16_a_prescaler )
 
 /*******************************************************************************************************************************************************************/
 
-/*
- *  8-bit Timer/Counter2 ISR
- */
-/* ISR functions' prototypes of TMR2 Overflow ( OVF ) */
-void __vector_5( void )		__attribute__((signal));
-
-/*******************************************************************************************************************************************************************/
-
-/* ISR function implementation of TMR2 OVF */
-void __vector_5( void )
-{
-	static u8 u8_ls_PWM_flag = 0;
-	
-	if( u8_ls_PWM_flag == 0 )
-	{
-		PWM_setPrescaler( u16_gs_ToffPrescale );
-		
-		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
-		u8_ls_PWM_flag = 1;
-	}
-	
-	else
-	{
-		PWM_setPrescaler( u16_gs_TonPrescale );
-		
-		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
-		u8_ls_PWM_flag = 0;
-	}
-
-	/* Step 2: Toggle the PWM Pin */
-	switch ( u8_gs_portId )
-	{
-		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
-		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
-	}
-}
+// /*
+//  *  8-bit Timer/Counter2 ISR
+//  */
+// /* ISR functions' prototypes of TMR2 Overflow ( OVF ) */
+// void __vector_5( void )		__attribute__((signal));
+// 
+// /*******************************************************************************************************************************************************************/
+// 
+// /* ISR function implementation of TMR2 OVF */
+// void __vector_5( void )
+// {
+// 	static u8 u8_ls_PWM_flag = 0;
+// 	
+// 	if( u8_ls_PWM_flag == 0 )
+// 	{
+// 		PWM_setPrescaler( u16_gs_ToffPrescale );
+// 		
+// 		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
+// 		u8_ls_PWM_flag = 1;
+// 	}
+// 	
+// 	else
+// 	{
+// 		PWM_setPrescaler( u16_gs_TonPrescale );
+// 		
+// 		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
+// 		u8_ls_PWM_flag = 0;
+// 	}
+// 
+// 	/* Step 2: Toggle the PWM Pin */
+// 	switch ( u8_gs_portId )
+// 	{
+// 		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
+// 		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
+// 	}
+// }
 
 /*******************************************************************************************************************************************************************/

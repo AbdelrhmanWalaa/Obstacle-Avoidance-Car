@@ -2,7 +2,7 @@
  * pwm_interface.h
  *
  *     Created on: May 17, 2023
- *         Author: Hazem Ashraf -
+ *         Author: Hazem Ashraf - https://github.com/hazemashrafali
  *    Description: This file contains all Pulse Width Modulation (PWM) functions' prototypes and definitions (Macros) to avoid magic numbers.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */
