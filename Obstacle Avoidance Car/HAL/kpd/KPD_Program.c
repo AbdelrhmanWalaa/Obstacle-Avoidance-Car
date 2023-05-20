@@ -22,12 +22,12 @@ static const u8 Au8_gs_colsPins[2] = { KPD_U8_C1_PIN, KPD_U8_C2_PIN };
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: KPD_initKPD
+ Name: KPD_initialization
  Input: void
  Output: void
  Description: Function to initialize Keypad.
 */
-void KPD_initKPD    ( void )
+void KPD_initialization( void )
 {
 	/* Set the One Row Pin to Output, therefore One Pin is Output */
 	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, OUT );
@@ -51,9 +51,9 @@ void KPD_initKPD    ( void )
  Output: void
  Description: Function to enable Keypad.
 */
-void KPD_enableKPD  ( void )
+void KPD_enableKPD     ( void )
 {
-	/* Set the one Pine configured Output to Output, in order to enable or re-enable the KPD, therefore one Pin is Output, and the other two are Input */
+	/* Set the one Pin configured Output to Output, in order to enable or re-enable the KPD, therefore one Pin is Output, and the other two are Input */
 	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, OUT );
 	
 	DIO_write( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, HIGH );
@@ -66,7 +66,7 @@ void KPD_enableKPD  ( void )
  Output: void
  Description: Function to disable Keypad.
 */
-void KPD_disableKPD ( void )
+void KPD_disableKPD    ( void )
 {
 	/* Set the one Pin configured Output to Input, in order to disable the KPD, therefore all KPD pins are Input */
 	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, IN );
@@ -79,7 +79,7 @@ void KPD_disableKPD ( void )
  Output: u8 Error or No Error
  Description: Function to check for the pressed key.
 */
-u8 KPD_getPressedKey( u8 *pu8_a_returnedKeyValue )
+u8 KPD_getPressedKey   ( u8 *pu8_a_returnedKeyValue )
 {
 	/* Define local variable to set the error state = OK */
 	u8 u8_l_errorState = STD_TYPES_OK;

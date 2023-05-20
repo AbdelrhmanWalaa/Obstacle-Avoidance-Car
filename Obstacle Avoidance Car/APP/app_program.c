@@ -13,6 +13,12 @@
 /*******************************************************************************************************************************************************************/
 /* Declaration and Initialization */
 
+ DCM_ST_CONFIG ast_g_DCMs[2] =
+ {
+	 { APP_U8_DCM_R_DIR_CW_PORT, APP_U8_DCM_R_DIR_CW_PIN, APP_U8_DCM_R_DIR_CCW_PORT, APP_U8_DCM_R_DIR_CCW_PIN, APP_U8_DCM_R_PWM_PORT, APP_U8_DCM_R_PWM_PIN },
+	 { APP_U8_DCM_L_DIR_CW_PORT, APP_U8_DCM_L_DIR_CW_PIN, APP_U8_DCM_L_DIR_CCW_PORT, APP_U8_DCM_L_DIR_CCW_PIN, APP_U8_DCM_L_PWM_PORT, APP_U8_DCM_L_PWM_PIN }
+ };
+ 
 /* Global variable to store appMode */
 // static u8 u8_gs_appMode = APP_CAR_STOP;
 // static u8 u8_gs_diagonalFlag = APP_LONG_DGNL;
@@ -30,7 +36,7 @@ Description: Function to .
 void APP_initialization(void)
 {
 	/* MCAL Initialization */
-// 	GLI_enableGIE();
+	GLI_enableGIE();
 // 
 // 	EXI_intSetCallBack( EXI_U8_INT0, &APP_stopCar );
 // 	EXI_enablePIE( EXI_U8_INT0, EXI_U8_SENSE_FALLING_EDGE );
@@ -48,8 +54,19 @@ void APP_initialization(void)
 // 	DCM_motorInit(&u8Ptr_g_suddenBreakPtr);
 // 
 // 	u8_gs_appMode = APP_CAR_STOP;
-	LCD_init();
-	KPD_initKPD();
+	//LCD_init();
+	//KPD_initialization();
+	
+	DCM_initialization( ast_g_DCMs );
+	
+// 	PWM_initialization( DIO_U8_PORTD, DIO_U8_PIN0, 1 );
+// 	
+// 	PWM_generatePWM( 50 );
+// 
+// 	TMR2_PWM_Init (1, 3, 0);
+// 	TMR2_PWM_start(50);
+
+	DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CCW, 10 );
 }
 
 /*******************************************************************************************************************************************************************/
@@ -61,16 +78,30 @@ Description: Function to .
 */
 void APP_startProgram(void)
 {
-	u8 u8_l_keyValue = KPD_U8_KEY_NOT_PRESSED;
+// 	u8 u8_l_keyValue = KPD_U8_KEY_NOT_PRESSED;
+// 	
+// 	while ( u8_l_keyValue != '1' )
+// 	{
+// 		KPD_getPressedKey( &u8_l_keyValue );
+// 	}
 	
 	/* Toggle forever */
 	while (1)
 	{
-		if ( KPD_getPressedKey( &u8_l_keyValue ) != KPD_U8_KEY_NOT_PRESSED )
-		{
-			LCD_sendChar( u8_l_keyValue );
-		}
 		
+		//PWM_generatePWM( 50 );
+// 		if ( u8_l_keyValue != KPD_U8_KEY_NOT_PRESSED )
+// 		{
+// 			LCD_sendCharacter( u8_l_keyValue );
+// 			
+// 			switch (u8_l_keyValue)
+// 			{
+// 				case '1':  break;
+// 				case '2':  break;
+// 			}
+// 		}
+		
+
 // 		/* Check 1: Required appMode */
 // 		switch ( u8_gs_appMode )
 // 		{

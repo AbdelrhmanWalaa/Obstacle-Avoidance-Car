@@ -19,7 +19,7 @@
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
-//#include "../../MCAL/tmer/tmer_interface.h"
+//#include "../../MCAL/tmr/tmr_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* KPD Macros */
@@ -34,11 +34,12 @@
 /*******************************************************************************************************************************************************************/
 /* KPD Functions' Prototypes */
 
-void KPD_initKPD    ( void );
-void KPD_enableKPD  ( void );
-void KPD_disableKPD ( void );
+void KPD_initialization( void );
+void KPD_enableKPD     ( void );
+void KPD_disableKPD    ( void );
 
-u8 KPD_getPressedKey( u8 *pu8_a_returnedKeyValue );
+u8 KPD_getPressedKey   ( u8 *pu8_a_returnedKeyValue );
+
 /*******************************************************************************************************************************************************************/
 
 #endif /* KPD_INTERFACE_H_ */

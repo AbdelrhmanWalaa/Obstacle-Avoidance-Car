@@ -129,9 +129,6 @@
     <Compile Include="APP\app_program.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HAL\btn\btn_config.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="HAL\btn\btn_interface.h">
       <SubType>compile</SubType>
     </Compile>
@@ -160,9 +157,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HAL\lcd\lcd_interface.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="HAL\lcd\lcd_private.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="HAL\lcd\lcd_program.c">
@@ -201,6 +195,18 @@
     <Compile Include="main.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\delay\pwm_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\delay\pwm_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\delay\pwm_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\delay\pwm_program.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\dio\dio_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -231,6 +237,24 @@
     <Compile Include="MCAL\gli\gli_program.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\pwm\pwm_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\pwm\pwm_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\pwm\pwm_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\pwm\pwm_program.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\tmr2\TMR2_interface.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\tmr2\TMR2_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\tmr\tmr_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -241,6 +265,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\tmr\tmr_program.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\TMR_UTILITIES\TMR_Registers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\TMR_UTILITIES\TMR_UTILITIES.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -261,6 +291,10 @@
     <Folder Include="MCAL\dio" />
     <Folder Include="MCAL\exi" />
     <Folder Include="MCAL\gli" />
+    <Folder Include="MCAL\delay" />
+    <Folder Include="MCAL\TMR_UTILITIES" />
+    <Folder Include="MCAL\tmr2" />
+    <Folder Include="MCAL\pwm" />
     <Folder Include="MCAL\tmr" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

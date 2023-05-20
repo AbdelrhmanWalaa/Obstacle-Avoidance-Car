@@ -18,11 +18,17 @@ HAL\usi\usi_program.c
 
 main.c
 
+MCAL\delay\pwm_program.c
+
 MCAL\dio\dio_program.c
 
 MCAL\exi\exi_program.c
 
 MCAL\gli\gli_program.c
+
+MCAL\pwm\pwm_program.c
+
+MCAL\tmr2\TMR2_interface.c
 
 MCAL\tmr\tmr_program.c
 
