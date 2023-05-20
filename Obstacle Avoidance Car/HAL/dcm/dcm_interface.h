@@ -20,31 +20,53 @@
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
-//#include "../../MCAL/pwm/pwm_interface.h"
-#include "../../MCAL/tmr2/TMR2_interface.h"
+#include "../../MCAL/pwm/pwm_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* DCM Macros */
 
+// #define MOTORS_NUMBER                 2
+// #define ZERO_SPEED					  0
+// #define MAX_DUTY_CYCLE			      100
+// #define PERIOD_TIME					  10
+// #define ROTATION_DUTY_CYCLE           50
+
+#define DCM_U8_RIGHT_DCM    0
+#define DCM_U8_LEFT_DCM		1
+
+
+
 typedef struct
 {
-	u8 u8_g_directionCWPort;
-	u8 u8_g_directionCWPin;
-	u8 u8_g_directionCCWPort;
-	u8 u8_g_directionCCWPin;
-	u8 u8_g_pwmPort;
-	u8 u8_g_pwmPin;
+	u8 DCM_U8_DCM_DIR_PORT;
+	u8 DCM_U8_DCM_DIR_PIN_A;
+	u8 DCM_U8_DCM_DIR_PIN_B;
+	u8 DCM_U8_DCM_PWM_PORT;
+	u8 DCM_U8_DCM_PWM_PIN;
 } DCM_ST_CONFIG;
 
-#define DCM_U8_STOP				0
-#define DCM_U8_ROTATE_CW		1
-#define DCM_U8_ROTATE_CCW		2
+//typedef enum {
+//	DCM_OK,
+//	DCM_ERROR
+//}EN_DCM_ERROR_T;
+//
+//typedef enum {
+//	MOTOR_RIGHT,
+//	MOTOR_LEFT
+//}EN_DCM_MOTORSIDE;
+//
+//typedef enum {
+//	FALSE,
+//	TRUE
+//}EN_DCM_FLAG;
 
 /*******************************************************************************************************************************************************************/
 /* DCM Functions' Prototypes */
 
-void DCM_initialization( DCM_ST_CONFIG *st_a_DCMConfig );
-u8 DCM_controlDCM      ( DCM_ST_CONFIG *st_a_DCMConfig, u8 u8_a_controlMode, u8 u8_a_speedPercentage );
+void DCM_initialization( void );
+//u8 DCM_rotateDCM       ( u8 u8_a_DCMId, u8 u8_a_rotateDirection, u8 u8_a_speedPercentage );
+u8 DCM_rotateDCM       ( u8 u8_a_speedPercentage );
+void DCM_stopDCM       ( void );
 
 /*******************************************************************************************************************************************************************/
 

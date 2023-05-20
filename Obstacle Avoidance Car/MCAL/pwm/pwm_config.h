@@ -2,7 +2,7 @@
  * pwm_config.h
  *
  *     Created on: May 17, 2023
- *         Author: Hazem Ashraf - https://github.com/hazemashrafali
+ *         Author: Hazem Ashraf - 
  *    Description: This file contains all Pulse Width Modulation (PWM) pre-build configurations, through which user can configure before using the PWM peripheral.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
  */

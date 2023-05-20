@@ -32,7 +32,7 @@
  *			MCU_U8_FCPU_16_MHZ
  *			MCU_U8_FCPU_20_MHZ
 */
-#define MCU_U8_FCPU_SELECT		MCU_U8_FCPU_8_MHZ
+#define MCU_U8_FCPU_SELECT		MCU_U8_FCPU_1_MHZ
 
 /* End of Configurations */
 
