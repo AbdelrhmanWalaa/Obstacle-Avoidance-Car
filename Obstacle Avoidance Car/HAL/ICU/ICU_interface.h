@@ -10,8 +10,8 @@
 #define ICU_INTERFACE_H_
 
 /*============= FILE INCLUSION =============*/
-#include "../../MCAL/exi/exi_interface.h"
-#include "../../MCAL/TMR1/TMR1_interface.h"
+#include "../EXI_Driver/EXI_interface.h"
+#include "../TMR1/TMR1_interface.h"
 
 /*============= extern variables =============*/
 
@@ -27,7 +27,7 @@ typedef enum
 
 typedef enum
 {
-	FALLING=2,RISING
+	FALLING,RISING
 }EN_ICU_EdgeType;
 
 typedef enum{
@@ -47,7 +47,7 @@ typedef struct
  * Description : Function to initialize the ICU driver
  * 	1. Set the required clock.
  * 	2. Set the required edge detection.
- * 	3. Enable the External Interrupt source and edge.
+ * 	3. Enable the External Interrupt source.
  * 	4. Initialize Timer1 Registers
  */
 void Icu_init(const ST_ICU_ConfigType * Config_Ptr);
@@ -63,8 +63,8 @@ void Icu_setCallBack(void(*a_ptr)(void));
 void Icu_setEdgeDetectionType(const EN_ICU_EdgeType edgeType);
 
 /*
- * Description: Function to get the Timer1 Value when the external interrupt is capture edge
- *             
+ * Description: Function to get the Timer1 Value when the input is captured
+ *              The value stored at Input Capture Register ICR1
  */
 u16 Icu_getInputCaptureValue(void);
 
@@ -74,7 +74,7 @@ u16 Icu_getInputCaptureValue(void);
 void Icu_clearTimerValue(void);
 
 /*
- * Description: Function to disable the Timer1 and External interrupt to stop the ICU Driver
+ * Description: Function to disable the Timer1 to stop the ICU Driver
  */
 void Icu_DeInit(void);
 

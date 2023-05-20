@@ -19,20 +19,16 @@
 /* MCAL */
 #include "../MCAL/dio/dio_interface.h"
 #include "../MCAL/gli/gli_interface.h"
-#include "../MCAL/exi/exi_interface.h"
-#include "../MCAL/TMR0/TMR0_interface.h"
-#include "../MCAL/TMR1/TMR1_interface.h"
+//#include "../MCAL/exi/exi_interface.h"
 //#include "../MCAL/pwm/pwm_interface.h"
-#include "../MCAL/TMR2/TMR2_interface.h"
+#include "../MCAL/tmr2/TMR2_interface.h"
 
 /* HAL */
 //#include "../HAL/btn/btn_interface.h"
 //#include "../HAL/lcd/lcd_interface.h"
 //#include "../HAL/kpd/kpd_interface.h"
 #include "../HAL/dcm/dcm_interface.h"
-#include "../HAL/icu/ICU_interface.h"
-#include "../HAL/us/US_Interface.h"
-
+//#include "../HAL/usi/usi_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* APP Macros */
