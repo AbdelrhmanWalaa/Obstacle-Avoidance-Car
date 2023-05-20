@@ -17,9 +17,9 @@
  Name: LCD_init
  Input: void
  Output: void
- Description: Function to initialize (both 4 Bit and 8 Bit Modes) LCD.
+ Description: Function to initialize ( both 4 Bit and 8 Bit Modes ) LCD peripheral.
 */
-void LCD_init ( void )
+void LCD_init(void)
 {	
 	#if Mode == bit_8							//if LCD mode chosen in 8bit mode
 	DIO_init (LCD_Data_Port, D7 ,OUT);			//make data7 pin output
@@ -34,11 +34,11 @@ void LCD_init ( void )
 	DIO_init (LCD_cmmnd_Port, RW ,OUT);			//make Rw pin output
 	DIO_init (LCD_cmmnd_Port, RS ,OUT);			//make Rs pin output
 	_delay_ms(20);								//LCD power on delay is always more than 15ms
-	LCD_sendCommand(0x38);						//initialization LCD 16x2 in 8bit mode
-	LCD_sendCommand(0x0C);						//display on cursor off
-	LCD_sendCommand(0x06);						//auto increment cursor
-	LCD_sendCommand(0x01);						//clear display
-	LCD_sendCommand(0x80);						//cursor at home position
+	LCD_sendcommand(0x38);						//initialization LCD 16x2 in 8bit mode
+	LCD_sendcommand(0x0C);						//display on cursor off
+	LCD_sendcommand(0x06);						//auto increment cursor
+	LCD_sendcommand(0x01);						//clear display
+	LCD_sendcommand(0x80);						//cursor at home position
 	#elif Mode == bit_4							//if LCD mode chosen in 4bit mode
 	DIO_init (LCD_Data_cmmnd_Port, D7 ,OUT);	//make data7 pin output
 	DIO_init (LCD_Data_cmmnd_Port, D6 ,OUT);	//make data6 pin output
@@ -48,61 +48,62 @@ void LCD_init ( void )
 	DIO_init (LCD_Data_cmmnd_Port, RW ,OUT);	//make rw pin output
 	DIO_init (LCD_Data_cmmnd_Port, RS ,OUT);	//make rs pin output
 	_delay_ms(20);								//LCD power on delay is always more than 15ms
-	LCD_sendCommand(0x02);						//initialization LCD in 4bit mode
-	LCD_sendCommand(0x28);						//2 lines, 8x5 pixels in 4bit mode
-	LCD_sendCommand(0x0C);						//display on cursor off
-	LCD_sendCommand(0x06);						//auto increment cursor
-	LCD_sendCommand(0x01);						//clear display
-	LCD_sendCommand(0x80);						//cursor at home position
+	LCD_sendcommand(0x02);						//initialization LCD in 4bit mode
+	LCD_sendcommand(0x28);						//2 lines, 8x5 pixels in 4bit mode
+	LCD_sendcommand(0x0C);						//display on cursor off
+	LCD_sendcommand(0x06);						//auto increment cursor
+	LCD_sendcommand(0x01);						//clear display
+	LCD_sendcommand(0x80);						//cursor at home position
 	#endif
 }
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: LCD_sendCommand
- Input: u8 Cmnd
+ Name: LCD_sendcommand
+ Input: u8 u8_a_cmnd
  Output: void
  Description: Function to send a Command to LCD through Data pins.
 */
-void LCD_sendCommand ( u8 u8_a_cmnd )
+void LCD_sendcommand (u8 u8_a_cmnd)
 {
-	#if Mode == bit_8									//if LCD mode chosen in 8bit mode
+	#if Mode == bit_8								//if LCD mode chosen in 8bit mode
 	DIO_setPortValue(LCD_Data_Port,u8_a_cmnd);			//LCD Data Port = u8_a_cmnd
-	DIO_write (LCD_cmmnd_Port, RS, LOW);				//RS = 0 Command register
-	DIO_write (LCD_cmmnd_Port, RW, LOW);				//RW = 0 write operation
-	DIO_write (LCD_cmmnd_Port, EN, HIGH);				//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
-	DIO_write (LCD_cmmnd_Port, EN, LOW);				//EN = 0 low pulse
-	_delay_ms(3);										//delay 3ms
-	#elif Mode == bit_4									//if LCD mode chosen in 4bit mode
-	DIO_setHigherNibble(LCD_Data_cmmnd_Port, u8_a_cmnd);//Sending upper nipple of u8_a_cmnd to LCD Data Port
-	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);			//RS = 0 Command register
-	DIO_write (LCD_Data_cmmnd_Port, RW, LOW);			//RW = 0 write operation
-	DIO_write (LCD_Data_cmmnd_Port, EN, HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
-	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(2);										//delay 2ms
-	DIO_setLowerNibble(LCD_Data_cmmnd_Port , u8_a_cmnd);//Sending lower nipple of u8_a_cmnd to LCD Data Port
-	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);			//RS = 0 Command register
-	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
-	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
-	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(3);										//delay 3ms
+	DIO_write (LCD_cmmnd_Port, RS, LOW);			//RS = 0 Command register
+	DIO_write (LCD_cmmnd_Port, RW, LOW);			//RW = 0 write operation
+	DIO_write (LCD_cmmnd_Port, EN, HIGH);			//EN = 1 high pulse
+	_delay_us(1);									//delay 1us is always more than 450ns
+	DIO_write (LCD_cmmnd_Port, EN, LOW);			//EN = 0 low pulse
+	_delay_ms(3);									//delay 3ms
+	#elif Mode == bit_4								//if LCD mode chosen in 4bit mode
+	DIO_higher_nipple(LCD_Data_cmmnd_Port, u8_a_cmnd);	//Sending upper nipple of u8_a_cmnd to LCD Data Port
+	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);		//RS = 0 Command register
+	DIO_write (LCD_Data_cmmnd_Port, RW, LOW);		//RW = 0 write operation
+	DIO_write (LCD_Data_cmmnd_Port, EN, HIGH);		//EN = 1 high pulse
+	_delay_us(1);									//delay 1us is always more than 450ns
+	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);		//EN = 0 low pulse
+	_delay_ms(2);									//delay 2ms
+	DIO_lower_nipple(LCD_Data_cmmnd_Port , u8_a_cmnd);	//Sending lower nipple of u8_a_cmnd to LCD Data Port
+	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);		//RS = 0 Command register
+	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);		//RW = 0 write operation
+	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);		//EN = 1 high pulse
+	_delay_us(1);									//delay 1us is always more than 450ns
+	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);		//EN = 0 low pulse
+	_delay_ms(3);									//delay 3ms
 	#endif
 }
 
+
 /*******************************************************************************************************************************************************************/
 /*
- Name: LCD_sendCharacter
- Input: u8 Char
+ Name: LCD_sendChar
+ Input: u8 u8_a_charData
  Output: void
  Description: Function to send a Character to LCD through Data pins.
 */
-void LCD_sendCharacter ( u8 u8_a_char )
+void LCD_sendChar (u8 u8_a_charData)
 {
 	#if Mode == bit_8									//if LCD mode chosen in 8bit mode
-	DIO_setPortValue(LCD_Data_Port,u8_a_char);			//LCD Data Port = char data
+	DIO_setPortValue(LCD_Data_Port,u8_a_charData);			//LCD Data Port = char data
 	DIO_write (LCD_cmmnd_Port, RS ,HIGH);				//RS = 1 Data register
 	DIO_write (LCD_cmmnd_Port, RW ,LOW);				//RW = 0 write operation
 	DIO_write (LCD_cmmnd_Port, EN ,HIGH);				//EN = 1 high pulse
@@ -110,14 +111,14 @@ void LCD_sendCharacter ( u8 u8_a_char )
 	DIO_write (LCD_cmmnd_Port, EN ,LOW);				//EN = 0 low pulse
 	_delay_ms(1);										//delay 1ms
 	#elif Mode == bit_4									//if LCD mode chosen in 4bit mode
-	DIO_setHigherNibble(LCD_Data_cmmnd_Port, u8_a_char);//Sending upper nipple of char data to LCD Data Port
+	DIO_higher_nipple(LCD_Data_cmmnd_Port,u8_a_charData);	//Sending upper nipple of char data to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,HIGH);			//RS = 1 Data register
 	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
 	_delay_us(1);										//delay 1us is always more than 450ns
 	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
 	_delay_ms(2);										//delay 2ms
-	DIO_setLowerNibble(LCD_Data_cmmnd_Port, u8_a_char);	//Sending lower nipple of char data to LCD Data Port
+	DIO_lower_nipple(LCD_Data_cmmnd_Port,u8_a_charData);	//Sending lower nipple of char data to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,HIGH);			//RS = 1 Data register
 	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
@@ -134,61 +135,60 @@ void LCD_sendCharacter ( u8 u8_a_char )
  Output: void
  Description: Function to clear LCD display screen in DDRAM.
 */
-void LCD_clear ( void )
+void LCD_clear(void)
 {
 	/* Step 1: Send Display Clear control command */
-	LCD_sendCommand(0x01);					//clear display
+	LCD_sendcommand(0x01);					//clear display
 	/* Step 2: Delay more than 1.53 ms */
 	_delay_ms(2);							//delay 2ms
-	LCD_sendCommand(0x80);					//cursor at home position
+	LCD_sendcommand(0x80);					//cursor at home position
 }
-
 /*******************************************************************************************************************************************************************/
 /*
  Name: LCD_setCursor
- Input: u8 Row and u8 Column
+ Input: u8 u8_a_row , u8 u8_a_column
  Output: void
  Description: Function to set the Address Counter (AC) of LCD to a certain location in DDRAM.
 */
-void LCD_setCursor ( u8 u8_a_row, u8 u8_a_column )
+void LCD_setCursor (u8 u8_a_row , u8 u8_a_column)
 {
 	if (u8_a_row == 0 && u8_a_column<16)
-	LCD_sendCommand((u8_a_column & 0x0F)|0x80);	/* Command of first row and required position<16 */
+	LCD_sendcommand((u8_a_column & 0x0F)|0x80);	/* Command of first row and required position<16 */
 	else if (u8_a_row == 1 && u8_a_column<16)
-	LCD_sendCommand((u8_a_column & 0x0F)|0xC0);	/* Command of first row and required position<16 */	
+	LCD_sendcommand((u8_a_column & 0x0F)|0xC0);	/* Command of first row and required position<16 */
+	
 }
-
 /*******************************************************************************************************************************************************************/
 /*
- Name: LCD_sendString
- Input: Pointer to u8 String
+ Name: LCD_writeString
+ Input: u8 *arr_a_str
  Output: void
- Description: Function to send an array of characters to LCD through Data pins (From CGROM to DDRAM).
+ Description: Function to send an array of characters to LCD through Data pins ( From CGROM to DDRAM ).
 */
-void LCD_sendString ( u8 *pu8_a_string )
+
+void LCD_sendString (u8 *arr_a_str)
 {
 	u16 i;
-	
-	for(i = 0; pu8_a_string[i]!= '\0'; i++)
+	for(i = 0;arr_a_str[i]!= '\0'; i++)
 	{
-		LCD_sendCharacter(pu8_a_string[i]);
+		LCD_sendChar(arr_a_str[i]);
 	}
 }
 
+
 /*******************************************************************************************************************************************************************/
 /*
- Name: LCD_floatToString
- Input: f32 FloatValue
+ Name: LCD_floattostring
+ Input: f32 f32_a_floatValue
  Output: void
- Description: Function to send a float (one decimal) number (positive or negative) to LCD through Data pins (From CGROM to DDRAM).
+ Description: Function to send a float (one decimal) number ( positive or negative ) to LCD through Data pins ( From CGROM to DDRAM ).
 */
-void LCD_floatToString (f32 f32_a_floatValue)
+void LCD_floattostring (f32 f32_a_floatValue)
 {
 	u8 u8_l_pattern[10] , u8_l_tempRearrange, u8_l_digitCount=0,i,j;
 	u32 u32_l_number;
 	f32 temp_float = f32_a_floatValue * 10;
 	u32_l_number = temp_float;
-	
 	for (i=0;u32_l_number>0;i++)
 	{
 		u8_l_pattern[i] = ((u32_l_number%10) +'0');
@@ -203,28 +203,25 @@ void LCD_floatToString (f32 f32_a_floatValue)
 		u8_l_pattern[j] = u8_l_tempRearrange;
 		i--;
 	}
-	
 	u8_l_pattern[u8_l_digitCount] =u8_l_pattern[u8_l_digitCount - 1];
 	u8_l_pattern[u8_l_digitCount - 1] = '.';
 	u8_l_pattern[u8_l_digitCount + 1] = '\0';
-	LCD_sendString( u8_l_pattern );
+	LCD_sendString(u8_l_pattern);
 }
-
 /*******************************************************************************************************************************************************************/
 /*
  Name: LCD_createCustomCharacter
- Input: Pointer to u8 Pattern and u8 Location
+ Input: u8 *arr_a_pattern , u8 u8_a_location 
  Output: void
- Description: Function to send character (stored in array -Special Char- byte by byte) and store it in CGRAM, then display it on DDRAM (From CGRAM to DDRAM).
+ Description: Function to send character ( stored in array -SpecialChar- byte by byte ) and store it in CGRAM, then display it on DDRAM ( From CGRAM to DDRAM ).
 */
-void LCD_createCustomCharacter ( u8 *pu8_a_pattern, u8 u8_a_location )
+void LCD_createCustomCharacter (u8 *arr_a_pattern , u8 u8_a_location )
 {
 	u8 i;
-	LCD_sendCommand(( 0x40 + (u8_a_location*8)));
-	
+	LCD_sendcommand(( 0x40 + (u8_a_location*8)));
 	for(i = 0; i<8; i++)
 	{
-		LCD_sendCharacter( pu8_a_pattern[i] );
+		LCD_sendChar(arr_a_pattern[i]);
 	}
 }
 

@@ -1,7 +1,7 @@
 /*
  * btn_program.c
  *
- *   Created on: May 16, 2023
+ *   Created on: MAY 16, 2023
  *       Author: Mohamed Abdelsalam - https://github.com/m3adel
  *  Description: This file contains all Button (BTN) functions' implementation.
  */
@@ -11,26 +11,24 @@
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: BTN_init
- Input: en PortNumber and en PinNumber
+ Name: BUTTON_init
+ Input: dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber
  Output: void
- Description: Function to initialize BTN pin as INPUT.
+ Description: Function to initialize BUTTON pin as INPUT.
 */
-void BTN_init( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber )
+void BUTTON_init( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber )
 {
-	DIO_init( en_a_portNumber, en_a_pinNumber, IN );
+	DIO_init (en_a_PortNumber,en_a_PinNumber,IN);
 }
-
-/*******************************************************************************************************************************************************************/
 /*
- Name: BTN_read
- Input: en PortNumber, en PinNumber, and Pointer to u8 ReturnedBTNState
+ Name: BUTTON_read
+ Input: dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state
  Output: void
  Description: Function to get BTN state.
 */
-void BTN_read( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber, u8 *pu8_a_returnedBTNState )
+void BUTTON_read( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state )
 {
-	DIO_read( en_a_portNumber, en_a_pinNumber, pu8_a_returnedBTNState );
+	DIO_read (en_a_PortNumber,en_a_PinNumber,en_a_state);
 }
 
 /*******************************************************************************************************************************************************************/

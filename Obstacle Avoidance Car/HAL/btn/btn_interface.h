@@ -1,7 +1,7 @@
 /*
  * btn_interface.h
  *
- *   Created on: May 16, 2023
+ *   Created on: MAY 16, 2023
  *       Author: Mohamed Abdelsalam - https://github.com/m3adel
  *  Description: This file contains all Button (BTN) functions' prototypes and definitions (Macros) to avoid magic numbers.
  */
@@ -21,10 +21,9 @@
 
 /*******************************************************************************************************************************************************************/
 /* BTN Functions' Prototypes */
-
-void BTN_init( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber );
-void BTN_read( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber, u8 *pu8_a_returnedState );
-
+/*******************************************************************************************************************************************************************/
+void BUTTON_init( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber );
+void BUTTON_read( dio_Port_number_en en_a_PortNumber,dio_Pin_number_en en_a_PinNumber,u8 *en_a_state );
 /*******************************************************************************************************************************************************************/
 
 #endif /* BTN_INTERFACE_H_ */
