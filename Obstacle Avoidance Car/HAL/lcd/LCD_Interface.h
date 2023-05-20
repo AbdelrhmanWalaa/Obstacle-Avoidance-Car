@@ -21,6 +21,7 @@
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
+//#include "../../MCAL/tmr/tmr_interface.h"
 
 /*******************************************************************************************************************************************************************/
 
@@ -35,14 +36,16 @@
 
 /*******************************************************************************************************************************************************************/
 /* LCD Functions' Prototypes */
-void LCD_init(void);
-void LCD_sendcommand (u8 u8_a_cmnd);
-void LCD_sendChar (u8 u8_a_charData);
-void LCD_clear(void);
-void LCD_setCursor (u8 u8_a_row , u8 u8_a_column);
-void LCD_sendString (u8 *arr_a_str);
-void LCD_floattostring (f32 f32_a_floatValue);
-void LCD_createCustomCharacter (u8 *arr_a_pattern , u8 u8_a_location );
+
+void LCD_init ( void );
+void LCD_sendCommand ( u8 u8_a_cmnd );
+void LCD_sendCharacter ( u8 u8_a_char );
+void LCD_clear ( void );
+void LCD_setCursor ( u8 u8_a_row, u8 u8_a_column );
+void LCD_sendString ( u8 *pu8_a_string );
+void LCD_floatToString ( f32 f32_a_floatValue );
+void LCD_createCustomCharacter ( u8 *pu8_a_pattern, u8 u8_a_location );
+
 /*******************************************************************************************************************************************************************/
 
 #endif /* LCD_INTERFACE_H_ */
