@@ -29,8 +29,8 @@
 #include "../HAL/lcd/lcd_interface.h"
 #include "../HAL/kpd/kpd_interface.h"
 #include "../HAL/dcm/dcm_interface.h"
-#include "../HAL/ICU/ICU_interface.h"
-#include "../HAL/Ultrasonic/US_Interface.h"
+#include "../HAL/icu/ICU_interface.h"
+#include "../HAL/us/US_Interface.h"
 
 
 /*******************************************************************************************************************************************************************/

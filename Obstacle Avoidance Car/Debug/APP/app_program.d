@@ -50,12 +50,11 @@ APP/app_program.d APP/app_program.o: ../APP/app_program.c \
  ../APP/../HAL/dcm/../../LIB/bit_math/bit_math.h \
  ../APP/../HAL/dcm/../../MCAL/dio/dio_interface.h \
  ../APP/../HAL/dcm/../../MCAL/TMR0/TMR0_interface.h \
- ../APP/../HAL/ICU/ICU_interface.h \
- ../APP/../HAL/ICU/../../MCAL/exi/exi_interface.h \
- ../APP/../HAL/ICU/../../MCAL/TMR1/TMR1_interface.h \
- ../APP/../HAL/Ultrasonic/US_Interface.h \
- ../APP/../HAL/Ultrasonic/../ICU/ICU_interface.h \
- ../APP/../HAL/Ultrasonic/../../MCAL/dio/dio_interface.h
+ ../APP/../HAL/icu/ICU_interface.h \
+ ../APP/../HAL/icu/../../MCAL/exi/exi_interface.h \
+ ../APP/../HAL/icu/../../MCAL/TMR1/TMR1_interface.h \
+ ../APP/../HAL/us/US_Interface.h ../APP/../HAL/us/../ICU/ICU_interface.h \
+ ../APP/../HAL/us/../../MCAL/dio/dio_interface.h
 
 ../APP/app_config.h:
 
@@ -165,14 +164,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../APP/../HAL/dcm/../../MCAL/TMR0/TMR0_interface.h:
 
-../APP/../HAL/ICU/ICU_interface.h:
+../APP/../HAL/icu/ICU_interface.h:
 
-../APP/../HAL/ICU/../../MCAL/exi/exi_interface.h:
+../APP/../HAL/icu/../../MCAL/exi/exi_interface.h:
 
-../APP/../HAL/ICU/../../MCAL/TMR1/TMR1_interface.h:
+../APP/../HAL/icu/../../MCAL/TMR1/TMR1_interface.h:
 
-../APP/../HAL/Ultrasonic/US_Interface.h:
+../APP/../HAL/us/US_Interface.h:
 
-../APP/../HAL/Ultrasonic/../ICU/ICU_interface.h:
+../APP/../HAL/us/../ICU/ICU_interface.h:
 
-../APP/../HAL/Ultrasonic/../../MCAL/dio/dio_interface.h:
+../APP/../HAL/us/../../MCAL/dio/dio_interface.h:
