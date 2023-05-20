@@ -10,6 +10,8 @@ HAL/lcd/lcd_program.d HAL/lcd/lcd_program.o: ../HAL/lcd/lcd_program.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../HAL/lcd/../../MCAL/dio/dio_interface.h \
+ ../HAL/lcd/../../MCAL/dio/dio_config.h \
+ ../HAL/lcd/../../MCAL/dio/dio_private.h \
  ../HAL/lcd/../../MCAL/dio/../../LIB/std_types/std_types.h \
  ../HAL/lcd/../../MCAL/dio/../../LIB/bit_math/bit_math.h
 
@@ -36,6 +38,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h:
 
 ../HAL/lcd/../../MCAL/dio/dio_interface.h:
+
+../HAL/lcd/../../MCAL/dio/dio_config.h:
+
+../HAL/lcd/../../MCAL/dio/dio_private.h:
 
 ../HAL/lcd/../../MCAL/dio/../../LIB/std_types/std_types.h:
 
