@@ -1,10 +1,11 @@
  /*
   * dcm_interface.h
   *
-  *     Created on: Apr 11, 2023
-  *         Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
-  *    Description: This file contains all Direct Current Motor (DCM) functions' prototypes and definitions (Macros) to avoid magic numbers.
-  *	 MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
+  *   Created on: Apr 11, 2023
+  *       Author: Abdelrhman Walaa - https://github.com/AbdelrhmanWalaa
+  *  Description: This file contains all Direct Current Motor (DCM) functions' prototypes and definitions (Macros) to avoid magic numbers.
+  *    Datasheet: https://datasheetspdf.com/pdf/917207/KYSAN/RF-300CA-11440/1
+  *    Model No.: RF-300CA-11440 - DCM
   */
 
 #ifndef DCM_INTERFACE_H_
@@ -19,7 +20,7 @@
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
-#include "../../MCAL/tmr/tmr_interface.h"
+#include "../../MCAL/pwm/pwm_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* DCM Macros */
@@ -30,15 +31,19 @@
 // #define PERIOD_TIME					  10
 // #define ROTATION_DUTY_CYCLE           50
 
-//#define MOTOR_RIGHT         0
-//#define MOTOR_LEFT			1
-//typedef struct {
-//	u8 DCM_g_motEnPinNumber0;
-//	u8 DCM_g_motEnPinNumber1;
-//	u8 DCM_g_motPWMPinNumber;
-//	EN_DIO_PORT_T DCM_g_motEnPortNumber;
-//	u8 DCM_g_motPWMPortNumber;
-//}ST_DCM_g_Config_t;
+#define DCM_U8_RIGHT_DCM    0
+#define DCM_U8_LEFT_DCM		1
+
+
+
+typedef struct
+{
+	u8 DCM_U8_DCM_DIR_PORT;
+	u8 DCM_U8_DCM_DIR_PIN_A;
+	u8 DCM_U8_DCM_DIR_PIN_B;
+	u8 DCM_U8_DCM_PWM_PORT;
+	u8 DCM_U8_DCM_PWM_PIN;
+} DCM_ST_CONFIG;
 
 //typedef enum {
 //	DCM_OK,
@@ -58,12 +63,10 @@
 /*******************************************************************************************************************************************************************/
 /* DCM Functions' Prototypes */
 
-u8 DCM_motorInit         ( u8 ** u8_a_shutdownFlag );
-u8 DCM_rotateDCM         ( void );
-u8 DCM_changeDCMDirection( u8 u8_a_motorId );
-u8 DCM_setDutyCycleOfPWM ( u8 u8_a_dutyCycleValue );
-vd DCM_stopDCM           ( void );
-vd DCM_updateStopFlag    ( void );
+void DCM_initialization( void );
+//u8 DCM_rotateDCM       ( u8 u8_a_DCMId, u8 u8_a_rotateDirection, u8 u8_a_speedPercentage );
+u8 DCM_rotateDCM       ( u8 u8_a_speedPercentage );
+void DCM_stopDCM       ( void );
 
 /*******************************************************************************************************************************************************************/
 

@@ -61,7 +61,6 @@ u8 EXI_enablePIE	 ( u8 u8_a_interruptId, u8 u8_a_senseControl )
 					case EXI_U8_SENSE_LOGICAL_CHANGE: SET_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC10_BIT ); CLR_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC11_BIT ); break;
 					case EXI_U8_SENSE_FALLING_EDGE	: CLR_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC10_BIT ); SET_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC11_BIT ); break;
 					case EXI_U8_SENSE_RISING_EDGE	: SET_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC10_BIT ); SET_BIT( EXI_U8_MCUCR_REG, EXI_U8_ISC11_BIT ); break;
-
 				}
 			break;
 
@@ -137,9 +136,7 @@ u8 EXI_intSetCallBack( u8 u8_a_interruptId, void ( *pf_a_interruptAction ) ( voi
 	/* Check 1: InterruptId is in the valid range, and Pointer to Function is not equal to NULL */
 	if( ( u8_a_interruptId <= EXI_U8_INT2 ) && ( pf_a_interruptAction != NULL ) )
 	{
-		/* Store the passed address of function ( in APP Layer ) through pointer to function
-		 * ( INTInterruptAction ) into Global Array of Pointers to Functions ( INTInterruptsAction )
-		 * in the passed index ( InterruptId ). */
+		/* Store the passed address of function ( in APP Layer ) through pointer to function ( INTInterruptAction ) into Global Array of Pointers to Functions ( INTInterruptsAction ) in the passed index ( InterruptId ). */
 		void_gs_apfInterrupstAction[u8_a_interruptId] = pf_a_interruptAction;
 	}
 	/* Check 2: InterruptId is not in the valid range, or Pointer to Function is equal to NULL */

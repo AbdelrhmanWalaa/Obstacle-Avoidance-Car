@@ -18,7 +18,7 @@
  Output: void
  Description: Function to set I bit in SREG, to enable the Global Interrupt Enable (GIE).
 */
-vd GLI_enableGIE ( void )
+void GLI_enableGIE ( void )
 {
 	SET_BIT( GLI_U8_SREG_REG, GLI_U8_I_BIT );
 }
@@ -30,7 +30,7 @@ vd GLI_enableGIE ( void )
  Output: void
  Description: Function to clear I bit in SREG, to disable the Global Interrupt Enable (GIE).
 */
-vd GLI_disableGIE( void )
+void GLI_disableGIE( void )
 {
 	CLR_BIT( GLI_U8_SREG_REG, GLI_U8_I_BIT );
 }

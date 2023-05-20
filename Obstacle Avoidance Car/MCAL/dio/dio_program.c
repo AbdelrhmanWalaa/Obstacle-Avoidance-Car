@@ -1,7 +1,7 @@
 /*
  * dio_program.c
  *
- *     Created on: MAY 16, 2023
+ *     Created on: May 16, 2023
  *         Author: Mohamed Abdelsalam - https://github.com/m3adel
  *    Description: This file contains all Digital Input Output (DIO) functions' implementation.
  *  MCU Datasheet: AVR ATmega32 - https://ww1.microchip.com/downloads/en/DeviceDoc/Atmega32A-DataSheet-Complete-DS40002072A.pdf
@@ -15,11 +15,11 @@
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_init
- Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Direction_en en_a_direction
+ Input: en PortNumber, en PinNumber, and en PinDirection
  Output: void
  Description: Function to initialize Pin direction.
 */
-void DIO_init (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINDirection en_a_pinDirection)
+void DIO_init ( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber, EN_DIO_PinDirection en_a_pinDirection )
 {
 	switch(en_a_portNumber)
 	{
@@ -69,11 +69,11 @@ void DIO_init (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumbe
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_write
- Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,dio_Port_value_en en_a_value
+ Input: en PortNumber, en PinNumber, and en PinValue
  Output: void
  Description: Function to set Pin value.
 */
-void DIO_write (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, EN_DIO_PINValue en_a_pinValue)
+void DIO_write ( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber, EN_DIO_PinValue en_a_pinValue )
 {
 	switch(en_a_portNumber)
 	{
@@ -123,11 +123,11 @@ void DIO_write (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumb
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_read
- Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber,u8 *en_a_data
+ Input: en PortNumber, en PinNumber, and Pointer to u8 ReturnedData
  Output: void
  Description: Function to get Pin value.
 */
-void DIO_read (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber, u8 *pu8_a_returnedData)
+void DIO_read ( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber, u8 *pu8_a_returnedData )
 {	
 	switch(en_a_portNumber)
 	{
@@ -149,11 +149,11 @@ void DIO_read (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumbe
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_toggle
- Input: dio_Port_number_en en_a_portNumber,dio_Pin_number_en en_a_pinNumber
+ Input: en portNumber and en PinNumber
  Output: void
  Description: Function to toggle Pin value.
 */
-void DIO_toggle (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNumber)
+void DIO_toggle ( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber )
 {
 	switch(en_a_portNumber)
 	{
@@ -175,11 +175,11 @@ void DIO_toggle (EN_DIO_PortNumber en_a_portNumber, EN_DIO_PINNumber en_a_pinNum
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortDirection
- Input: dio_Port_number_en en_a_portNumber,u8 u8_a_PortDirection
+ Input: en PortNumber and en PortDirection
  Output: void
  Description: Function to set Port direction.
 */
-void DIO_setPortDirection (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portDirection)
+void DIO_setPortDirection ( EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portDirection )
 {
 	switch(en_a_portNumber)
 	{
@@ -201,11 +201,11 @@ void DIO_setPortDirection (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portDirect
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_setPortValue
- Input: dio_Port_number_en en_a_portNumber,u8 u8_a_PortValue
+ Input: en PortNumber and u8 PortValue
  Output: void
  Description: Function to set Port value.
 */
-void DIO_setPortValue (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portValue)
+void DIO_setPortValue ( EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portValue )
 {
 	switch(en_a_portNumber)
 	{
@@ -227,11 +227,11 @@ void DIO_setPortValue (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_portValue)
 /*******************************************************************************************************************************************************************/
 /*
  Name: DIO_getPortValue
- Input: dio_Port_number_en en_a_portNumber,u8 *u8_a_PortValue
+ Input: en PortNumber and Pointer to u8 ReturnedPortValue
  Output: void
  Description: Function to get Port value.
 */
-void DIO_getPortValue (EN_DIO_PortNumber en_a_portNumber, u8 *pu8_a_returnedPortValue)
+void DIO_getPortValue ( EN_DIO_PortNumber en_a_portNumber, u8 *pu8_a_returnedPortValue )
 {
 	switch(en_a_portNumber)
 	{
@@ -252,52 +252,54 @@ void DIO_getPortValue (EN_DIO_PortNumber en_a_portNumber, u8 *pu8_a_returnedPort
 
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_higher_nipple
- Input: dio_Port_number_en en_a_portNumber,u8 u8_a_data 
+ Name: DIO_setHigherNibble
+ Input: en portNumber and u8 Data
  Output: void
- Description: Function to set Higher Nipple of Port value.
+ Description: Function to set Higher Nibble of Port.
 */
-void DIO_setHigherNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data)
+void DIO_setHigherNibble ( EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data )
 {
 	switch(en_a_portNumber)
 	{
 		case A:
-			UPPER_NIPPLE( DIO_U8_PORTA_REG, u8_a_data );
-		break;
+			UPPER_NIBBLE( DIO_U8_PORTA_REG, u8_a_data );
+		break;	
 		case B:
-			UPPER_NIPPLE( DIO_U8_PORTB_REG, u8_a_data );
+			UPPER_NIBBLE( DIO_U8_PORTB_REG, u8_a_data );
 		break;
-		case C:
-			UPPER_NIPPLE( DIO_U8_PORTC_REG, u8_a_data );
+		case C:	
+			UPPER_NIBBLE( DIO_U8_PORTC_REG, u8_a_data );
 		break;
 		case D:
-			UPPER_NIPPLE( DIO_U8_PORTD_REG, u8_a_data );
+			UPPER_NIBBLE( DIO_U8_PORTD_REG, u8_a_data );
 		break;
 	}
 }
+
 /*******************************************************************************************************************************************************************/
 /*
- Name: DIO_lower_nipple
- Input: dio_Port_number_en en_a_portNumber,u8 u8_a_data 
+ Name: DIO_setLowerNibble
+ Input: en PortNumber and u8 Data
  Output: void
- Description: Function to set LOWER Nipple of Port value.
+ Description: Function to set LOWER Nibble of Port.
 */
-void DIO_setLowerNibble (EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data)
+void DIO_setLowerNibble ( EN_DIO_PortNumber en_a_portNumber, u8 u8_a_data )
 {
 	switch(en_a_portNumber)
 	{
 		case A:
-			LOWER_NIPPLE( DIO_U8_PORTA_REG, u8_a_data );
+			LOWER_NIBBLE( DIO_U8_PORTA_REG, u8_a_data );
 		break;
 		case B:
-			LOWER_NIPPLE( DIO_U8_PORTB_REG, u8_a_data );
+			LOWER_NIBBLE( DIO_U8_PORTB_REG, u8_a_data );
 		break;
 		case C:
-			LOWER_NIPPLE( DIO_U8_PORTC_REG, u8_a_data );
+			LOWER_NIBBLE( DIO_U8_PORTC_REG, u8_a_data );
 		break;
 		case D:
-			LOWER_NIPPLE( DIO_U8_PORTD_REG, u8_a_data );
+			LOWER_NIBBLE( DIO_U8_PORTD_REG, u8_a_data );
 		break;
 	}
 }
+
 /*******************************************************************************************************************************************************************/
