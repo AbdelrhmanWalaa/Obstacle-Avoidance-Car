@@ -27,7 +27,7 @@ u8 u8_g_select = APP_U8_CAR_ROTATE_RGT;
  Name: APP_initialization
  Input: void
  Output: void
- Description: Function to .
+ Description: Function to Initialize the Application.
 */ 
 void APP_initialization(void)
 {
@@ -47,7 +47,7 @@ void APP_initialization(void)
  Name: APP_startProgram
  Input: void
  Output: void
- Description: Function to 
+ Description: Function to Start the basic flow of the Application. 
 */
 void APP_startProgram  (void)
 {
@@ -334,7 +334,7 @@ void APP_startProgram  (void)
  Name: APP_stopCar
  Input: void
  Output: void
- Description: Function to 
+ Description: Function to Stop the car. 
 */
 vd APP_stopCar( void )
 {
