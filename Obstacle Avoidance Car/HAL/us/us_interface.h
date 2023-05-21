@@ -12,6 +12,7 @@
 /*============= FILE INCLUSION =============*/
 #include "../icu/icu_interface.h"
 #include "../../MCAL/dio/dio_interface.h"
+#include <math.h>
 
 /*============= MACRO DEFINITION =============*/
 #define HIGH 1
@@ -30,10 +31,10 @@
   a_triggerPin:trigger pin
   en_a_echoPin: interrupt source pin [EN_INT0,EN_INT1,EN_INT2]
  */
-void Ultrasonic_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin);
+void US_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin);
 
 // Description :function to read distance of from the sensor
-u16 Ultrasonic_readDistance(void);
+u16 US_readDistance(void);
 
 
 

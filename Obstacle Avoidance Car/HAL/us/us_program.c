@@ -18,19 +18,19 @@ static u8 u8_g_triggerPin;			//to hold trigger pin id
 
 /*============= FUNCTION DEFINITION =============*/
 
-void Ultrasonic_edgeProcessing(void)
+void US_edgeProcessing(void)
 {
 	u8_g_edgeCount++;
 	if(u8_g_edgeCount==1)
 	{
-		Icu_clearTimerValue();
-		Icu_setEdgeDetectionType(FALLING);
+		ICU_clearTimerValue();
+		ICU_setEdgeDetectionType(FALLING);
 	}
 	else if(u8_g_edgeCount==2)
 	{
-		u16_g_timeHigh=Icu_getInputCaptureValue();
-		Icu_clearTimerValue();
-		Icu_setEdgeDetectionType(RISING);
+		u16_g_timeHigh=ICU_getInputCaptureValue();
+		ICU_clearTimerValue();
+		ICU_setEdgeDetectionType(RISING);
 	}
 }
 
@@ -45,30 +45,30 @@ void Ultrasonic_edgeProcessing(void)
   a_triggerPin:trigger pin
   en_a_echoPin: interrupt source pin [EN_INT0,EN_INT1,EN_INT2]
  */
-void Ultrasonic_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin)
+void US_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin)
 {
 	ST_ICU_ConfigType ST_L_IcuConfig={F_CPU_8,RISING,en_a_echoPin};
 	u8_g_triggerPort=a_triggerPort;
 	u8_g_triggerPin=a_triggerPin;
-	Icu_init(&ST_L_IcuConfig);
-	Icu_setCallBack(Ultrasonic_edgeProcessing);
+	ICU_init(&ST_L_IcuConfig);
+	ICU_setCallBack(US_edgeProcessing);
 	DIO_init(a_triggerPort, a_triggerPin, OUT);		 //setup trigger pin direction as output
 	DIO_write(a_triggerPort, a_triggerPin, LOW);
 }
 
 
-void Ultrasonic_Trigger(void)
+void US_Trigger(void)
 {
 	DIO_write(u8_g_triggerPort, u8_g_triggerPin,HIGH);
 	//_delay_us(10);
-	TMR0_Delay_MS(1);
+	TMR0_delayMS(1);
 	DIO_write(u8_g_triggerPort, u8_g_triggerPin,LOW);
 }
 
-u16 Ultrasonic_readDistance(void)
+u16 US_readDistance(void)
 {
 	u16 u16_L_value=0;
-	Ultrasonic_Trigger();
+	US_Trigger();
 	while(u8_g_edgeCount != 2);   //wait until ultrasonic sound to travel towards the object and return.
 	u16_L_value=((u16)u16_g_timeHigh/58);
 	u8_g_edgeCount=0;            //clear edge count to be ready for new read

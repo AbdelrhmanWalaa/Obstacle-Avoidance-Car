@@ -20,13 +20,13 @@ static EN_ICU_Source EN_g_source;
  * 	3. Enable the External Interrupt source.
  * 	4. Initialize Timer1 Registers
  */
-void Icu_init(const ST_ICU_ConfigType * Config_Ptr)
+void ICU_init(const ST_ICU_ConfigType * Config_Ptr)
 {
 	ST_TME1_ConfigType ST_L_Timer;
 	ST_L_Timer.CLK_source=Config_Ptr->clock;
 	ST_L_Timer.TMR_mode=Normal;
 	ST_L_Timer.INT_state=Disable;
-	TMR1_Init(&ST_L_Timer);
+	TMR1_init(&ST_L_Timer);
 	EXI_enablePIE(Config_Ptr->source,Config_Ptr->edge);
 	EN_g_edge=Config_Ptr->edge;
 	EN_g_source=Config_Ptr->source;
@@ -35,7 +35,7 @@ void Icu_init(const ST_ICU_ConfigType * Config_Ptr)
 /*
  * Description: Function to set the Call Back function address.
  */
-void Icu_setCallBack(void(*a_ptr)(void))
+void ICU_setCallBack(void(*a_ptr)(void))
 {
 	EXI_intSetCallBack(EN_g_source,a_ptr);
 }
@@ -43,7 +43,7 @@ void Icu_setCallBack(void(*a_ptr)(void))
 /*
  * Description: Function to set the required edge detection.
  */
-void Icu_setEdgeDetectionType(const EN_ICU_EdgeType edgeType)
+void ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType)
 {
 	if(edgeType==RISING)
 		EXI_enablePIE(EN_g_source,EXI_U8_SENSE_RISING_EDGE);
@@ -55,24 +55,24 @@ void Icu_setEdgeDetectionType(const EN_ICU_EdgeType edgeType)
  * Description: Function to get the Timer1 Value when the input is captured
  *              The value stored at Input Capture Register ICR1
  */
-u16 Icu_getInputCaptureValue(void)
+u16 ICU_getInputCaptureValue(void)
 {
-	return TMR1_ReadTime();
+	return TMR1_readTime();
 }
 
 /*
  * Description: Function to clear the Timer1 Value to start count from ZERO
  */
-void Icu_clearTimerValue(void)
+void ICU_clearTimerValue(void)
 {
-	TMR1_Clear();
+	TMR1_clear();
 }
 
 /*
  * Description: Function to disable the Timer1 to stop the ICU Driver
  */
-void Icu_DeInit(void)
+void ICU_DeInit(void)
 {
 	EXI_disablePIE(EN_g_source);
-	TMR1_Stop();
+	TMR1_stop();
 }

@@ -26,6 +26,10 @@
 #define TMR_U16_TMR_2_256_PRESCALER					256
 #define TMR_U16_TMR_2_1024_PRESCALER				1024
 
+/* PWM Flag States */
+#define PWM_U8_FLAG_DOWN							0
+#define PWM_U8_FLAG_UP								1
+
 /* End of Configurations */
 
 /*******************************************************************************************************************************************************************/

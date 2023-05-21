@@ -30,18 +30,18 @@ static const u8 Au8_gs_colsPins[2] = { KPD_U8_C1_PIN, KPD_U8_C2_PIN };
 void KPD_initialization( void )
 {
 	/* Set the One Row Pin to Output, therefore One Pin is Output */
-	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, OUT );
+	DIO_init( KPD_U8_OUTPUT_PORT, KPD_U8_OUTPUT_PIN1, OUT );
 	
 	/* Set the two Col Pins to Input, therefore two Pins are Input */
-	DIO_init( KPD_U8_INPUT_PIN1, KPD_U8_INPUT_PORT, IN );
-	DIO_init( KPD_U8_INPUT_PIN2, KPD_U8_INPUT_PORT, IN );
+	DIO_init( KPD_U8_INPUT_PORT, KPD_U8_INPUT_PIN1,IN );
+	DIO_init( KPD_U8_INPUT_PORT, KPD_U8_INPUT_PIN2,IN );
 	
 	/* Write High on one output pins */
-	DIO_write( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, HIGH );
+	DIO_write( KPD_U8_OUTPUT_PORT, KPD_U8_OUTPUT_PIN1, HIGH );
 	
 	/* Enable internal Pull-up resistor on two input pins */
-	DIO_write( KPD_U8_INPUT_PIN1, KPD_U8_INPUT_PORT, HIGH );
-	DIO_write( KPD_U8_INPUT_PIN2, KPD_U8_INPUT_PORT, HIGH );
+	DIO_write( KPD_U8_INPUT_PORT, KPD_U8_INPUT_PIN1, HIGH );
+	DIO_write( KPD_U8_INPUT_PORT, KPD_U8_INPUT_PIN2, HIGH );
 }
 
 /*******************************************************************************************************************************************************************/
@@ -54,9 +54,9 @@ void KPD_initialization( void )
 void KPD_enableKPD     ( void )
 {
 	/* Set the one Pin configured Output to Output, in order to enable or re-enable the KPD, therefore one Pin is Output, and the other two are Input */
-	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, OUT );
+	DIO_init( KPD_U8_OUTPUT_PORT, KPD_U8_OUTPUT_PIN1, OUT );
 	
-	DIO_write( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, HIGH );
+	DIO_write( KPD_U8_OUTPUT_PORT, KPD_U8_OUTPUT_PIN1, HIGH );
 }
 
 /*******************************************************************************************************************************************************************/
@@ -69,7 +69,7 @@ void KPD_enableKPD     ( void )
 void KPD_disableKPD    ( void )
 {
 	/* Set the one Pin configured Output to Input, in order to disable the KPD, therefore all KPD pins are Input */
-	DIO_init( KPD_U8_OUTPUT_PIN1, KPD_U8_OUTPUT_PORT, IN );
+	DIO_init( KPD_U8_OUTPUT_PORT, KPD_U8_OUTPUT_PIN1, IN );
 }
 
 /*******************************************************************************************************************************************************************/
@@ -97,29 +97,30 @@ u8 KPD_getPressedKey   ( u8 *pu8_a_returnedKeyValue )
 		for ( u8 Loc_u8RowsCounter = 0; Loc_u8RowsCounter < 1; Loc_u8RowsCounter++ )
 		{
 			/* Step 2: Activate Row ( i.e. Set Pin Low ) */
-            DIO_write( Au8_gs_rowsPins[Loc_u8RowsCounter], KPD_U8_OUTPUT_PORT, LOW );
+            DIO_write( KPD_U8_OUTPUT_PORT, Au8_gs_rowsPins[Loc_u8RowsCounter], LOW );
 
 			/* Loop: On Columns -> Input ( i.e. Get Pin ) */
 			for ( u8 Loc_u8ColsCounter = 0; Loc_u8ColsCounter <= 1; Loc_u8ColsCounter++ )
 			{
 				/* Step 3: Get the value of each Key */
-				DIO_read( Au8_gs_colsPins[Loc_u8ColsCounter], KPD_U8_INPUT_PORT, &u8_l_pinValue );
+				DIO_read( KPD_U8_INPUT_PORT, Au8_gs_colsPins[Loc_u8ColsCounter], &u8_l_pinValue );
 
 				/* Check 1.1.1: Key is Pressed */
 				if ( u8_l_pinValue == LOW )
 				{
 					/* Push buttons often generate spurious open/close transitions when pressed, due to mechanical and physical issues: these transitions may be read as multiple presses in a very short time fooling the program. This example demonstrates how to debounce an input, which means checking twice in a short period of time to make sure the pushbutton is definitely pressed. Without debouncing, pressing the button once may cause unpredictable results. */
 					/* Delay debouncing time of the Key */
-					_delay_ms( 20 );
+					//_delay_ms( 20 );
+					TMR0_delayMS( 20 );
 					
 					/* Step 4: Recheck if the Key is still Pressed */
-					DIO_read( Au8_gs_colsPins[Loc_u8ColsCounter], KPD_U8_INPUT_PORT, &u8_l_pinValue );
+					DIO_read( KPD_U8_INPUT_PORT, Au8_gs_colsPins[Loc_u8ColsCounter], &u8_l_pinValue );
 
 					/* This step assures releasing Key before returning the key value, to avoid returning multiple values for the same Press! */
 					/* Loop: Until releasing Key ( i.e. Pin value is High ) */
 					while ( u8_l_pinValue == LOW )
 					{
-						DIO_read( Au8_gs_colsPins[Loc_u8ColsCounter], KPD_U8_INPUT_PORT, &u8_l_pinValue );
+						DIO_read( KPD_U8_INPUT_PORT, Au8_gs_colsPins[Loc_u8ColsCounter], &u8_l_pinValue );
 					}
 					
 					/* Step 5: Update ReturnedKeyValue with the Pressed Key value */
@@ -134,7 +135,7 @@ u8 KPD_getPressedKey   ( u8 *pu8_a_returnedKeyValue )
 			}
 
 			/* Step 8: Deactivate Row ( i.e. Set Pin High ) */
-			DIO_write( Au8_gs_rowsPins[Loc_u8RowsCounter], KPD_U8_OUTPUT_PORT, HIGH );
+			DIO_write( KPD_U8_OUTPUT_PORT, Au8_gs_rowsPins[Loc_u8RowsCounter], HIGH );
 
 			/* Check 1.1: Flag is Found */
 			if ( u8_l_keyFlag == KPD_U8_KEY_FOUND )

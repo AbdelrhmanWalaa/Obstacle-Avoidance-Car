@@ -2,7 +2,7 @@
 * app_program.c
 *
 *   Created on: May 16, 2023
-*       Author: Team 3 - https://github.com/AbdelrhmanWalaa/Obstacle-Avoidance-Car.git
+*       Author: Bits 0101 Tribe - https://github.com/AbdelrhmanWalaa/Obstacle-Avoidance-Car.git
 *  Description: This file contains all Application (APP) functions' implementation.
 */
 
@@ -15,182 +15,347 @@
 
 DCM_ST_CONFIG ast_g_DCMs[2] =
 {
-	{ APP_U8_DCM_R_DIR_CW_PORT, APP_U8_DCM_R_DIR_CW_PIN, APP_U8_DCM_R_DIR_CCW_PORT, APP_U8_DCM_R_DIR_CCW_PIN, APP_U8_DCM_R_PWM_PORT, APP_U8_DCM_R_PWM_PIN },
-	{ APP_U8_DCM_L_DIR_CW_PORT, APP_U8_DCM_L_DIR_CW_PIN, APP_U8_DCM_L_DIR_CCW_PORT, APP_U8_DCM_L_DIR_CCW_PIN, APP_U8_DCM_L_PWM_PORT, APP_U8_DCM_L_PWM_PIN }
+	{ APP_U8_DCM_R_DIR_CW_PORT, APP_U8_DCM_R_DIR_CW_PIN, APP_U8_DCM_R_DIR_CCW_PORT, APP_U8_DCM_R_DIR_CCW_PIN },
+	{ APP_U8_DCM_L_DIR_CW_PORT, APP_U8_DCM_L_DIR_CW_PIN, APP_U8_DCM_L_DIR_CCW_PORT, APP_U8_DCM_L_DIR_CCW_PIN }
 };
  
- /* Global variable to store appMode */
- // static u8 u8_gs_appMode = APP_CAR_STOP;
- // static u8 u8_gs_diagonalFlag = APP_LONG_DGNL;
+/* Global variable to store appMode */
+u8 u8_g_select = APP_U8_CAR_ROTATE_RGT;
  
 /*******************************************************************************************************************************************************************/
 /*
- Name: DCM_controlDCM
- Input: Pointer to st DCMConfig, u8 ControlMode, and u8 SpeedPercentage
- Output: u8 Error or No Error
- Description: Function Control DCM with one of DCM Modes.
+ Name: APP_initialization
+ Input: void
+ Output: void
+ Description: Function to .
 */ 
 void APP_initialization(void)
 {
 	/* MCAL Initialization */
 	GLI_enableGIE();
-	//
-	// 	EXI_intSetCallBack( EXI_U8_INT0, &APP_stopCar );
-	// 	EXI_enablePIE( EXI_U8_INT0, EXI_U8_SENSE_FALLING_EDGE );
-	// 	DCM_motorInit(&u8Ptr_g_suddenBreakPtr);
-	//
-	// 	u8_gs_appMode = APP_CAR_STOP;
-	//LCD_init();
-	//KPD_initialization();
-	 
+	
+	/* HAL Initialization */
+	BTN_init( C, P4 );
+	LCD_init();
+	KPD_initialization();
+	US_init( B, P3, EN_INT2 );
 	DCM_initialization( ast_g_DCMs );
-	 
-	// 	PWM_initialization( DIO_U8_PORTD, DIO_U8_PIN0, 1 );
-	//
-	// 	PWM_generatePWM( 50 );
-	//
-	// 	TMR2_PWM_Init (1, 3, 0);
-	// 	TMR2_PWM_start(50);
-	DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CCW, 10 );
 }
 
 /*******************************************************************************************************************************************************************/
 /*
  Name: APP_startProgram
- Input: 
- Output: 
- Description: 
+ Input: void
+ Output: void
+ Description: Function to 
 */
-void APP_startProgram(void)
+void APP_startProgram  (void)
 {
-// 	u8 u8_l_keyValue = KPD_U8_KEY_NOT_PRESSED;
-// 
-// 	while ( u8_l_keyValue != '1' )
-// 	{
-// 		KPD_getPressedKey( &u8_l_keyValue );
-// 	}
- 
+	u8 u8_l_keyValue = KPD_U8_KEY_NOT_PRESSED;
+	u8 u8_l_btnValue;
+
+	while ( u8_l_keyValue != '1' )
+	{
+		KPD_getPressedKey( &u8_l_keyValue );
+	}
+	
+	TMR0_timeoutMS( 5000 );
+	
+	LCD_setCursor( 0, 0 );
+	LCD_sendString( ( u8* ) "Set Def. Rot." );
+	
+	while( !g_timeout_flag )
+	{
+		LCD_setCursor( 1, 0 );
+		
+		if ( u8_g_select == APP_U8_CAR_ROTATE_RGT )
+		{
+			LCD_sendString( ( u8* ) "Right" );
+		}
+		else
+		{
+			LCD_sendString( ( u8* ) "Left" );
+		}
+
+		BTN_read( C, P4, &u8_l_btnValue );
+		
+		if ( u8_l_btnValue == LOW )
+		{
+			u8_g_select = ~u8_g_select;
+			
+			while ( u8_l_btnValue == LOW )
+			{
+				BTN_read( C, P4, &u8_l_btnValue );
+			}
+		}
+	}
+	
+	LCD_clear();
+
+	DCM_controlDCMSpeed( 30 );
+	DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+	DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+	
+	LCD_setCursor( 0, 0 );
+	LCD_sendString( ( u8* ) "Speed:00% Dir:S" );
+	
+	TMR0_delayMS( 2000 );
+	
+	u16 u16_l_distance = 0;
+	
+	u16_l_distance = US_readDistance();
+	
+	LCD_setCursor( 1, 0 );
+	
+	LCD_sendString( ( u8* ) "Dist.:     cm");
+	LCD_setCursor( 1, 7 );
+	LCD_floatToString( u16_l_distance );
+	
 	/* Toggle forever */
 	while (1)
 	{
- 
-	 //PWM_generatePWM( 50 );
-	 // 		if ( u8_l_keyValue != KPD_U8_KEY_NOT_PRESSED )
-	 // 		{
-	 // 			LCD_sendCharacter( u8_l_keyValue );
-	 //
-	 // 			switch (u8_l_keyValue)
-	 // 			{
-	 // 				case '1':  break;
-	 // 				case '2':  break;
-	 // 			}
-	 // 		}
- 
- // 		/* Check 1: Required appMode */
- // 		switch ( u8_gs_appMode )
- // 		{
-// 			case APP_CAR_STOP:
-// 			
-// 				/* Step A1: Turn on red LED, and turn off other LEDs */
-// 				LED_arrayOff( PORT_A, DIO_MASK_BITS_0_1_2 );
-// 				LED_on( PORT_A, APP_STOP_LED );
-// 				/* Step A2: Stop both motors */
-// 				DCM_stopDCM();
-// 			
-// 				break;
-// 			
-// 			case APP_CAR_START:
-// 			
-// 				/* Step B1: Delay 1 sec. */
-// 				TIMER_timer0Delay( APP_STARTING_DELAY );
-// 			
-// 				/* Check 1.1: appMode is not "CAR_STOP" mode */
-// 				if ( u8_gs_appMode != APP_CAR_STOP )
-// 				{
-// 					/* Step B2: Update appMode to "CAR_MOVE_FWD_LD" mode */
-// 					u8_gs_appMode = APP_CAR_MOVE_FWD_LD;
-// 				}
-// 				break;
-// 			
-// 			case APP_CAR_MOVE_FWD_LD:
-// 			
-// 				/* Step C1: Update diagonalFlag to "LONG_DGNL" */
-// 				u8_gs_diagonalFlag = APP_LONG_DGNL;
-// 				/* Step C2: Turn on green(LD) LED, and turn off other LEDs */
-// 				LED_arrayOff( PORT_A, DIO_MASK_BITS_1_2_3 );
-// 				LED_on( PORT_A, APP_MOVE_FWD_LD_LED );
-// 				/* Step C3: Car moves for 3 sec. with 50% of speed */
-// 				TIMER_timer2Delay( APP_FWD_LD_DURATION );
-// 				DCM_setDutyCycleOfPWM( APP_FWD_LD_DUTY );
-// 				DCM_stopDCM();
-// 			
-// 				/* Check 1.2: appMode is not "CAR_STOP" mode */
-// 				if ( u8_gs_appMode != APP_CAR_STOP )
-// 				{
-// 					/* Step C4: Update appMode to "CAR_ROT_90_DEG" mode */
-// 					u8_gs_appMode = APP_CAR_ROT_90_DEG;
-// 				}
-// 				break;
-// 			
-// 			case APP_CAR_ROT_90_DEG:
-// 			
-// 				/* Step D1: Turn on yellow LED, and turn off other LEDs */
-// 				LED_arrayOff( PORT_A, DIO_MASK_BITS_0_1_3 );
-// 				LED_on( PORT_A, APP_ROTATE_LED );
-// 				/* Step D2: Delay 0.5 sec. */
-// 				TIMER_timer0Delay( APP_ROTATION_DELAY );
-// 				/* Step D3: Car rotates for 620 msec. with 50% of speed */
-// 				TIMER_timer2Delay( APP_ROTATION_DURATION );
-// 				DCM_rotateDCM();
-// 				DCM_stopDCM();
-// 				/* Step D4: Delay 0.5 sec. */
-// 				TIMER_timer0Delay( APP_ROTATION_DELAY );
-// 			
-// 				/* Check 1.3: appMode is not "CAR_STOP" mode */
-// 				if ( u8_gs_appMode != APP_CAR_STOP )
-// 				{
-// 					/* Step D5: Update appMode to "CAR_MOVE_FWD_SD" or "CAR_MOVE_FWD_LD" modes */
-// 					/* Check 1.3.1: Required diagonalFlag  */
-// 					switch ( u8_gs_diagonalFlag )
-// 					{
-// 						case APP_SHORT_DGNL:
-// 						u8_gs_appMode = APP_CAR_MOVE_FWD_LD;
-// 						break;
-// 						case APP_LONG_DGNL :
-// 						u8_gs_appMode = APP_CAR_MOVE_FWD_SD;
-// 						break;
-// 						default:
-// 						u8_gs_diagonalFlag = APP_LONG_DGNL;
-// 						u8_gs_appMode = APP_CAR_MOVE_FWD_LD;
-// 					}
-// 				}
-// 				break;
-// 				
-// 			case APP_CAR_MOVE_FWD_SD:
-// 				
-// 				/* Step E1: Update diagonalFlag to "SHORT_DGNL" */
-// 				u8_gs_diagonalFlag = APP_SHORT_DGNL;
-// 				/* Step E2: Turn on green(SD) LED, and turn off other LEDs */
-// 				LED_arrayOff( PORT_A, DIO_MASK_BITS_0_2_3 );
-// 				LED_on( PORT_A, APP_MOVE_FWD_SD_LED );
-// 				/* Step E3: Car moves for 2 sec. with 30% of speed */
-// 				TIMER_timer2Delay( APP_FWD_SD_DURATION );
-// 				DCM_setDutyCycleOfPWM( APP_FWD_SD_DUTY );
-// 				
-// 				/* Check 1.4: appMode is not "CAR_STOP" mode */
-// 				if ( u8_gs_appMode != APP_CAR_STOP )
-// 				{
-// 				/* Step E4: Update appMode to "CAR_ROT_90_DEG" mode */
-// 				u8_gs_appMode = APP_CAR_ROT_90_DEG;
-// 				}
-// 				break;
-// 				
-// 			default:
-// 				u8_gs_appMode = APP_CAR_STOP;
-// 				u8_gs_diagonalFlag = APP_LONG_DGNL;
-// 				break;
-/*		}*/
+		/************************************************************************************/
+		/*****************************First State********************************************/
+		/************************************************************************************/
+		u16_l_distance = US_readDistance();
+		
+		LCD_setCursor( 1, 7 );
+		LCD_floatToString(u16_l_distance);
+			
+		if ( u16_l_distance > 70 )
+		{
+			TMR0_timeoutMS( 5000 );
+			
+			while( !g_timeout_flag && u16_l_distance > 70 )
+			{
+				DCM_controlDCMSpeed( 30 );
+				DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CW );
+				DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CW );
+				
+				u16_l_distance = US_readDistance();
+				
+				LCD_setCursor( 0, 6 );
+				LCD_sendString( ( u8* ) "30" );
+				LCD_setCursor( 0,14 );
+				LCD_sendCharacter( 'F' );
+				LCD_setCursor( 1, 7 );
+				LCD_floatToString( u16_l_distance );
+				
+				APP_stopCar();
+			}
+			while( u16_l_distance > 70 )
+			{
+				DCM_controlDCMSpeed( 50 );
+				DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CW );
+				DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CW );
+				
+				u16_l_distance = US_readDistance();
+				
+				LCD_setCursor( 0, 6 );
+				LCD_sendString( ( u8* ) "50" );
+				LCD_setCursor( 0, 14 );
+				LCD_sendCharacter( 'F' );
+				LCD_setCursor( 1, 7 );
+				LCD_floatToString( u16_l_distance );
+				
+				APP_stopCar();
+			}
+		}
+		/************************************************************************************/
+		/*****************************Second State*******************************************/
+		/************************************************************************************/
+		else if ( ( u16_l_distance <= 70 ) && ( u16_l_distance > 30 ) )
+		{
+			DCM_controlDCMSpeed( 30 );
+			DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CW );
+			DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CW );
+			
+			u16_l_distance = US_readDistance();
+			
+			LCD_setCursor( 0, 6 );
+			LCD_sendString( ( u8* ) "30" );
+			LCD_setCursor( 0, 14 );
+			LCD_sendCharacter( 'F' );
+			LCD_setCursor( 1, 7 );
+			LCD_floatToString( u16_l_distance );
+			
+			APP_stopCar();
+		}
+		/************************************************************************************/
+		/*****************************Third State********************************************/
+		/************************************************************************************/
+		else if ( ( u16_l_distance <= 30 ) && ( u16_l_distance > 20 ) )
+		{
+			DCM_controlDCMSpeed( 30 );
+			DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+			DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+			
+			u16_l_distance = US_readDistance();
+			
+			LCD_setCursor( 0,6 );
+			LCD_sendString( ( u8* ) "00" );
+			LCD_setCursor(0,14);
+			LCD_sendCharacter('S');
+			
+			while( u16_l_distance <= 30 )
+			{
+				DCM_controlDCMSpeed( 30 );
+				DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CCW );
+				DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CCW );
+				
+				u16_l_distance = US_readDistance();
+				
+				LCD_setCursor( 0, 6 );
+				LCD_sendString( ( u8* ) "30" );
+				LCD_setCursor( 0, 14 );
+				LCD_sendCharacter( 'B' );
+				LCD_setCursor( 1 ,7 );
+				LCD_floatToString( u16_l_distance );
+				APP_stopCar();
+			}
+			
+			if ( u8_g_select == APP_U8_CAR_ROTATE_RGT )
+			{
+				DCM_controlDCMSpeed( 30 );
+				DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CCW );
+				DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CW );
+				
+				LCD_setCursor( 0 ,6 );
+				LCD_sendString( ( u8* ) "30" );
+				LCD_setCursor( 0, 14 );
+				LCD_sendCharacter( 'R' );
+			}
+			
+			else
+			{
+				DCM_controlDCMSpeed( 30 );
+				DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CW );
+				DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CCW );
+				
+				LCD_setCursor( 0, 6 );
+				LCD_sendString( ( u8* ) "30" );
+				LCD_setCursor( 0, 14 );
+				LCD_sendCharacter( 'R' );
+			}
+			
+			TMR0_delayMS( 600 );
+			
+			u16_l_distance = US_readDistance();
+			
+			LCD_setCursor( 1, 7 );
+			LCD_floatToString( u16_l_distance );
+			
+			DCM_controlDCMSpeed( 30 );
+			DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+			DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+			
+			LCD_setCursor( 0, 6 );
+			LCD_sendString( ( u8* ) "00" );
+			LCD_setCursor( 0, 14 );
+			LCD_sendCharacter( 'S' );
+			APP_stopCar();
+		}
+		/************************************************************************************/
+		/*****************************Forth State********************************************/
+		/************************************************************************************/
+		else if ( u16_l_distance <= 20 )
+		{
+			DCM_controlDCMSpeed( 30 );
+			DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+			DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+			
+			u16_l_distance = US_readDistance();
+			
+			LCD_setCursor( 0, 6 );
+			LCD_sendString( ( u8* ) "00" );
+			LCD_setCursor( 0, 14 );
+			LCD_sendCharacter( 'S' );
+			LCD_setCursor( 1, 7 );
+			LCD_floatToString( u16_l_distance );
+			
+			u8 u8_l_counter = 0;
+			
+			while ( ( u8_l_counter < 4 ) && ( u16_l_distance <= 20 ) )
+			{
+				APP_stopCar();
+				
+				u16_l_distance = US_readDistance();
+				
+				u8_l_counter++;
+				
+				if ( u8_g_select == APP_U8_CAR_ROTATE_RGT )
+				{
+					DCM_controlDCMSpeed( 30 );
+					DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CCW );
+					DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CW );
+					
+					LCD_setCursor( 1, 0 );
+					LCD_sendString((u8*)"Speed:30% Dir:R");
+				}
+				
+				else
+				{
+					DCM_controlDCMSpeed( 30 );
+					DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_ROTATE_CW );
+					DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_ROTATE_CCW );
+					
+					LCD_setCursor( 1, 0 );
+					LCD_sendString( ( u8* ) "Speed:30% Dir:R" );
+				}
+				
+				TMR0_delayMS( 600 );
+			}
+			
+			if ( u8_l_counter == 4 )
+			{
+				while( u16_l_distance <= 20 )
+				{
+					DCM_controlDCMSpeed( 30 );
+					DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+					DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+					
+					u16_l_distance = US_readDistance();
+					
+					LCD_setCursor( 0, 6 );
+					LCD_sendString( ( u8* ) "00" );
+					LCD_setCursor( 0, 14 );
+					LCD_sendCharacter( 'S' );
+					APP_stopCar();
+				}
+			}
+			
+			APP_stopCar();
+		}
 	}
+}
+
+/*******************************************************************************************************************************************************************/
+/*
+ Name: APP_stopCar
+ Input: void
+ Output: void
+ Description: Function to 
+*/
+vd APP_stopCar( void )
+{
+	u8 u8_l_keyValue = KPD_U8_KEY_NOT_PRESSED;
+	
+	KPD_getPressedKey( &u8_l_keyValue );
+	
+	if ( u8_l_keyValue == '2' )
+	{
+		DCM_controlDCMSpeed( 30 );
+		DCM_controlDCM( &ast_g_DCMs[0], DCM_U8_STOP );
+		DCM_controlDCM( &ast_g_DCMs[1], DCM_U8_STOP );
+		
+		LCD_setCursor( 0, 0 );
+		LCD_sendString( ( u8* ) "Speed:00% Dir:S" );
+		
+		while ( u8_l_keyValue != '1' )
+		{
+			KPD_getPressedKey( &u8_l_keyValue );
+		}
+	}	
 }
 
 /*******************************************************************************************************************************************************************/

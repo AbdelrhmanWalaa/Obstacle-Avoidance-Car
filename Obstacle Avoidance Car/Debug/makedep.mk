@@ -8,13 +8,13 @@ HAL\btn\btn_program.c
 
 HAL\dcm\dcm_program.c
 
-HAL\icu\icu_interface.c
+HAL\icu\icu_program.c
 
 HAL\kpd\kpd_program.c
 
 HAL\lcd\lcd_program.c
 
-HAL\us\us_interface.c
+HAL\us\us_program.c
 
 main.c
 
@@ -26,9 +26,7 @@ MCAL\gli\gli_program.c
 
 MCAL\pwm\pwm_program.c
 
-MCAL\tmr0\tmr0_interface.c
+MCAL\tmr0\tmr0_program.c
 
-MCAL\tmr1\tmr1_interface.c
-
-MCAL\tmr2\tmr2_interface.c
+MCAL\tmr1\tmr1_program.c
 

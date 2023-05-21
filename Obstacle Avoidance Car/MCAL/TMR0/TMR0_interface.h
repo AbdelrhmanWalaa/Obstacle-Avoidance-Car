@@ -28,13 +28,13 @@ extern volatile u8 g_timeout_flag;
 Description
 use to apply block delay using overflow mode 
 */
-void TMR0_Delay_MS(f32 delay);
+void TMR0_delayMS(f32 delay);
 
 /*
 Description
 use to stop timer functionality
 */
-void TMR0_Stop(void);
+void TMR0_stop(void);
 
 
 /*
@@ -42,7 +42,7 @@ Description
 use to call event after elapse timeout delay using overflow mode
 minimum delay is (1 ms)
 */
-void TMR0_CallEvent(f32 delay,void(*g_ptr)(void));
+void TMR0_callEvent(f32 delay,void(*g_ptr)(void));
 
 /*
 Description:use to apply timeout function using compare match mode 
@@ -53,7 +53,7 @@ for example:
 assume OCR register (0--255) 
 max_timeout = MAX_DELAY_COMP_MODE * OCR
 */
-void TMR0_TimeOut_Ms(f32 delay); 
+void TMR0_timeoutMS(f32 delay); 
 
 //void TMR0_OVFSetCallBack (void(*g_ptr)(void));
 //void TMR0_CMPSetCallBack (void(*g_ptr)(void));

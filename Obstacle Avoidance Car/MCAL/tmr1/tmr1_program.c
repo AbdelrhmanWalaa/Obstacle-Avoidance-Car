@@ -19,7 +19,7 @@
 #define ZERO_VALUE			0
 /*============= FUNCTION DEFINITION =============*/
 
-void TMR1_Init (ST_TME1_ConfigType* TMR_config)
+void TMR1_init (ST_TME1_ConfigType* TMR_config)
 {
 	//set timer initial value
 	TCNT1 = ZERO_VALUE;
@@ -45,18 +45,18 @@ void TMR1_Init (ST_TME1_ConfigType* TMR_config)
 		TCCR1A = (1<<FOC1A) | (1<<FOC1B);
 	}
 }
-u16 TMR1_ReadTime(void)
+u16 TMR1_readTime(void)
 {
 	//return timer/counter register
 	return TCNT1 ;
 }
-void TMR1_Clear(void)
+void TMR1_clear(void)
 {
 	//reset timer/counter register
 	TCNT1 = ZERO_VALUE;
 }
 
-void TMR1_Stop(void)
+void TMR1_stop(void)
 {
 	//stop timer clock
 	TCCR1B=ZERO_VALUE;

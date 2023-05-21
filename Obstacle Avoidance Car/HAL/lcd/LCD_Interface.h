@@ -17,11 +17,11 @@
 /* LIB */
 #include "../../LIB/std_types/std_types.h"
 #include "../../LIB/bit_math/bit_math.h"
-#include "../../LIB/MCU_Config/MCU_Config.h"
+#include "../../LIB/mcu_config/mcu_config.h"
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
-//#include "../../MCAL/tmr/tmr_interface.h"
+#include "../../MCAL/tmr0/tmr0_interface.h"
 
 /*******************************************************************************************************************************************************************/
 

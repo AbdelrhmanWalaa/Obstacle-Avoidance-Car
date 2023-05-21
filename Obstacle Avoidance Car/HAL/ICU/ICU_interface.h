@@ -50,32 +50,32 @@ typedef struct
  * 	3. Enable the External Interrupt source and edge.
  * 	4. Initialize Timer1 Registers
  */
-void Icu_init(const ST_ICU_ConfigType * Config_Ptr);
+void ICU_init(const ST_ICU_ConfigType * Config_Ptr);
 
 /*
  * Description: Function to set the Call Back function address.
  */
-void Icu_setCallBack(void(*a_ptr)(void));
+void ICU_setCallBack(void(*a_ptr)(void));
 
 /*
  * Description: Function to set the required edge detection.
  */
-void Icu_setEdgeDetectionType(const EN_ICU_EdgeType edgeType);
+void ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType);
 
 /*
  * Description: Function to get the Timer1 Value when the external interrupt is capture edge
  *             
  */
-u16 Icu_getInputCaptureValue(void);
+u16 ICU_getInputCaptureValue(void);
 
 /*
  * Description: Function to clear the Timer1 Value to start count from ZERO
  */
-void Icu_clearTimerValue(void);
+void ICU_clearTimerValue(void);
 
 /*
  * Description: Function to disable the Timer1 and External interrupt to stop the ICU Driver
  */
-void Icu_DeInit(void);
+void ICU_DeInit(void);
 
 #endif /* ICU_INTERFACE_H_ */

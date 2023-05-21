@@ -18,7 +18,8 @@
 */
 void BTN_init( EN_DIO_PortNumber en_a_portNumber, EN_DIO_PinNumber en_a_pinNumber )
 {
-	DIO_init( en_a_portNumber, en_a_pinNumber, IN );
+	DIO_init( en_a_portNumber, en_a_pinNumber, IN );	
+	DIO_write( en_a_portNumber, en_a_pinNumber, HIGH );
 }
 
 /*******************************************************************************************************************************************************************/

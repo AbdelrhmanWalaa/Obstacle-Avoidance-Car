@@ -23,9 +23,9 @@ typedef struct{
 }ST_timer0_config;
 
 /*============= PRIVATE FUNCTIONS =============*/
-static inline u8 calc_prescaler(f32 delay,u16* prescale);
-static inline void calc_initialValue(u16 prescaler,u8* initial_value,f32 delay);
-static inline void set_prescale(u16 prescaler);
+static inline u8 TMR0_calculatePrescaler(f32 delay,u16* prescale);
+static inline void TMR0_calculateInitialValue(u16 prescaler,u8* initial_value,f32 delay);
+static inline void TMR0_setPrescale(u16 prescaler);
 
 /*============= FUNCTION DEFINITIONS =============*/
 /*
@@ -35,14 +35,14 @@ static inline void set_prescale(u16 prescaler);
  * calculate timer initial value
  */
 
-void TMR0_Delay_MS(f32 delay)
+void TMR0_delayMS(f32 delay)
 {
 	//delay-=5;
 	ST_timer0_config Time;
 	u8 real_part,reminder,count;
-	if(calc_prescaler(delay, &Time.prescaler))
+	if(TMR0_calculatePrescaler(delay, &Time.prescaler))
 	{
-		calc_initialValue(Time.prescaler, &Time.initial_value,delay);
+		TMR0_calculateInitialValue(Time.prescaler, &Time.initial_value,delay);
 		Time.NO_OF_OV=0;
 	}
 	else
@@ -57,7 +57,7 @@ void TMR0_Delay_MS(f32 delay)
 	TCNT0=Time.initial_value;
 	if(count==0)
 	{
-		set_prescale(Time.prescaler);
+		TMR0_setPrescale(Time.prescaler);
 		while(!(TIFR & (1<<TOV0)));
 	}
 	else
@@ -117,12 +117,12 @@ void TMR0_Delay_MS(f32 delay)
 	TCCR0 = FALSE;
 }
 
-void TMR0_Stop(void)
+void TMR0_stop(void)
 {
 	TIMSK &= ~(1<<TOIE0);
 }
 
-void TMR0_CallEvent(f32 delay,void(*g_ptr)(void))
+void TMR0_callEvent(f32 delay,void(*g_ptr)(void))
 {	
 	TIMSK |= (1<<TOIE0);
 	if(delay < MAX_DELAY_MS(P_1024))
@@ -141,38 +141,24 @@ void TMR0_CallEvent(f32 delay,void(*g_ptr)(void))
 	TCCR0 = (1<<FOC0) | (1<<CS02) | (1<<CS00);
 }
 
-void TMR0_TimeOut_Ms(f32 delay)
+void TMR0_timeoutMS(f32 delay)
 {
-	u8 divide_1=0;
-	u32 divide_2=0;
 	/*code to count time in milliseconds*/
-		if(delay < MAX_DELAY_MS(P_1024))
-		{
-			g_initial_value=delay;
-			NO_OF_OVERFLOWS=0;
-		}
-		else
-		{
-			for(u8 i=1;i< MAX_DELAY_COMP_MODE;i++)
-			{
-				divide_1=(f32)delay/i;
-				divide_2=(f32)delay/i;
-				if(divide_1 < MAX_COUNT)
-				{
-					if(divide_1==divide_2)
-					{
-						g_initial_value=divide_1;
-						NO_OF_OVERFLOWS=i;
-						break;
-					}
-				}
-			}
-		}
-		TCNT0=0;
-		OCR0=g_initial_value;
-		TIMSK |= (1<<OCIE0);			//enable timer compare match interrupt
-		g_timeout_flag=0;				//set flag to default
-		TCCR0 = (1<<FOC0) | (1<<WGM01) | (1<<CS02) | (1<<CS00);
+	if(delay < MAX_DELAY_MS(P_1024))
+	{
+		g_initial_value=delay;
+		NO_OF_OVERFLOWS=0;
+	}
+	else
+	{
+		NO_OF_OVERFLOWS = ((f32)delay/MAX_DELAY_MS(P_1024));
+		g_initial_value = MAX_COUNT - 1;
+	}
+	TCNT0=0;
+	OCR0=g_initial_value;
+	TIMSK |= (1<<OCIE0);			//enable timer compare match interrupt
+	g_timeout_flag=0;				//set flag to default
+	TCCR0 = (1<<FOC0) | (1<<WGM01) | (1<<CS02) | (1<<CS00);
 }
 
 ISR_HANDLER(TMR0_CMP)
@@ -215,7 +201,7 @@ ISR_HANDLER(TMR0_OVF)
 	}
 }
 
-static inline u8 calc_prescaler(f32 delay,u16* prescale)
+static inline u8 TMR0_calculatePrescaler(f32 delay,u16* prescale)
 {
 	if(delay <= MAX_DELAY_MS(P_1024))
 	{
@@ -237,7 +223,7 @@ static inline u8 calc_prescaler(f32 delay,u16* prescale)
 		return FALSE;
 }
 
-static inline void calc_initialValue(u16 prescaler,u8* init_value,f32 delay)
+static inline void TMR0_calculateInitialValue(u16 prescaler,u8* init_value,f32 delay)
 {
 	switch(prescaler)
 	{
@@ -262,7 +248,7 @@ static inline void calc_initialValue(u16 prescaler,u8* init_value,f32 delay)
 	}
 }
 
-static inline void set_prescale(u16 prescaler)
+static inline void TMR0_setPrescale(u16 prescaler)
 {
 	switch(prescaler)
 	{

@@ -20,22 +20,21 @@
 
 /* MCAL */
 #include "../../MCAL/dio/dio_interface.h"
-//#include "../../MCAL/pwm/pwm_interface.h"
-#include "../../MCAL/tmr2/TMR2_interface.h"
+#include "../../MCAL/pwm/pwm_interface.h"
 
 /*******************************************************************************************************************************************************************/
 /* DCM Macros */
 
+/* DCM CW and CCW Configurations */
 typedef struct
 {
 	u8 u8_g_directionCWPort;
 	u8 u8_g_directionCWPin;
 	u8 u8_g_directionCCWPort;
-	u8 u8_g_directionCCWPin;
-	u8 u8_g_pwmPort;
-	u8 u8_g_pwmPin;
+	u8 u8_g_directionCCWPin;	
 } DCM_ST_CONFIG;
 
+/* DCM Control Modes */
 #define DCM_U8_STOP				0
 #define DCM_U8_ROTATE_CW		1
 #define DCM_U8_ROTATE_CCW		2
@@ -43,8 +42,9 @@ typedef struct
 /*******************************************************************************************************************************************************************/
 /* DCM Functions' Prototypes */
 
-void DCM_initialization( DCM_ST_CONFIG *st_a_DCMConfig );
-u8 DCM_controlDCM      ( DCM_ST_CONFIG *st_a_DCMConfig, u8 u8_a_controlMode, u8 u8_a_speedPercentage );
+u8 DCM_initialization ( DCM_ST_CONFIG *pst_a_DCMConfig );
+u8 DCM_controlDCM     ( DCM_ST_CONFIG *pst_a_DCMConfig, u8 u8_a_controlMode );
+u8 DCM_controlDCMSpeed( u8 u8_a_speedPercentage );
 
 /*******************************************************************************************************************************************************************/
 

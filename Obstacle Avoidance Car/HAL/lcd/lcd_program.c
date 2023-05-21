@@ -33,7 +33,8 @@ void LCD_init ( void )
 	DIO_init (LCD_cmmnd_Port, EN ,OUT);			//make enable pin output
 	DIO_init (LCD_cmmnd_Port, RW ,OUT);			//make Rw pin output
 	DIO_init (LCD_cmmnd_Port, RS ,OUT);			//make Rs pin output
-	_delay_ms(20);								//LCD power on delay is always more than 15ms
+	//_delay_ms(20);							//LCD power on delay is always more than 15ms
+	TMR0_delayMS(20);
 	LCD_sendCommand(0x38);						//initialization LCD 16x2 in 8bit mode
 	LCD_sendCommand(0x0C);						//display on cursor off
 	LCD_sendCommand(0x06);						//auto increment cursor
@@ -47,7 +48,8 @@ void LCD_init ( void )
 	DIO_init (LCD_Data_cmmnd_Port, EN ,OUT);	//make enable pin output
 	DIO_init (LCD_Data_cmmnd_Port, RW ,OUT);	//make rw pin output
 	DIO_init (LCD_Data_cmmnd_Port, RS ,OUT);	//make rs pin output
-	_delay_ms(20);								//LCD power on delay is always more than 15ms
+	//_delay_ms(20);							//LCD power on delay is always more than 15ms
+	TMR0_delayMS(20);
 	LCD_sendCommand(0x02);						//initialization LCD in 4bit mode
 	LCD_sendCommand(0x28);						//2 lines, 8x5 pixels in 4bit mode
 	LCD_sendCommand(0x0C);						//display on cursor off
@@ -71,24 +73,30 @@ void LCD_sendCommand ( u8 u8_a_cmnd )
 	DIO_write (LCD_cmmnd_Port, RS, LOW);				//RS = 0 Command register
 	DIO_write (LCD_cmmnd_Port, RW, LOW);				//RW = 0 write operation
 	DIO_write (LCD_cmmnd_Port, EN, HIGH);				//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_cmmnd_Port, EN, LOW);				//EN = 0 low pulse
-	_delay_ms(3);										//delay 3ms
+	//_delay_ms(3);										//delay 3ms
+	TMR0_delayMS(3);
 	#elif Mode == bit_4									//if LCD mode chosen in 4bit mode
 	DIO_setHigherNibble(LCD_Data_cmmnd_Port, u8_a_cmnd);//Sending upper nipple of u8_a_cmnd to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);			//RS = 0 Command register
 	DIO_write (LCD_Data_cmmnd_Port, RW, LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN, HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(2);										//delay 2ms
+	//_delay_ms(2);										//delay 2ms
+	TMR0_delayMS(2);
 	DIO_setLowerNibble(LCD_Data_cmmnd_Port , u8_a_cmnd);//Sending lower nipple of u8_a_cmnd to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,LOW);			//RS = 0 Command register
 	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(3);										//delay 3ms
+	//_delay_ms(3);										//delay 3ms
+	TMR0_delayMS(3);
 	#endif
 }
 
@@ -106,24 +114,30 @@ void LCD_sendCharacter ( u8 u8_a_char )
 	DIO_write (LCD_cmmnd_Port, RS ,HIGH);				//RS = 1 Data register
 	DIO_write (LCD_cmmnd_Port, RW ,LOW);				//RW = 0 write operation
 	DIO_write (LCD_cmmnd_Port, EN ,HIGH);				//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_cmmnd_Port, EN ,LOW);				//EN = 0 low pulse
-	_delay_ms(1);										//delay 1ms
+	//_delay_ms(1);										//delay 1ms
+	TMR0_delayMS(1);
 	#elif Mode == bit_4									//if LCD mode chosen in 4bit mode
 	DIO_setHigherNibble(LCD_Data_cmmnd_Port, u8_a_char);//Sending upper nipple of char data to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,HIGH);			//RS = 1 Data register
 	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(2);										//delay 2ms
+	//_delay_ms(2);										//delay 2ms
+	TMR0_delayMS(2);
 	DIO_setLowerNibble(LCD_Data_cmmnd_Port, u8_a_char);	//Sending lower nipple of char data to LCD Data Port
 	DIO_write (LCD_Data_cmmnd_Port, RS ,HIGH);			//RS = 1 Data register
 	DIO_write (LCD_Data_cmmnd_Port, RW ,LOW);			//RW = 0 write operation
 	DIO_write (LCD_Data_cmmnd_Port, EN ,HIGH);			//EN = 1 high pulse
-	_delay_us(1);										//delay 1us is always more than 450ns
+	//_delay_us(1);										//delay 1us is always more than 450ns
+	TMR0_delayMS(1);
 	DIO_write (LCD_Data_cmmnd_Port, EN ,LOW);			//EN = 0 low pulse
-	_delay_ms(2);										//delay 2ms
+	//_delay_ms(2);										//delay 2ms
+	TMR0_delayMS(2);
 	#endif
 }
 
@@ -139,7 +153,8 @@ void LCD_clear ( void )
 	/* Step 1: Send Display Clear control command */
 	LCD_sendCommand(0x01);					//clear display
 	/* Step 2: Delay more than 1.53 ms */
-	_delay_ms(2);							//delay 2ms
+	//_delay_ms(2);							//delay 2ms
+	TMR0_delayMS(2);
 	LCD_sendCommand(0x80);					//cursor at home position
 }
 

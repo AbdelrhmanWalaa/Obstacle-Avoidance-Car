@@ -15,12 +15,16 @@
 /*******************************************************************************************************************************************************************/
 /* Declaration and Initialization */
 
-/* Global Variables ( Flags ) to be altered when CTC Mode is selected in Timer 1, and depending on which Channel is selected. */
+/* Global Variables to store Port and Pin values. */
 static u8 u8_gs_portId, u8_gs_pinId;
 
+/* Global Variables to store different values. */
 static u8 u8_gs_TonInitialValue, u8_gs_ToffInitialValue;
 static u16 u16_gs_TonPrescale, u16_gs_ToffPrescale;
 static f32 f32_gs_periodTime;
+
+/* Global Variable ( Flag ) to be altered when entering OVF interrupt in TMR2. */
+static volatile u8 u8_gs_PWMFlag = PWM_U8_FLAG_DOWN;
 
 /*******************************************************************************************************************************************************************/
 /* PWM Private Functions' prototypes */
@@ -48,7 +52,16 @@ u8 PWM_initialization( u8 u8_a_portId, u8 u8_a_pinId, f32 f32_a_pwmFrequency )
 		u8_gs_portId = u8_a_portId;
 		u8_gs_pinId = u8_a_pinId;
 		
-		/* Step 2: Set the PWM Pin to Low */
+		/* Step 2: Set the PWM Pin Direction to Out */
+		switch ( u8_a_portId )
+		{
+			case DIO_U8_PORTA: SET_BIT( DIO_U8_DDRA_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTB: SET_BIT( DIO_U8_DDRB_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTC: SET_BIT( DIO_U8_DDRC_REG, u8_a_pinId ); break;
+			case DIO_U8_PORTD: SET_BIT( DIO_U8_DDRD_REG, u8_a_pinId ); break;
+		}
+				
+		/* Step 3: Set the PWM Pin Value to Low */
 		switch ( u8_a_portId )
 		{
 			case DIO_U8_PORTA: CLR_BIT( DIO_U8_PORTA_REG, u8_a_pinId ); break;
@@ -57,10 +70,10 @@ u8 PWM_initialization( u8 u8_a_portId, u8 u8_a_pinId, f32 f32_a_pwmFrequency )
 			case DIO_U8_PORTD: CLR_BIT( DIO_U8_PORTD_REG, u8_a_pinId ); break;
 		}		
 		
-		/* Step 3: Calculate Period ( Note: PWM Periodic Time is in milli seconds ) */
+		/* Step 4: Calculate Period ( Note: PWM Periodic Time is in milli seconds ) */
 		f32_gs_periodTime = 1.0F / f32_a_pwmFrequency;
 		
-		/* Step 4: Enable TMR2 Overflow Interrupt */
+		/* Step 5: Enable TMR2 Overflow Interrupt */
 		SET_BIT( TMR_U8_TIMSK_REG, TMR_U8_TOIE2_BIT );	
 	}
 	/* Check 2:PortId and PinlId is not in the valid range */
@@ -91,8 +104,8 @@ u8 PWM_generatePWM   ( u8 u8_a_dutyCycle )
 		f32 f32_l_timeOn, f32_l_timeOff;
 		
 		/* Step 1: Calculate Time Delay for both On & Off Time */
-		f32_l_timeOn = ( ( f32 ) f32_gs_periodTime * u8_a_dutyCycle ) / 100.0F;
-		f32_l_timeOff = f32_gs_periodTime - f32_l_timeOn;
+		f32_l_timeOff = ( ( f32 ) f32_gs_periodTime * u8_a_dutyCycle ) / 100.0F;
+		f32_l_timeOn = f32_gs_periodTime - f32_l_timeOff;
 		
 		/* Step 2: Calculate Prescaler Value for both On & Off Time */
 		PWM_calculatePrescaler( f32_l_timeOn, &u16_gs_TonPrescale );
@@ -304,34 +317,33 @@ void __vector_5( void )		__attribute__((signal));
 /*******************************************************************************************************************************************************************/
 
 /* ISR function implementation of TMR2 OVF */
-// void __vector_5( void )
-// {
-// 	static u8 u8_ls_PWM_flag = 0;
-// 	
-// 	if( u8_ls_PWM_flag == 0 )
-// 	{
-// 		PWM_setPrescaler( u16_gs_ToffPrescale );
-// 		
-// 		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
-// 		u8_ls_PWM_flag = 1;
-// 	}
-// 	
-// 	else
-// 	{
-// 		PWM_setPrescaler( u16_gs_TonPrescale );
-// 		
-// 		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
-// 		u8_ls_PWM_flag = 0;
-// 	}
-// 
-// 	/* Step 2: Toggle the PWM Pin */
-// 	switch ( u8_gs_portId )
-// 	{
-// 		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
-// 		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
-// 		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
-// 		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
-// 	}
-// }
+void __vector_5( void )
+{
+	/* Check 1: PWMFlag is not set */
+	if( u8_gs_PWMFlag == PWM_U8_FLAG_DOWN )
+	{
+		PWM_setPrescaler( u16_gs_ToffPrescale );		
+		TMR_U8_TCNT2_REG = u8_gs_ToffInitialValue;
+		
+		u8_gs_PWMFlag = PWM_U8_FLAG_UP;
+	}
+	/* Check 2: PWMFlag is set */
+	else
+	{
+		PWM_setPrescaler( u16_gs_TonPrescale );		
+		TMR_U8_TCNT2_REG = u8_gs_TonInitialValue;
+		
+		u8_gs_PWMFlag = PWM_U8_FLAG_DOWN;
+	}
+
+	/* Step 2: Toggle the PWM Pin */
+	switch ( u8_gs_portId )
+	{
+		case DIO_U8_PORTA: TOG_BIT( DIO_U8_PORTA_REG, u8_gs_pinId ); break;
+		case DIO_U8_PORTB: TOG_BIT( DIO_U8_PORTB_REG, u8_gs_pinId ); break;
+		case DIO_U8_PORTC: TOG_BIT( DIO_U8_PORTC_REG, u8_gs_pinId ); break;
+		case DIO_U8_PORTD: TOG_BIT( DIO_U8_PORTD_REG, u8_gs_pinId ); break;
+	}
+}
 
 /*******************************************************************************************************************************************************************/

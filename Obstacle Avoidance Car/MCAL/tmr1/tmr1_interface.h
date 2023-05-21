@@ -61,10 +61,10 @@ typedef struct{
 	
 
 /*============= FUNCTION PROTOTYPE =============*/
-void TMR1_Init (ST_TME1_ConfigType* TMR_config);
-u16 TMR1_ReadTime(void);
-void TMR1_Clear(void);
-void TMR1_Stop(void);
+void TMR1_init (ST_TME1_ConfigType* TMR_config);
+u16 TMR1_readTime(void);
+void TMR1_clear(void);
+void TMR1_stop(void);
 #endif /* TMR1_INTERFACE_H_ */
 
 
