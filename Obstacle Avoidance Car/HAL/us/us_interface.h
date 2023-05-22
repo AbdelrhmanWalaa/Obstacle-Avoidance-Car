@@ -14,9 +14,7 @@
 #include "../../MCAL/dio/dio_interface.h"
 #include <math.h>
 
-typedef enum{
-	invalid,valid
-	}EN_state;
+
 /*============= MACRO DEFINITION =============*/
 #define HIGH 1
 #define LOW 0

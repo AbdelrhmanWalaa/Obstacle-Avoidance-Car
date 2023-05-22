@@ -34,6 +34,10 @@ typedef enum{
 	EN_INT0,EN_INT1,EN_INT2,MAX_INT
 }EN_ICU_Source;
 
+typedef enum{
+	invalid,valid
+}EN_state;
+
 typedef struct
 {
 	EN_ICU_Clock clock;
@@ -50,17 +54,17 @@ typedef struct
  * 	3. Enable the External Interrupt source and edge.
  * 	4. Initialize Timer1 Registers
  */
-void ICU_init(const ST_ICU_ConfigType * Config_Ptr);
+EN_state ICU_init(const ST_ICU_ConfigType * Config_Ptr);
 
 /*
  * Description: Function to set the Call Back function address.
  */
-void ICU_setCallBack(void(*a_ptr)(void));
+EN_state ICU_setCallBack(void(*a_ptr)(void));
 
 /*
  * Description: Function to set the required edge detection.
  */
-void ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType);
+EN_state ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType);
 
 /*
  * Description: Function to get the Timer1 Value when the external interrupt is capture edge

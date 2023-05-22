@@ -20,35 +20,56 @@ static EN_ICU_Source EN_g_source;
  * 	3. Enable the External Interrupt source.
  * 	4. Initialize Timer1 Registers
  */
-void ICU_init(const ST_ICU_ConfigType * Config_Ptr)
+EN_state ICU_init(const ST_ICU_ConfigType * Config_Ptr)
 {
-	ST_TME1_ConfigType ST_L_Timer;
-	ST_L_Timer.CLK_source=Config_Ptr->clock;
-	ST_L_Timer.TMR_mode=Normal;
-	ST_L_Timer.INT_state=Disable;
-	TMR1_init(&ST_L_Timer);
-	EXI_enablePIE(Config_Ptr->source,Config_Ptr->edge);
-	EN_g_edge=Config_Ptr->edge;
-	EN_g_source=Config_Ptr->source;
+	if(Config_Ptr != NULL)
+	{
+		ST_TME1_ConfigType ST_L_Timer;
+		ST_L_Timer.CLK_source=Config_Ptr->clock;
+		ST_L_Timer.TMR_mode=Normal;
+		ST_L_Timer.INT_state=Disable;
+		TMR1_init(&ST_L_Timer);
+		EXI_enablePIE(Config_Ptr->source,Config_Ptr->edge);
+		EN_g_edge=Config_Ptr->edge;
+		EN_g_source=Config_Ptr->source;
+		return valid;
+	}
+	return invalid;
 }
 
 /*
  * Description: Function to set the Call Back function address.
  */
-void ICU_setCallBack(void(*a_ptr)(void))
+EN_state ICU_setCallBack(void(*a_ptr)(void))
 {
-	EXI_intSetCallBack(EN_g_source,a_ptr);
+	if(a_ptr != NULL)
+	{
+		EXI_intSetCallBack(EN_g_source,a_ptr);
+		return valid;
+	}
+	return invalid;
 }
 
 /*
  * Description: Function to set the required edge detection.
  */
-void ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType)
+EN_state ICU_setEdgeDetectionType(const EN_ICU_EdgeType edgeType)
 {
-	if(edgeType==RISING)
-		EXI_enablePIE(EN_g_source,EXI_U8_SENSE_RISING_EDGE);
-	else
-		EXI_enablePIE(EN_g_source,EXI_U8_SENSE_FALLING_EDGE);
+	EN_state en_l_state;
+		if(edgeType==RISING)
+		{
+			EXI_enablePIE(EN_g_source,EXI_U8_SENSE_RISING_EDGE);
+			en_l_state=valid;
+		}
+		else if(edgeType==FALLING)
+		{
+			EXI_enablePIE(EN_g_source,EXI_U8_SENSE_FALLING_EDGE);
+			en_l_state=valid;
+		}
+		else
+			en_l_state=invalid;
+			
+		return en_l_state;
 }
 
 /*
