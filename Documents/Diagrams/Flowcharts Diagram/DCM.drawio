@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-05-21T14:20:20.529Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="dq3P2se-mGK2BkbCdgRk" version="21.2.8" type="device">
+<mxfile host="Electron" modified="2023-05-22T03:13:39.748Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="wJbinr2kd4ySGYPL2UP6" version="21.2.8" type="device">
   <diagram name="Page-1" id="wkSTFM-xhvv9ywmYlebC">
     <mxGraphModel dx="1114" dy="852" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -92,11 +92,11 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="RaQ1Jy0vWYm-qhS4mqpq-103" value="&lt;p style=&quot;line-height: 80%;&quot;&gt;&lt;font face=&quot;Calibri&quot; style=&quot;font-size: 11.29px;&quot;&gt;&lt;i&gt;NumberOfDCMs&lt;/i&gt; = 0&lt;/font&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
-          <mxGeometry x="-119.75" y="26" width="112.5" height="42" as="geometry" />
+          <mxGeometry x="-147" y="28" width="170" height="42" as="geometry" />
         </mxCell>
-        <UserObject label="&lt;div style=&quot;font-size: 11.29px;&quot;&gt;Initialize initial direction of DCM, in both Direction Pins&lt;br&gt;&lt;/div&gt;" Function="EN_DIO_Error_T DIO_toggle(uint8_t pinNumber, EN_DIO_PORT_T portNumber);  " tags="Flowchart" id="RaQ1Jy0vWYm-qhS4mqpq-106">
+        <UserObject label="&lt;div style=&quot;font-size: 11.29px;&quot;&gt;Initialize initial direction of &lt;i&gt;DCM&lt;/i&gt;,&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 11.29px;&quot;&gt;in both Direction Pins,&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;font-size: 11.29px;&quot;&gt;using DIO_init function&lt;br&gt;&lt;/div&gt;" Function="EN_DIO_Error_T DIO_toggle(uint8_t pinNumber, EN_DIO_PORT_T portNumber);  " tags="Flowchart" id="RaQ1Jy0vWYm-qhS4mqpq-106">
           <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=274;fillColor=#d5e8d4;shape=stencil(nZBLDoAgDERP0z3SIyjew0SURgSD+Lu9kMZoXLhwN9O+tukAlrNpJg1SzDH4QW/URgNYgZTkjA4UkwJUgGXng+6DX1zLfmoymdXo17xh5zmRJ6Q42BWCfc2oJfdAr+Yv+AP9Cb7OJ3H/2JG1HNGz/84klThPVCc=);strokeColor=#82b366;spacingTop=-1;spacingBottom=-1;spacingLeft=-1;spacingRight=-1;points=[[0,0.5,0],[1,0.5,0],[0.5,1,0],[0.5,0,0]];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;fontFamily=Calibri;" vertex="1" parent="1">
-            <mxGeometry x="-153.5" y="245" width="180" height="60" as="geometry" />
+            <mxGeometry x="-148.5" y="243" width="170" height="55" as="geometry" />
           </mxCell>
         </UserObject>
       </root>
