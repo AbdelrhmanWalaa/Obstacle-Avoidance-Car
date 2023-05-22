@@ -45,15 +45,20 @@ void US_edgeProcessing(void)
   a_triggerPin:trigger pin
   en_a_echoPin: interrupt source pin [EN_INT0,EN_INT1,EN_INT2]
  */
-void US_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin)
+EN_state US_init(u8 a_triggerPort,u8 a_triggerPin,EN_ICU_Source en_a_echoPin)
 {
-	ST_ICU_ConfigType ST_L_IcuConfig={F_CPU_8,RISING,en_a_echoPin};
-	u8_g_triggerPort=a_triggerPort;
-	u8_g_triggerPin=a_triggerPin;
-	ICU_init(&ST_L_IcuConfig);
-	ICU_setCallBack(US_edgeProcessing);
-	DIO_init(a_triggerPort, a_triggerPin, OUT);		 //setup trigger pin direction as output
-	DIO_write(a_triggerPort, a_triggerPin, LOW);
+	if(a_triggerPin <= P7 && a_triggerPin >= P0 && a_triggerPort >= A && a_triggerPort <= D && en_a_echoPin < MAX_INT)
+	{
+		ST_ICU_ConfigType ST_L_IcuConfig={F_CPU_8,RISING,en_a_echoPin};
+		u8_g_triggerPort=a_triggerPort;
+		u8_g_triggerPin=a_triggerPin;
+		ICU_init(&ST_L_IcuConfig);
+		ICU_setCallBack(US_edgeProcessing);
+		DIO_init(a_triggerPort, a_triggerPin, OUT);		 //setup trigger pin direction as output
+		DIO_write(a_triggerPort, a_triggerPin, LOW);
+		return valid;
+	}
+	return invalid;
 }
 
 

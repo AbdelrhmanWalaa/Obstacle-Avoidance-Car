@@ -31,7 +31,7 @@ typedef enum
 }EN_ICU_EdgeType;
 
 typedef enum{
-	EN_INT0,EN_INT1,EN_INT2
+	EN_INT0,EN_INT1,EN_INT2,MAX_INT
 }EN_ICU_Source;
 
 typedef struct
